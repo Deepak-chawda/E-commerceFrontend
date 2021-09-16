@@ -1,0 +1,17 @@
+.svg-inline--fa {
+    display: inline-block;
+    font-size: inherit;
+    height: 2em;
+    overflow: visible;
+    vertical-align: -0.125em;
+}
+@media (max-width: 788px)
+{
+.svg-inline--fa  {
+    display: inline-block;
+    font-size: inherit;
+    height: 1em;
+    overflow: visible;
+    vertical-align: -0.125em;
+}
+}

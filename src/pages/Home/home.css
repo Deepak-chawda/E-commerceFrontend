@@ -1,0 +1,29 @@
+.countdown {
+  display: flex;
+  flex-wrap: wrap;
+  font-weight: normal;
+}
+.bg-faded-info {
+  background-color: rgba(83, 164, 245, 0.199) !important;
+}
+.btn-accent {
+  color: #fff !important;
+  background-color: #4e54c8 !important;
+  border-color: #4e54c8 !important;
+  box-shadow: unset !important;
+}
+.marketing h2 {
+  font-weight: 900;
+}
+.featurette-heading {
+  font-size: 50px;
+  margin-top: 7rem;
+}
+.card {
+  background-color: #fff !important;
+  box-shadow: 3px 0 11px 0 rgb(0 0 0 / 20%) !important;
+}
+.card-title::before {
+  content: "\20B9";
+  padding-right: 5px;
+}

@@ -1,0 +1,25 @@
+.nav_bg {
+  background-color: white !important;
+}
+.e {
+  font-size: 3.5rem;
+}
+.navbar-brand {
+  color: rgb(17, 19, 27) !important;
+}
+.selected {
+  font-weight: bold;
+  border-bottom: 2px solid rgb(63, 192, 13) !important;
+}
+.nav-item a:hover {
+  color: rgb(26, 50, 230) !important;
+}
+/* .navbar-nav{
+  text-align: center;
+} */
+.nav-link {
+  font-size: 1.4rem;
+}
+.bg-header {
+  background-color: rgba(17, 226, 24, 0.897) !important;
+}

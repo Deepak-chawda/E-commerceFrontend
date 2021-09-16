@@ -1,0 +1,37 @@
+/* .waveIamage{
+    background-image:url("../images/wavesNegative.svg") ;
+    background-repeat:repeat-x;
+    background-color: #7189adb9;
+} */
+.waveIamage {
+  background-color: #fff !important;
+  box-shadow: 1px 0 10px 0 rgb(0 0 0 / 20%) !important;
+  border-radius: 20px;
+  border: 1px soli black;
+}
+.norm {
+  text-decoration: none !important;
+  color: rgb(0, 38, 255) !important;
+}
+.animat {
+  animation: up-down 2s ease-in-out infinite alternate-reverse both;
+}
+@-webkit-keyframes up-down {
+  0% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes up-down {
+  0% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+.btn-color {
+  background-color: #15ee1e !important;
+}

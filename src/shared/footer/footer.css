@@ -1,0 +1,27 @@
+
+footer {
+    position: relative;
+    margin: 0 auto;
+    padding: 5rem 0;
+}
+.text-white .eyebrow {
+    color: rgba(255, 255, 255, 0.5)!important;
+}
+.eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+}
+ul, ol {
+    list-style:none!important;
+    padding: 0px !important;
+}
+.menu-list-link{
+    text-decoration: none;
+}
+#GFG{
+    text-decoration: none;
+    
+}
