@@ -23,7 +23,7 @@
   background-color: #fff !important;
   box-shadow: 3px 0 11px 0 rgb(0 0 0 / 20%) !important;
 }
-.card-title::before {
+.rup::before {
   content: "\20B9";
   padding-right: 5px;
 }

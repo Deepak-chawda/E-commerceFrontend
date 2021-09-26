@@ -1,93 +1,151 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import "../admin/admin.css"
 import appleWatch from "../images/apple_watch.jpeg";
+import AddProductModal from "./add.product.model";
+import DeleteProductAdmin from "./delete.product.admin";
+import EditProductModal from "./edit.product.model";
 
 const AdminHome = () => {
+  // here is a get admin all product api
+  const [productData, setProductData] = useState([]);
+  useEffect(() => {
+    getProductsApi();
+  }, []);
+  // get all product by admin
+  const getProductsApi = async () => {
+    const token = JSON.parse(localStorage.getItem("token"));
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/api/get/admin/product",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+// get admin all data
+      // console.log("get admin data response", response);
+      setProductData(response.data.data);
+    } catch (error) {
+      console.log("error", error.response);
+      alert(error.response.data.error);
+    }
+  };
+  // add product api
+  const addProductApi = async (
+    addProductAdmin,
+    closeModal,
+    setProductAdmin
+  ) => {
+    const token = JSON.parse(localStorage.getItem("token"));
+
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/add/product",
+        addProductAdmin,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("response", response);
+      alert(response.data.msg)
+      // remove value after add product
+      setProductAdmin({
+        ...addProductAdmin,
+        productName: "",
+        price: "",
+        discription: "",
+      });
+      closeModal();
+      getProductsApi();
+    } catch (error) {
+      console.log("error", error.response);
+      alert(error.response.data.error);
+    }
+  };
+  // delete product api
+ 
+
+
+  // update product api
+  //   useState for store  edit id
+  const [editId,seteditId]=useState()
+  const updateProductsApi = async (closeModal) => {
+    const token = JSON.parse(localStorage.getItem("token"));
+    try {
+      const response = await axios.put(
+        `http://localhost:4000/api/update/product`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("response", response);
+      // closeModal();
+      // getProductsApi();
+    } catch (error) {
+      console.log("error", error.response);
+      alert(error.response.data.error);
+    }
+  };
   return (
     <>
       <section className="pt-4 pt-md-11">
         <div className="container">
           <div className="row align-items-center m-2 ">
-          <h2 className="m-3 text-center">All PRODUCT IN STORE</h2>
+            <h2 className="m-3 text-center">All PRODUCT IN STORE</h2>
             <div className="card p-0 m-0 pt-2 mb-4">
-                <div className="p-4">
-            <h2 className="">PRODUCT</h2>
-            
-            <button type="button" className="btn btn-info "><svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" fill="currentColor" className="bi bi-plus-circle" viewBox="0 0 16 16">
-  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-</svg> Add Product</button>
-            </div>
-            
+              <div className="p-4">
+                <h2 className="">ADD PRODUCT ADMIN</h2>
+                <AddProductModal addProductApi={addProductApi} />
+              </div>
+
               <div className="card-body m-0 p-0 text-center">
                 <div className="table-responsive">
                   <table className="table table-hover  align-middle">
                     <thead className="table-dark">
                       <tr>
                         <th scope="col">Id</th>
-                        <th scope="col">Product Image</th>
-                        <th scope="col">Prod Name</th>
-                        <th scope="col rupes">Price</th>
-                        <th scope="col">Order date</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Action</th>
+                        <th scope="col"><i className="icon-picture"></i> Product Image</th>
+                        <th scope="col"><i className="icon-gift"></i> Product Name</th>
+                        <th scope="col"><i className="icon-inr"></i> Price</th>
+                        <th scope="col"> <i className="icon-calendar"></i> Order date</th>
+                        <th scope="col"><i className="icon-edit"></i> Product Discription</th>
+                        <th scope="col"><i className="icon-pushpin"></i> Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>
-                          <img
-                            className="card-table-img img-fluid me-3"
-                            src={appleWatch}
-                            alt="product-img"
-                            width="100"
-                          />
-                        </td>
-                        <td>watch</td>
-                        <td>5000</td>
-                        <td>12/08/2021</td>
-                        <td>panding</td>
-                        <td>
-                            <a
-                              className="me-3 text-lg text-success"
-                              href="/e-commerce-product-new"
-                            >
-                              <svg
-                                aria-hidden="true"
-                                focusable="false"
-                                data-prefix="far"
-                                data-icon="edit"
-                                className="svg-inline--fa fa-edit fa-w-18 "
-                                role="img"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 576 512"
-                              >
-                                <path
-                                  fill="currentColor"
-                                  d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"
-                                ></path>
-                              </svg>
-                            </a>
-                            <a className="text-lg text-danger" href="#!">
-                              <svg
-                                aria-hidden="true"
-                                focusable="false"
-                                data-prefix="far"
-                                data-icon="trash-alt"
-                                className="svg-inline--fa fa-trash-alt fa-w-14 "
-                                role="img"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 448 512"
-                              >
-                                <path
-                                  fill="currentColor"
-                                  d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"
-                                ></path>
-                              </svg>
-                            </a>
-                        </td>
-                      </tr>
+                      {productData && productData.length !== 0
+                        ? productData.map((item, index) => {
+                            return (
+                              <>
+                                <tr>
+                                  <th scope="row">{index + 1}</th>
+                                  <td>
+                                    <img
+                                      className="card-table-img img-fluid me-3"
+                                      src={appleWatch}
+                                      alt="product-img"
+                                      width="100"
+                                    />
+                                  </td>
+                                  <td>{item.productName}</td>
+                                  <td>{item.price}</td>
+                                  <td>22/07/2000</td>
+                                  <td>{item.discription}</td>
+                                  <td>
+                                    <EditProductModal updateProductsApi={updateProductsApi} seteditId={seteditId} key={item._id} item={item}/>
+                                    <DeleteProductAdmin itemId={item._id} getProductsApi={getProductsApi} />
+                                  </td>
+                                </tr>
+                              </>
+                            );
+                          })
+                        : "No Data add yet"}
                     </tbody>
                   </table>
                 </div>

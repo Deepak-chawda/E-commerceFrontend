@@ -12,10 +12,33 @@ import air_pots2 from "../images/air_pots2.jfif";
 import apple_laptop from "../images/apple_laptop.jfif";
 import ipad from "../images/ipad.jfif";
 import CommanCard from "./comman.card";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 const Home = () => {
-  const [card, setCard] = useState(["1", "2", "3", "4", "5", "6"]);
-
+   // here is a get user all product api
+   const [getUserData, setUserData] = useState([]);
+   useEffect(() => {
+    getUserDataApi();
+   }, []);
+   const getUserDataApi = async () => {
+     const token = JSON.parse(localStorage.getItem("token"));
+     try {
+       const response = await axios.get(
+         "http://localhost:4000/api/get/user/product",
+         {
+           headers: {
+             Authorization: `Bearer ${token}`,
+           },
+         }
+       );
+ 
+      //  console.log("user product response", response);
+       setUserData(response.data.data);
+     } catch (error) {
+       console.log("error", error.response);
+       alert(error.response.data.error)
+     }
+   };
   return (
     <>
       {/* first banner */}
@@ -167,13 +190,14 @@ const Home = () => {
         <h1 className="text-center grident">Here Apple Product For Order </h1>
         <div className="d-flex flex-wrap text-center justify-content-center">
           {/*cards*/}
-          {card.map((Element, index) => {
-            return (
-              <>
-                <CommanCard key={index} />
+          {getUserData && getUserData.length !== 0
+                        ? getUserData.map((item) => {
+                            return (
+                              <>
+                <CommanCard key={item._id} Allitem={item}/>
               </>
             );
-          })}
+          }):<p>no Product add by admin yet</p> }
         </div>
         {/* </div> */}
         {/* </div> */}

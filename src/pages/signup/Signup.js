@@ -15,7 +15,7 @@ const Signup = () => {
     password : "",
   });
   // handle Change
-  const handleloginChange = (e) => {
+  const handlesignupChange = (e) => {
     const { name, value } = e.target; // object destructuring
     setDetails({ ...userDetails, [name]: value});
   };
@@ -23,15 +23,16 @@ const Signup = () => {
     console.log("userDetails=", userDetails)
     try {
       const response = await axios.post("http://localhost:4000/api/signup?isAdmin=false",userDetails)
+      localStorage.setItem("userDetails" , JSON.stringify(response.data.data.user))
+      localStorage.setItem("token" , JSON.stringify(response.data.data.token))
 
-      console.log("response =",response)
+      // console.log("response =",response)
       history.push("/login")
  
     } catch (error) {
       console.log("error", error)
       // error showing in front end
       alert(error.response.data.error)
-      
     }
   }
   return (
@@ -57,7 +58,7 @@ const Signup = () => {
                     <input
                       type="email"
                       name="email"
-                      onChange={handleloginChange}
+                      onChange={handlesignupChange}
                       className="form-control py-3 px-1"
                       id="inputEmail4"
                     />
@@ -69,7 +70,7 @@ const Signup = () => {
                     <input
                       type="password"
                       name="password"
-                      onChange={handleloginChange}
+                      onChange={handlesignupChange}
                       className="form-control py-3 px-1"
                       id="inputPassword4"
                     />

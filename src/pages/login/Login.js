@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../signup/signup.css";
 import loginImg from "../images/loginImg.svg";
-
 const Login = () => {
   // here call useHistory function for using..use to routing for btw diff componets
   const history = useHistory()
@@ -21,11 +20,16 @@ const Login = () => {
     setDetails({ ...userDetails, [name]: value});
   };
   const loginApi = async ()=>{
-    console.log("userDetails=", userDetails)
+    // console.log("userDetails=", userDetails)
     try {
+      // alert massage for fill all field
+      if(userDetails.email==="" || userDetails.password==="")
+      {
+        return alert("plz fill all required field")
+      }
       const response = await axios.post("http://localhost:4000/api/sigin",userDetails)
 
-      console.log("response =",response)
+    // console.log("response =",response)
     localStorage.setItem("userDetails" , JSON.stringify(response.data.data.user))
     localStorage.setItem("token" , JSON.stringify(response.data.data.token))
     if(response.data.data.user.role==="ADMIN"){
@@ -33,8 +37,9 @@ const Login = () => {
     }else{
       history.push("/")
     }
+  alert(response.data.msg)
     } catch (error) {
-      console.log("error", error)
+      console.log("error response=>", error.response)
       // error showing in front end
       alert(error.response.data.error)
     }
@@ -64,8 +69,8 @@ const Login = () => {
                       name="email"
                       onChange={handleloginChange}
                       className="form-control py-3 px-1"
-                      // id="inputEmail4"
-                      // required
+                      id="inputEmail4"
+                      required
                     />
                   </div>
                   <div className="col-md-12">
@@ -79,7 +84,7 @@ const Login = () => {
                       className="form-control py-3 px-1"
                       autoComplete="off"
                       // id="inputPassword4"
-                      // required
+                      required
                     />
                   </div>
                   <div className=" d-grid text-center">
@@ -93,14 +98,13 @@ const Login = () => {
                       <Link
                         className="text-primary text-decoration-none Fweight-600 text-nowrap"
                         to="/singup"
-                      >
-                        Sign up here
+                      > Sign up here
                       </Link>
                     </p>
                     <p className="mt-2">
                       <Link
                         className="text-danger text-decoration-none text-nowrap"
-                        to="/"
+                        to="/#"
                       >
                         Forget password ?
                       </Link>

@@ -1,8 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 import "../header/header.css";
 
 const Header = () => {
+  const history =useHistory();
   return (
     <>
       <div className="container-fluid nav_bg">
@@ -35,7 +36,7 @@ const Header = () => {
                         aria-current="page"
                         to="/"
                       >
-                        <i className="icon-home"> </i>
+                        {/* <i className="icon-home"> </i> */}
                         HOME
                       </Link>
                     </li>
@@ -43,19 +44,29 @@ const Header = () => {
                       <Link
                         className="nav-link active "
                         aria-current="page"
-                        to="/"
+                        to="/profile/wishlist"
                       >
-                        <i className="icon-heart"> </i>
-                        WISHLIST
+                        {/* <i className="icon-heart"> </i> */}
+                       MY WISHLIST
                       </Link>
                     </li>
                     <li className="nav-item">
                       <Link
                         className="nav-link active "
                         aria-current="page"
-                        to="/"
+                        to="/profile/order"
                       >
-                        <i className="icon-user"> </i>
+                        {/* <i className="icon-heart"> </i> */}
+                       MY ORDER
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        className="nav-link active "
+                        aria-current="page"
+                        to="/profile"
+                      >
+                        {/* <i className="icon-user"> </i> */}
                         PROFILE
                       </Link>
                     </li>
@@ -65,7 +76,7 @@ const Header = () => {
                         aria-current="page"
                         to="/login"
                       >
-                        <i className="icon-signin "> </i>
+                        {/* <i className="icon-signin "> </i> */}
                         LOGIN
                       </Link>
                     </li>
@@ -75,7 +86,7 @@ const Header = () => {
                         aria-current="page"
                         to="/singup"
                       >
-                        <i className="icon-signout"> </i>
+                        {/* <i className="icon-signout"> </i> */}
                         SIGNUP
                       </Link>
                     </li>
@@ -85,9 +96,22 @@ const Header = () => {
                         aria-current="page"
                         to="/admin"
                       >
-                        <i className="icon-signout"> </i>
+                        {/* <i className="icon-signout"> </i> */}
                         ADMIN
                       </Link>
+                    </li>
+                    <li className="nav-item">
+                    <a
+                        className="nav-link active"
+                        aria-current="page"
+                        onClick={()=>{
+                         localStorage.clear()
+                         history.push("/")
+                        }}
+                      >
+                        {/* <i className="icon-signout"> </i> */}
+                        LOGOUT
+                      </a>
                     </li>
                   </ul>
                 </div>
