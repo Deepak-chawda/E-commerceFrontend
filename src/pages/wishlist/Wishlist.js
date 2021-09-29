@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "./wishlist.css";
+import { v4 as uuidv4 } from 'uuid';
 import appleWatch from "../images/apple_watch.jpeg";
 import ReactTooltip from "react-tooltip";
 
@@ -33,6 +34,54 @@ const Wishlist = () => {
       alert(error.response.data.error);
     }
   };
+  // here is a wishlist delete api
+  const wishlistDeleteApi = async (_id) => {
+    const token = JSON.parse(localStorage.getItem("token"));
+    try {
+      const response = await axios.delete(
+        `http://localhost:4000/api/delete/wishlist?_id=${_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("response", response);
+      getWishlistApi();
+      alert(response.data.msg);
+    } catch (error) {
+      console.log("error", error.response);
+    }
+  };
+  // call placeOrder api
+const placeOrder = async(item)=>{
+  const itemId = item._id
+  const itempro = item.product._id
+  // console.log("id",_id)
+  const token = JSON.parse(localStorage.getItem("token"));
+  try {
+    const response = await axios.post(
+      "http://localhost:4000/api/add/order",{
+        product : itempro,
+        orderDate : Date.now(),
+        transactionId  : uuidv4(),
+        address : null,
+        user : JSON.parse(localStorage.getItem("userDetails"))._id
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log("response", response)
+    wishlistDeleteApi(itemId)
+    alert(response.data.msg)
+  } catch (error) {
+    console.log("error=>", error.response);
+    // alert(error.response.data.error)
+  }
+}
   return (
     <>
       <section className="pt-4 pt-md-11">
@@ -51,12 +100,12 @@ const Wishlist = () => {
                     <thead className="table-dark">
                       <tr>
                         {/* <th className="fs-4 text-center">My All Order List</th> */}
-                        {/* <th class="text-center"><a class="btn btn-sm btn-outline-danger" href="#">Clear Wishlist</a></th> */}
+                        {/* <th className="text-center"><a className="btn btn-sm btn-outline-danger" href="#">Clear Wishlist</a></th> */}
                       </tr>
                       <tr>
                         <th scope="col">Product Image</th>
                         <th scope="col">Product Name</th>
-                        <th scope="col rupes">Price</th>
+                        <th scope="col">Price</th>
                         <th scope="col">Product Discription</th>
                         <th scope="col">Action</th>
                       </tr>
@@ -79,8 +128,28 @@ const Wishlist = () => {
                                 <td>{item.product.price}</td>
                                 <td>{item.product.discription}</td>
                                 <td>
-                                  <a className="text-lg text-danger" href="#!" data-tip="Delete">
-                                  <ReactTooltip place="top" type="dark" effect="solid" />
+                                <a
+                                    className="me-3 text-lg text-success"
+                                    data-tip="Place Order"
+                                    href="#/"
+                                    onClick={()=>{
+                                      placeOrder(item)
+                                    }}
+                                  ><i class="icon-shopping-cart icon-2x"></i>
+                                  </a>
+                                  <a
+                                    className="text-lg text-danger"
+                                    onClick={() => {
+                                      wishlistDeleteApi(item._id);
+                                    }}
+                                    href="#!"
+                                    data-tip="Delete"
+                                  >
+                                    <ReactTooltip
+                                      place="top"
+                                      type="dark"
+                                      effect="solid"
+                                    />
                                     <svg
                                       aria-hidden="true"
                                       focusable="false"
@@ -97,6 +166,7 @@ const Wishlist = () => {
                                       ></path>
                                     </svg>
                                   </a>
+                                 
                                 </td>
                               </tr>
                             </>

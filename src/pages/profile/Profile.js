@@ -9,59 +9,61 @@ import dc from "../images/dc.jpg";
 
 const Profile = () => {
   const history =useHistory();
+  const proName = JSON.parse(localStorage.getItem("userDetails"));
+
   return (
     <>
-      {/* <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> */}
-      <div class="container padding-bottom-3x mb-2 my-4">
-        <div class="row">
-          <div class="col-lg-4">
-            <aside class="user-info-wrapper">
-              <div class="user-cover backImage">
+      <div className="container padding-bottom-3x mb-2 my-4">
+        <div className="row">
+          <div className="col-lg-4">
+            <aside className="user-info-wrapper">
+              <div className="user-cover backImage">
                 <div
-                  class="info-label"
+                  className="info-label"
                   data-toggle="tooltip"
                   title=""
                   data-original-title="You currently have 290 Reward Points to spend"
                 >
-                  <i class="icon-medal"></i>+
+                  <i className="icon-medal"></i>+
                 </div>
               </div>
-              <div class="user-info">
-                <div class="user-avatar">
-                  <a class="edit-avatar" href="#"></a>
+              <div className="user-info">
+                <div className="user-avatar">
+                  {/* <a className="edit-avatar" href="#/"></a> */}
                   <img src={dc} alt="User" />
                 </div>
-                <div class="user-data">
-                  <h4>Daniel Adams</h4>
-                  <span>Joined February 06, 2017</span>
+                <div className="user-data">
+                  <h6>Hii.....</h6>
+                  <h4>{proName.userName}</h4>
+                  <span>Joined February 06, 2021</span>
                 </div>
               </div>
             </aside>
-            <nav class="list-group">
-              <Link class="list-group-item with-badge" to="/profile/order">
-                <i class=" fa fa-th"></i>Orders
+            <nav className="list-group">
+              <Link className="list-group-item with-badge" to="/profile/order">
+              <i class="icon-shopping-cart icon-2x"></i><span className="">Orders</span>  
               </Link>
-              <a class="list-group-item" to="/MainProfile/profile">
-                <i class="fa fa-user"></i>Profile
-              </a>
+              <Link className="list-group-item with-badge" to="/MainProfile/profile">
+              <i class="icon-user icon-2x"></i>Profile
+              </Link>
 
               {/* active */}
-              <Link class="list-group-item with-badge" to="/profile/wishlist">
-                <i class="fa fa-heart"></i>Wishlist
+              <Link className="list-group-item with-badge" to="/profile/wishlist">
+              <i class="icon-heart icon-2x"></i>Wishlist
               </Link>
-              <Link class="list-group-item with-badge" to="/profile/mytickets">
-                <i class="fa fa-tag"></i>My Tickets
+              <Link className="list-group-item with-badge" to="/profile/mytickets">
+                <i className="fa fa-tag icon-2x"></i>My Tickets
               </Link>
-              <Link class="list-group-item" to="/" onClick={()=>{ localStorage.clear()
-                   history.push("/")} }><i class="fa fa-map"></i>Log out
+              <Link className="list-group-item" to="/" onClick={()=>{ localStorage.clear()
+                   history.push("/")} }><i class="icon-signout icon-2x"></i>Log out
               </ Link>
             </nav>
           </div>
-          <div class="col-lg-8  rounded-2">
-            <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+          <div className="col-lg-8  rounded-2">
+            {/* <div className="padding-top-2x mt-2 hidden-lg-up"></div> */}
             {/* <!-- Wishlist Table--> */}
-            <div class="table-responsive wishlist-table margin-bottom-none">
-              <table class="table">
+            <div className="table-responsive wishlist-table margin-bottom-none">
+              <table className="table">
                   <Switch>
                     <Route exact path="/profile/wishlist" component={Wishlist} />
                     <Route exact path="/profile/order" component={Order} />
@@ -69,7 +71,7 @@ const Profile = () => {
                   </Switch>
               </table>
             </div>
-            <hr class="mb-4" />
+            <hr className="mb-4" />
           </div>
         </div>
       </div>

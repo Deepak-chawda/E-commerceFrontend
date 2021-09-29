@@ -34,6 +34,7 @@ function DeleteProductAdmin({itemId,getProductsApi}) {
       console.log("response", response);
       closeModal();
       getProductsApi();
+      alert(response.data.msg)
     } catch (error) {
       console.log("error", error.response);
       alert(error.response.data.error);
@@ -58,6 +59,7 @@ function DeleteProductAdmin({itemId,getProductsApi}) {
       <a
         className="text-lg text-danger "
         data-tip="Detele"
+        href="#/"
         style={{ cursor: "pointer" }}
         onClick={openModal}
       >
@@ -101,7 +103,9 @@ function DeleteProductAdmin({itemId,getProductsApi}) {
             Cancel
           </button>
           <button type="button" className="btn btn-danger m-2"
-          // onClick={deleteProductsApis(itemId) } 
+          onClick={()=>{
+            deleteProductsApis(itemId) 
+          }} 
            >
             Delete
           </button>

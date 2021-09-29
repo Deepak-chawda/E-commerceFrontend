@@ -28,10 +28,24 @@ const Order = () => {
       setGetOrder(response.data.data);
     } catch (error) {
       console.log("error=>", error.response);
-      alert(error.response.data.error);
+      alert(error.response.data.data.error)
     }
-    
   };
+  // order delete api
+  const orderDeleteApi=async(_id)=>{
+    const token = JSON.parse(localStorage.getItem("token"));
+    try {
+      const response = await axios.delete(`http://localhost:4000/api/delete/order?_id=${_id}` ,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }})
+        console.log("response", response);
+        getOrderApi()
+        alert(response.data.msg)
+    } catch (error) {
+      console.log("error",error.response)
+    }
+  }
   return (
     <>
       <section className="pt-4 pt-md-11">
@@ -50,7 +64,7 @@ const Order = () => {
                     <thead className="table-dark">
                       <tr>
                         {/* <th className="fs-4 text-center">My All Order List</th> */}
-                        {/* <th class="text-center"><a class="btn btn-sm btn-outline-danger" href="#">Clear Wishlist</a></th> */}
+                        {/* <th className="text-center"><a className="btn btn-sm btn-outline-danger" href="#">Clear Wishlist</a></th> */}
                       </tr>
                       <tr>
                         <th scope="col">Product Image</th>
@@ -62,54 +76,63 @@ const Order = () => {
                       </tr>
                     </thead>
                     <tbody className="text-center">
-                      {getOrder && getOrder.length !== 0
-                        ? getOrder.map((item) => {
-                            return (
-                              <>
-                                <tr>
-                                  <td>
-                                    <img
-                                      className="card-table-img img-fluid me-3"
-                                      src={appleWatch}
-                                      alt="product-img"
-                                      width="100"
+                      {getOrder && getOrder.length !== 0 ? (
+                        getOrder.map((item) => {
+                          return (
+                            <>
+                              <tr>
+                                <td>
+                                  <img
+                                    className="card-table-img img-fluid me-3"
+                                    src={appleWatch}
+                                    alt="product-img"
+                                    width="100"
+                                  />
+                                </td>
+                                <td>{item.product.productName}</td>
+                                <td>{item.product.price}</td>
+                                <td>{item.orderDate}</td>
+                                <td>{item.product.discription}</td>
+                                <td>
+                                  <a
+                                    className="text-lg text-danger"
+                                    href="#!"
+                                    data-tip="Delete"
+                                    onClick={()=>{
+                                      orderDeleteApi(item._id)
+                                    }}
+                                  >
+                                    <ReactTooltip
+                                      place="top"
+                                      type="dark"
+                                      effect="solid"
                                     />
-                                  </td>
-                                  <td>{item.product.productName}</td>
-                                  <td>{item.product.price}</td>
-                                  <td>{item.orderDate}</td>
-                                  <td>{item.product.discription}</td>
-                                  <td>
-                                    
-                                    <a
-                                      className="text-lg text-danger"
-                                      href="#!" data-tip="Delete"
-                                    ><ReactTooltip place="top" type="dark" effect="solid" />
-                                      <svg
-                                        aria-hidden="true"
-                                        focusable="false"
-                                        data-prefix="far"
-                                        data-icon="trash-alt"
-                                        className="svg-inline--fa fa-trash-alt fa-w-14 "
-                                        role="img"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 448 512"
-                                      >
-                                        <path
-                                          fill="currentColor"
-                                          d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"
-                                        ></path>
-                                      </svg>
-                                    </a>
-                                  </td>
-                                </tr>
-                              </>
-                            );
-                          })
-                        : <div className="fs-3 text-center">
+                                    <svg
+                                      aria-hidden="true"
+                                      focusable="false"
+                                      data-prefix="far"
+                                      data-icon="trash-alt"
+                                      className="svg-inline--fa fa-trash-alt fa-w-14 "
+                                      role="img"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      viewBox="0 0 448 512"
+                                    >
+                                      <path
+                                        fill="currentColor"
+                                        d="M268 416h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12zM432 80h-82.41l-34-56.7A48 48 0 0 0 274.41 0H173.59a48 48 0 0 0-41.16 23.3L98.41 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16v336a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM171.84 50.91A6 6 0 0 1 177 48h94a6 6 0 0 1 5.15 2.91L293.61 80H154.39zM368 464H80V128h288zm-212-48h24a12 12 0 0 0 12-12V188a12 12 0 0 0-12-12h-24a12 12 0 0 0-12 12v216a12 12 0 0 0 12 12z"
+                                      ></path>
+                                    </svg>
+                                  </a>
+                                </td>
+                              </tr>
+                            </>
+                          );
+                        })
+                      ) : (
+                        <div className="fs-3 text-center">
                           Not add order by user yet
                         </div>
-                        }
+                      )}
                     </tbody>
                   </table>
                 </div>

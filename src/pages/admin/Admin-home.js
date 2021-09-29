@@ -11,7 +11,7 @@ const AdminHome = () => {
   const [productData, setProductData] = useState([]);
   useEffect(() => {
     getProductsApi();
-  }, []);
+  },[]);
   // get all product by admin
   const getProductsApi = async () => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -28,7 +28,7 @@ const AdminHome = () => {
       // console.log("get admin data response", response);
       setProductData(response.data.data);
     } catch (error) {
-      console.log("error", error.response);
+      console.log("error=>", error.response);
       alert(error.response.data.error);
     }
   };
@@ -67,17 +67,20 @@ const AdminHome = () => {
     }
   };
   // delete product api
+
  
 
 
   // update product api
   //   useState for store  edit id
-  const [editId,seteditId]=useState()
-  const updateProductsApi = async (closeModal) => {
+  // const [editId,seteditId]=useState()
+  
+  const updateProductsApi = async (editProductAdmin,closeModal,iditem) => {
     const token = JSON.parse(localStorage.getItem("token"));
     try {
       const response = await axios.put(
-        `http://localhost:4000/api/update/product`,
+        `http://localhost:4000/api/update/product?_id=${iditem}`,
+        {editProductAdmin},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -85,8 +88,8 @@ const AdminHome = () => {
         }
       );
       console.log("response", response);
-      // closeModal();
-      // getProductsApi();
+      closeModal();
+      getProductsApi();
     } catch (error) {
       console.log("error", error.response);
       alert(error.response.data.error);
@@ -109,7 +112,7 @@ const AdminHome = () => {
                   <table className="table table-hover  align-middle">
                     <thead className="table-dark">
                       <tr>
-                        <th scope="col">Id</th>
+                        <th scope="col">S.N.</th>
                         <th scope="col"><i className="icon-picture"></i> Product Image</th>
                         <th scope="col"><i className="icon-gift"></i> Product Name</th>
                         <th scope="col"><i className="icon-inr"></i> Price</th>
@@ -138,7 +141,7 @@ const AdminHome = () => {
                                   <td>22/07/2000</td>
                                   <td>{item.discription}</td>
                                   <td>
-                                    <EditProductModal updateProductsApi={updateProductsApi} seteditId={seteditId} key={item._id} item={item}/>
+                                    <EditProductModal updateProductsApi={updateProductsApi}  key={item._id} itemId={item}/>
                                     <DeleteProductAdmin itemId={item._id} getProductsApi={getProductsApi} />
                                   </td>
                                 </tr>

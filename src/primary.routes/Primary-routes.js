@@ -6,8 +6,8 @@ import Signup from "../pages/signup/Signup";
 import Header from "../shared/header/Header";
 import Footer from "../shared/footer/Footer";
 import Admin from "../pages/admin/Admin-home";
-import Order from "../pages/order/Order";
-import Wishlist from "../pages/wishlist/Wishlist";
+// import Order from "../pages/order/Order";
+// import Wishlist from "../pages/wishlist/Wishlist";
 import Profile from "../pages/profile/Profile"
 
 const PrimaryRoutes = () => {
@@ -16,12 +16,12 @@ const PrimaryRoutes = () => {
       <Header />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/singup" component={Signup} />
-        <Route path="/admin" component={Admin} />
-        <Route path="/wishlist" component={Wishlist} />
-        <Route path="/order" component={Order} />
-        <Route path="/profile" component={Profile} />
+        <Route exact  path="/login" component={Login} />
+        <Route exact  path="/singup" component={Signup} />
+        <Route exact  path="/admin" component={Admin} />
+        <Route exact  path="/profile/wishlist" component={Profile} />
+        <Route exact  path="/profile/order" component={Profile} />
+        <Route exact  path="/MainProfile/profile" component={Profile} />
       </Switch>
       <Footer />
     </>

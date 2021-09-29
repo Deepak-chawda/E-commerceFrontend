@@ -61,7 +61,7 @@ const Login = () => {
               <div className="col-12 col-md-7 col-lg-6 order-md-1">
                 <form className="row g-3">
                   <div className="col-md-12">
-                    <label for="inputEmail4" className="form-label fa-2x">
+                    <label for="inputEmail4" className="form-label fa-1x fw-bold">
                       Email
                     </label>
                     <input
@@ -74,7 +74,7 @@ const Login = () => {
                     />
                   </div>
                   <div className="col-md-12">
-                    <label for="inputPassword4" className="form-label fa-2x">
+                    <label for="inputPassword4" className="form-label fa-1x fw-bold">
                       Password
                     </label>
                     <input

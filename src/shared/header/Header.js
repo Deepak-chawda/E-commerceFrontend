@@ -1,14 +1,15 @@
 import React from "react";
-import { Link,useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "../header/header.css";
 
 const Header = () => {
-  const history =useHistory();
+  const history = useHistory();
+
   return (
     <>
       <div className="container-fluid nav_bg">
         <div className="row bg-header">
-          <div className="col-11 mx-auto">
+          <div className="col-11 mx-auto ">
             <nav className="navbar navbar-expand-lg navbar-light ">
               <div className="container-fluid">
                 <Link className="navbar-brand" to="/">
@@ -47,7 +48,7 @@ const Header = () => {
                         to="/profile/wishlist"
                       >
                         {/* <i className="icon-heart"> </i> */}
-                       MY WISHLIST
+                        MY WISHLIST
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -57,14 +58,14 @@ const Header = () => {
                         to="/profile/order"
                       >
                         {/* <i className="icon-heart"> </i> */}
-                       MY ORDER
+                        MY ORDER
                       </Link>
                     </li>
                     <li className="nav-item">
                       <Link
                         className="nav-link active "
                         aria-current="page"
-                        to="/profile"
+                        to="/MainProfile/profile"
                       >
                         {/* <i className="icon-user"> </i> */}
                         PROFILE
@@ -92,7 +93,7 @@ const Header = () => {
                     </li>
                     <li className="nav-item">
                       <Link
-                        className="nav-link active "
+                        className="nav-link active"
                         aria-current="page"
                         to="/admin"
                       >
@@ -101,17 +102,64 @@ const Header = () => {
                       </Link>
                     </li>
                     <li className="nav-item">
-                    <a
+                      <a
                         className="nav-link active"
                         aria-current="page"
-                        onClick={()=>{
-                         localStorage.clear()
-                         history.push("/")
-                        }}
+                        href="#/"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                      
                       >
                         {/* <i className="icon-signout"> </i> */}
                         LOGOUT
                       </a>
+                      <div
+                        className="modal fade"
+                        id="exampleModal"
+                        tabindex="-1"
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true"
+                      >
+                        <div className="modal-dialog">
+                          <div className="modal-content">
+                            <div className="modal-header border-bottom-0">
+                              {/* <h5 className="modal-title" id="exampleModalLabel">
+                                Modal title
+                              </h5> */}
+                              <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                            <div className="modal-body text-center">
+                              <i className="icon-exclamation icon-4x text-danger"></i>
+                              <h3> You want to Logout</h3>
+                            </div>
+                            <div className="modal-footer border-top-0">
+                              <button
+                                type="button"
+                                className="btn btn-color"
+                                data-bs-dismiss="modal"
+                              >
+                                Cancel
+                              </button>
+                              <button
+                                type="button"
+                                className="btn btn-danger"
+                                data-bs-dismiss="modal"
+                                onClick={() => {
+                                  localStorage.clear();
+                                  history.push("/");
+                                }}
+                              >
+                                Conform
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </li>
                   </ul>
                 </div>
