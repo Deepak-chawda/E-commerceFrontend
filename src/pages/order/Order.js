@@ -28,7 +28,7 @@ const Order = () => {
       setGetOrder(response.data.data);
     } catch (error) {
       console.log("error=>", error.response);
-      alert(error.response.data.data.error)
+      alert(error.response.data.error)
     }
   };
   // order delete api

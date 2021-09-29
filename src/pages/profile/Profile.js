@@ -3,12 +3,13 @@ import { Route, Switch } from "react-router-dom";
 import Order from "../order/Order";
 import Wishlist from "../wishlist/Wishlist";
 import MainProfile from "../profile/MainProfile";
+import LogOutModel from "../../shared/header/LogOutModel";
 import "./profile.css";
-import { Link,useHistory  } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import dc from "../images/dc.jpg";
 
 const Profile = () => {
-  const history =useHistory();
+  const history = useHistory();
   const proName = JSON.parse(localStorage.getItem("userDetails"));
 
   return (
@@ -34,29 +35,44 @@ const Profile = () => {
                 </div>
                 <div className="user-data">
                   <h6>Hii.....</h6>
-                  <h4>{proName.userName}</h4>
+                  <h4>{proName?.userName}</h4>
                   <span>Joined February 06, 2021</span>
                 </div>
               </div>
             </aside>
             <nav className="list-group">
               <Link className="list-group-item with-badge" to="/profile/order">
-              <i class="icon-shopping-cart icon-2x"></i><span className="">Orders</span>  
+                <i className="icon-shopping-cart icon-2x"></i>
+                <span className="">Orders</span>
               </Link>
-              <Link className="list-group-item with-badge" to="/MainProfile/profile">
-              <i class="icon-user icon-2x"></i>Profile
+              <Link
+                className="list-group-item with-badge"
+                to="/MainProfile/profile"
+              >
+                <i className="icon-user icon-2x"></i>Profile
               </Link>
 
               {/* active */}
-              <Link className="list-group-item with-badge" to="/profile/wishlist">
-              <i class="icon-heart icon-2x"></i>Wishlist
+              <Link
+                className="list-group-item with-badge"
+                to="/profile/wishlist"
+              >
+                <i className="icon-heart icon-2x"></i>Wishlist
               </Link>
-              <Link className="list-group-item with-badge" to="/profile/mytickets">
+              <Link
+                className="list-group-item with-badge"
+                to="/profile/mytickets"
+              >
                 <i className="fa fa-tag icon-2x"></i>My Tickets
               </Link>
-              <Link className="list-group-item" to="/" onClick={()=>{ localStorage.clear()
-                   history.push("/")} }><i class="icon-signout icon-2x"></i>Log out
-              </ Link>
+              <a
+                className="list-group-item"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                <i className="icon-signout icon-2x"></i>Log out
+                <LogOutModel />
+              </a>
             </nav>
           </div>
           <div className="col-lg-8  rounded-2">
@@ -64,11 +80,15 @@ const Profile = () => {
             {/* <!-- Wishlist Table--> */}
             <div className="table-responsive wishlist-table margin-bottom-none">
               <table className="table">
-                  <Switch>
-                    <Route exact path="/profile/wishlist" component={Wishlist} />
-                    <Route exact path="/profile/order" component={Order} />
-                    <Route exact path="/MainProfile/profile" component={MainProfile} />
-                  </Switch>
+                <Switch>
+                  <Route exact path="/profile/wishlist" component={Wishlist} />
+                  <Route exact path="/profile/order" component={Order} />
+                  <Route
+                    exact
+                    path="/MainProfile/profile"
+                    component={MainProfile}
+                  />
+                </Switch>
               </table>
             </div>
             <hr className="mb-4" />

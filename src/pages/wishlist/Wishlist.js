@@ -135,7 +135,7 @@ const placeOrder = async(item)=>{
                                     onClick={()=>{
                                       placeOrder(item)
                                     }}
-                                  ><i class="icon-shopping-cart icon-2x"></i>
+                                  ><i className="icon-shopping-cart icon-2x"></i>
                                   </a>
                                   <a
                                     className="text-lg text-danger"

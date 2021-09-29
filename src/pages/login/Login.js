@@ -1,49 +1,59 @@
 import React, { useState } from "react";
 // install axios and require here
-import axios from 'axios';
+import axios from "axios";
 // here use hook for routing page
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../signup/signup.css";
 import loginImg from "../images/loginImg.svg";
+
 const Login = () => {
+  // state for loader
+  const [Isloader, setIsloader] = useState(false);
   // here call useHistory function for using..use to routing for btw diff componets
-  const history = useHistory()
+  const history = useHistory();
   // user inicial state
   const [userDetails, setDetails] = useState({
-    email : "",
-    password : "",
+    email: "",
+    password: "",
   });
   // handle Change
   const handleloginChange = (e) => {
     const { name, value } = e.target; // object destructuring
-    setDetails({ ...userDetails, [name]: value});
+    setDetails({ ...userDetails, [name]: value });
   };
-  const loginApi = async ()=>{
+  const loginApi = async () => {
+    setIsloader(true);
     // console.log("userDetails=", userDetails)
     try {
       // alert massage for fill all field
-      if(userDetails.email==="" || userDetails.password==="")
-      {
-        return alert("plz fill all required field")
+      if (userDetails.email === "" || userDetails.password === "") {
+        return alert("plz fill all required field");
       }
-      const response = await axios.post("http://localhost:4000/api/sigin",userDetails)
-
-    // console.log("response =",response)
-    localStorage.setItem("userDetails" , JSON.stringify(response.data.data.user))
-    localStorage.setItem("token" , JSON.stringify(response.data.data.token))
-    if(response.data.data.user.role==="ADMIN"){
-      history.push("/admin")
-    }else{
-      history.push("/")
-    }
-  alert(response.data.msg)
+      const response = await axios.post(
+        "http://localhost:4000/api/sigin",
+        userDetails
+      );
+      setIsloader(false);
+      // console.log("response =",response)
+      localStorage.setItem(
+        "userDetails",
+        JSON.stringify(response.data.data.user)
+      );
+      localStorage.setItem("token", JSON.stringify(response.data.data.token));
+      if (response.data.data.user.role === "ADMIN") {
+        history.push("/admin");
+      } else {
+        history.push("/");
+      }
+      alert(response.data.msg);
     } catch (error) {
-      console.log("error response=>", error.response)
+      setIsloader(false);
+      console.log("error response=>", error.response);
       // error showing in front end
-      alert(error.response.data.error)
+      alert(error.response.data.error);
     }
-  }
+  };
   return (
     <>
       <section className="py-5 ">
@@ -61,7 +71,10 @@ const Login = () => {
               <div className="col-12 col-md-7 col-lg-6 order-md-1">
                 <form className="row g-3">
                   <div className="col-md-12">
-                    <label for="inputEmail4" className="form-label fa-1x fw-bold">
+                    <label
+                      htmlFor="inputEmail4"
+                      className="form-label fa-1x fw-bold"
+                    >
                       Email
                     </label>
                     <input
@@ -74,7 +87,10 @@ const Login = () => {
                     />
                   </div>
                   <div className="col-md-12">
-                    <label for="inputPassword4" className="form-label fa-1x fw-bold">
+                    <label
+                      htmlFor="inputPassword4"
+                      className="form-label fa-1x fw-bold"
+                    >
                       Password
                     </label>
                     <input
@@ -83,13 +99,25 @@ const Login = () => {
                       name="password"
                       className="form-control py-3 px-1"
                       autoComplete="off"
-                      // id="inputPassword4"
                       required
                     />
                   </div>
-                  <div className=" d-grid text-center">
-                    <button type="button" onClick={loginApi} className="btn btn-color py-3">
+                  <div className="d-grid text-center">
+                    <button
+                      type="button"
+                      onClick={loginApi}
+                      className="btn btn-color fs-5 fw-bold py-3  d-flex justify-content-center align-items-center"
+                      disabled={Isloader}
+                    >
                       LOG IN
+                      {Isloader && (
+                        <div
+                          class="spinner-border text-primary m-1"
+                          role="status"
+                        >
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      )}
                     </button>
                   </div>
                   <div className="text-center">
@@ -98,7 +126,9 @@ const Login = () => {
                       <Link
                         className="text-primary text-decoration-none Fweight-600 text-nowrap"
                         to="/singup"
-                      > Sign up here
+                      >
+                        {" "}
+                        Sign up here
                       </Link>
                     </p>
                     <p className="mt-2">

@@ -41,7 +41,7 @@ function EditProfileModal({ updateProductsApi, itemId }) {
     <>
       <button
         type="button"
-        class="btn btn-color text-dark"
+        className="btn btn-color text-dark"
         data-tip="Edit profile"
         href="#/"
         // style={{ cursor: "pointer" }}

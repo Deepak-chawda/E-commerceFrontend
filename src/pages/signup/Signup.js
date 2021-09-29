@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import "../signup/signup.css";
 import signup1 from "../images/signup1.svg";
 const Signup = () => {
+  const [Isloader, setIsloader] = useState(false);
   // here call useHistory function for using..use to routing for btw diff componets
   const history = useHistory();
   // user inicial state
@@ -23,6 +24,7 @@ const Signup = () => {
     setDetails({ ...userDetails, [name]: value });
   };
   const signupApi = async () => {
+  
     console.log("userDetails=", userDetails);
     try {
       // alert massage for fill all field
@@ -33,10 +35,12 @@ const Signup = () => {
       ) {
         return alert("plz fill all required field");
       }
+      setIsloader(true);
       const response = await axios.post(
         "http://localhost:4000/api/signup?isAdmin=false",
         userDetails
       );
+      setIsloader(false);
       localStorage.setItem(
         "userDetails",
         JSON.stringify(response.data.data.user)
@@ -46,6 +50,7 @@ const Signup = () => {
       // console.log("response =",response)
       history.push("/login");
     } catch (error) {
+      setIsloader(false);
       console.log("error", error);
       // error showing in front end
       alert(error.response.data.error);
@@ -69,7 +74,7 @@ const Signup = () => {
                 <form className="row g-3">
                   <div className="col-md-12">
                     <label
-                      for="inputUserName"
+                      htmlFor="inputUserName"
                       className="form-label fa-1x fw-bold"
                     >
                       User Name
@@ -84,7 +89,7 @@ const Signup = () => {
                   </div>
                   <div className="col-md-12">
                     <label
-                      for="inputEmail4"
+                      htmlFor="inputEmail4"
                       className="form-label fa-1x fw-bold"
                     >
                       Email
@@ -100,7 +105,7 @@ const Signup = () => {
 
                   <div className="col-md-12">
                     <label
-                      for="inputPassword4"
+                      htmlFor="inputPassword4"
                       className="form-label fa-1x fw-bold"
                     >
                       Password
@@ -115,7 +120,7 @@ const Signup = () => {
                   </div>
                   <div className="col-md-12">
                     <label
-                      for="inputPassword4"
+                      htmlFor="inputPassword4"
                       className="form-label fa-1x fw-bold"
                     >
                       Conform password
@@ -132,8 +137,9 @@ const Signup = () => {
                         className="form-check-input"
                         type="checkbox"
                         id="gridCheck"
+                        checked={false}
                       />
-                      <label className="form-check-label" for="gridCheck">
+                      <label className="form-check-label" htmlFor="gridCheck">
                         &nbsp; I agree to all &nbsp;
                       </label>
                       <a
@@ -148,29 +154,29 @@ const Signup = () => {
                         Terms and Conditions .
                       </a>
                       <div
-                        class="modal fade "
+                        className="modal fade "
                         id="exampleModal2"
-                        tabindex="-1"
+                        tabIndex="-1"
                         aria-labelledby="exampleModalLabel"
                         aria-hidden="true"
                       >
-                        <div class="modal-dialog modal-dialog-scrollable">
-                          <div class="modal-content">
-                            <div class="modal-header">
+                        <div className="modal-dialog modal-dialog-scrollable">
+                          <div className="modal-content">
+                            <div className="modal-header">
                               <h5
-                                class="modal-title m-auto text-center"
+                                className="modal-title m-auto text-center"
                                 id="exampleModalLabel2"
                               >
                                 TERMS OF SERVICE AGREEMENT
                               </h5>
                               <button
                                 type="button"
-                                class="btn-close"
+                                className="btn-close"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"
                               ></button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                               <strong>
                                 {" "}
                                 <span className="e">I</span>phone shop Terms of
@@ -286,10 +292,10 @@ const Signup = () => {
                               </ol>
                             </div>
 
-                            <div class="modal-footer">
+                            <div className="modal-footer">
                               <button
                                 type="button"
-                                class="btn btn-color"
+                                className="btn btn-color"
                                 data-bs-dismiss="modal"
                               >
                                 Close
@@ -304,15 +310,19 @@ const Signup = () => {
                     <button
                       type="button"
                       onClick={signupApi}
-                      className="btn btn-color py-3"
+                      className="btn btn-color fs-5 fw-bold py-3  d-flex justify-content-center align-items-center" 
+                      // disabled={Isloader}
+                      disabled
                     >
-                      SIGN UP{" "}
-                      <span
-                        className="spinner-border "
-                        style={{ width: "3rem;", height: "3rem;" }}
-                        role="status"
-                        aria-hidden="true"
-                      ></span>
+                      SIGN UP
+                      {Isloader && (
+                        <div
+                          class="spinner-border text-primary m-1"
+                          role="status"
+                        >
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      )}
                     </button>
                   </div>
                   <div className="text-center">

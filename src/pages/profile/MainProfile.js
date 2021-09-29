@@ -1,9 +1,10 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import EditProfileModal from "./EditProfileModal";
 
 const MainProfile = () => {
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-  console.log(userDetails);
+  console.log("userDtails", userDetails);
   return (
     <>
       <div className="profile-content border rounded-2">
@@ -12,7 +13,9 @@ const MainProfile = () => {
             <div className="col-md-12">
               <div className="profile text-center">
                 <div className="m-3">
-                  <h2 className=" bord text-info"><u>Profile Detailes</u> </h2>
+                  <h2 className=" bord text-info">
+                    <u>Profile Detailes</u>{" "}
+                  </h2>
                 </div>
                 <div className="avatar">
                   <img
@@ -22,34 +25,40 @@ const MainProfile = () => {
                   />
                 </div>
                 <div className="name">
-                  <h3 className="title mt-3">{userDetails.userName}</h3>
+                  <h3 className="title mt-3">{userDetails?.userName}</h3>
                   <h6>User</h6>
                 </div>
-                <div class="table-responsive">
-                  <table class="table table-borderless">
+                <div className="table-responsive">
+                  <table className="table table-borderless">
                     <tbody className="">
                       <tr>
                         <th>User Id :</th>
-                        <td>{userDetails._id}</td>
+                        <td>{userDetails?._id}</td>
                       </tr>
                       <tr>
                         <th>Email Id :</th>
-                        <td>{userDetails.email}</td>
+                        <td>{userDetails?.email}</td>
                       </tr>
                       <tr>
                         <th>Address :</th>
-                        {userDetails.address===" "?"?": <td>{userDetails.address}</td>}
-                       
+                        {userDetails?.address === " " ? (
+                          "?"
+                        ) : (
+                          <td>{userDetails?.address}</td>
+                        )}
                       </tr>
                       <tr>
                         <th>Phone no. :</th>
-                        {userDetails.contact===" " ? "?" :<td>{userDetails.contact}</td>}
-                        
+                        {userDetails?.contact === " " ? (
+                          "?"
+                        ) : (
+                          <td>{userDetails?.contact}</td>
+                        )}
                       </tr>
                       <tr>
                         <th>
-                          <EditProfileModal/>
-                          {/* <button type="button" class="btn btn-color text-dark">
+                          <EditProfileModal />
+                          {/* <button type="button" className="btn btn-color text-dark">
                             Edit Profile
                           </button> */}
                         </th>

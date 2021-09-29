@@ -17,9 +17,10 @@ import axios from "axios";
 const Home = () => {
    // here is a get user all product api
    const [getUserData, setUserData] = useState([]);
+  //  console.log("getuserdata",getUserData)
    useEffect(() => {
     getUserDataApi() 
-    getWithouLoginDataApi()
+    // getWithouLoginDataApi()
    }, []);
    const getUserDataApi = async () => {
      const token = JSON.parse(localStorage.getItem("token"));
@@ -32,26 +33,27 @@ const Home = () => {
            },
          }
        );
-      //  console.log("user product response", response);
+       console.log("user product response=", response);
        setUserData(response.data.data);
+      //  alert(response.data.error)
      } catch (error) {
-       console.log("error", error.response);
+       console.log("error=>", error.response);
        alert(error.response.data.error)
      }
    };
   //  get all prodict without log in 
-  const getWithouLoginDataApi = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:4000/api/get/all/product"
-      );
-     //  console.log("user product response", response);
-      setUserData(response.data.data);
-    } catch (error) {
-      console.log("error", error.response);
-      alert(error.response.data.error)
-    }
-  };
+  // const getWithouLoginDataApi = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       "http://localhost:4000/api/get/all/product"
+  //     );
+  //     console.log("user product response", response);
+  //     setUserData(response.data.data);
+  //   } catch (error) {
+  //     console.log("error", error.response);
+  //     alert(error.response.data.error)
+  //   }
+  // };
   return (
     <>
       {/* first banner */}
