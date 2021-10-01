@@ -1,5 +1,6 @@
 import React from "react";
 import {  useHistory } from "react-router-dom";
+import {  toast } from 'react-toastify';
 
 const LogOutModel = () => {
     const history = useHistory();
@@ -41,6 +42,9 @@ const LogOutModel = () => {
                 onClick={() => {
                   localStorage.clear();
                   history.push("/");
+                  toast.success("LogOut Successfull 👍", {
+                    theme: "colored"
+                  })
                 }}
               >
                 Conform

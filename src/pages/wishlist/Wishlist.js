@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "./wishlist.css";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import appleWatch from "../images/apple_watch.jpeg";
 import ReactTooltip from "react-tooltip";
+import {  toast } from 'react-toastify';
 
 const Wishlist = () => {
+  // state for loader
+  const [Isloader, setIsloader] = useState(false);
   const history = useHistory();
   const [getWishlist, setWishlist] = useState([]);
   useEffect(() => {
@@ -14,6 +17,7 @@ const Wishlist = () => {
   }, []);
   // call wishlist   api
   const getWishlistApi = async () => {
+    setIsloader(true)
     const token = JSON.parse(localStorage.getItem("token"));
     if (!token) {
       return history.push("/login");
@@ -28,8 +32,10 @@ const Wishlist = () => {
         }
       );
       console.log("response", response);
+      setIsloader(false)
       setWishlist(response.data.data);
     } catch (error) {
+      setIsloader(false)
       console.log("error=>", error.response);
       alert(error.response.data.error);
     }
@@ -48,43 +54,50 @@ const Wishlist = () => {
       );
       console.log("response", response);
       getWishlistApi();
-      alert(response.data.msg);
+      toast.success("Deleted Successfull from wishlist 👍", {
+        theme: "colored"
+      })
+      // alert(response.data.msg);
     } catch (error) {
       console.log("error", error.response);
     }
   };
   // call placeOrder api
-const placeOrder = async(item)=>{
-  const itemId = item._id
-  const itempro = item.product._id
-  // console.log("id",_id)
-  const token = JSON.parse(localStorage.getItem("token"));
-  try {
-    const response = await axios.post(
-      "http://localhost:4000/api/add/order",{
-        product : itempro,
-        orderDate : Date.now(),
-        transactionId  : uuidv4(),
-        address : null,
-        user : JSON.parse(localStorage.getItem("userDetails"))._id
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+  const placeOrder = async (item) => {
+    const itemId = item._id;
+    const itempro = item.product._id;
+    // console.log("id",_id)
+    const token = JSON.parse(localStorage.getItem("token"));
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/add/order",
+        {
+          product: itempro,
+          orderDate: Date.now(),
+          transactionId: uuidv4(),
+          address: null,
+          user: JSON.parse(localStorage.getItem("userDetails"))._id,
         },
-      }
-    );
-    console.log("response", response)
-    wishlistDeleteApi(itemId)
-    alert(response.data.msg)
-  } catch (error) {
-    console.log("error=>", error.response);
-    // alert(error.response.data.error)
-  }
-}
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("response", response);
+      wishlistDeleteApi(itemId);
+      toast.success("Placed order Successfull 👍", {
+        theme: "colored"
+      })
+      // alert(response.data.msg);
+    } catch (error) {
+      console.log("error=>", error.response);
+      alert(error.response.data.error)
+    }
+  };
   return (
     <>
-      <section className="pt-4 pt-md-11">
+      <div className="pt-4 pt-md-11">
         <div className="container">
           <div className="row align-items-center m-2 ">
             {/* <h2 className="m-3 text-center">MY ORDER</h2> */}
@@ -99,10 +112,6 @@ const placeOrder = async(item)=>{
                   <table className="table table-hover  align-middle">
                     <thead className="table-dark">
                       <tr>
-                        {/* <th className="fs-4 text-center">My All Order List</th> */}
-                        {/* <th className="text-center"><a className="btn btn-sm btn-outline-danger" href="#">Clear Wishlist</a></th> */}
-                      </tr>
-                      <tr>
                         <th scope="col">Product Image</th>
                         <th scope="col">Product Name</th>
                         <th scope="col">Price</th>
@@ -111,6 +120,16 @@ const placeOrder = async(item)=>{
                       </tr>
                     </thead>
                     <tbody className="text-center">
+                      {Isloader && (
+                        <>
+                          <tr
+                            className="spinner-border text-danger"
+                            role="status"
+                          >
+                            <span className="visually-hidden">Loading...</span>
+                          </tr>
+                        </>
+                      )}
                       {getWishlist && getWishlist.length !== 0 ? (
                         getWishlist.map((item) => {
                           return (
@@ -128,14 +147,15 @@ const placeOrder = async(item)=>{
                                 <td>{item.product.price}</td>
                                 <td>{item.product.discription}</td>
                                 <td>
-                                <a
+                                  <a
                                     className="me-3 text-lg text-success"
                                     data-tip="Place Order"
                                     href="#/"
-                                    onClick={()=>{
-                                      placeOrder(item)
+                                    onClick={() => {
+                                      placeOrder(item);
                                     }}
-                                  ><i className="icon-shopping-cart icon-2x"></i>
+                                  >
+                                    <i className="icon-shopping-cart icon-2x"></i>
                                   </a>
                                   <a
                                     className="text-lg text-danger"
@@ -166,7 +186,6 @@ const placeOrder = async(item)=>{
                                       ></path>
                                     </svg>
                                   </a>
-                                 
                                 </td>
                               </tr>
                             </>
@@ -184,7 +203,7 @@ const placeOrder = async(item)=>{
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </>
   );
 };

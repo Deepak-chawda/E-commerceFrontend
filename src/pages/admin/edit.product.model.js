@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import axios from "axios";
 import "../admin/admin.css";
 import addProduct from "../images/addProduct.svg";
 import ReactTooltip from "react-tooltip";
@@ -17,21 +18,51 @@ const customStyles = {
 };
 Modal.setAppElement("#root");
 
-function EditProductModal({ updateProductsApi, itemId }) {
-  console.log("id",itemId)
+function EditProductModal({ itemId,getProductsApi }) {
   const iditem = itemId._id;
+  // console.log(iditem)
   // here is  add product by admin api
   const [editProductAdmin, setProductAdmin] = useState({
-    productName: "",
-    price: "",
-    discription: "",
-    picture: null,
+    productName: itemId.productName,
+    price: itemId.price,
+    discription: itemId.discription,
+    picture: itemId.picture,
   });
   // handle change
   const handleProductChange = (e) => {
     const { name, value } = e.target;
     setProductAdmin({ ...editProductAdmin, [name]: value });
+    // console.log("edit prodict admin",editProductAdmin)
   };
+// update product api
+const updateProductsApi = async (editProductAdmin, setProductAdmin,closeModal,ditem,getProductsApi) => {
+  console.log("update data",editProductAdmin)
+  const token = JSON.parse(localStorage.getItem("token"));
+  try {
+    const response = await axios.put(
+      `http://localhost:4000/api/update/product?_id=${iditem}`,
+      {editProductAdmin},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    //  setProductAdmin({
+    //   productName: "",
+    //     price: "",
+    //     discription: "",
+    //     picture: "",
+    //   })
+    console.log("response", response);
+    closeModal();
+    getProductsApi();
+    alert(response.data.msg);
+  } catch (error) {
+    console.log("error=>", error.response);
+    // alert(error.response.data.error);
+  }
+};
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
     setIsOpen(true);
@@ -40,7 +71,6 @@ function EditProductModal({ updateProductsApi, itemId }) {
   function closeModal() {
     setIsOpen(false);
   }
-
   return (
     <>
       <a
@@ -48,15 +78,10 @@ function EditProductModal({ updateProductsApi, itemId }) {
         data-tip="Edit"
         href="#/"
         style={{ cursor: "pointer" }}
-        onClick={openModal
-        //   setProductAdmin({...editProductAdmin,
-        //     ["productName"]:itemId.productName,
-        //     ["price"]:itemId.price,
-        //     ["discription"]:itemId.discription,
-        //     ["picture"]: itemId.picture
-        // })
+        onClick={ 
+          openModal
         }
-        >
+      >
         <ReactTooltip place="top" type="dark" effect="solid" />
         <svg
           aria-hidden="true"
@@ -88,7 +113,6 @@ function EditProductModal({ updateProductsApi, itemId }) {
           >
             ×
           </button>
-
           <div className="container ">
             <div className="row align-items-center  my-auto mx-auto">
               <div className="col-md-6 col-lg-6 order-md-1 ">
@@ -102,7 +126,7 @@ function EditProductModal({ updateProductsApi, itemId }) {
                 <h1 className="text-center">Edit Product</h1>
                 <form className="row g-3">
                   <div className="col-md-12">
-                    <label for="inputEmail4" className="form-label ">
+                    <label htmlFor="inputEmail4" className="form-label ">
                       Product Name
                     </label>
                     <input
@@ -116,7 +140,7 @@ function EditProductModal({ updateProductsApi, itemId }) {
                     />
                   </div>
                   <div className="col-md-12">
-                    <label for="inputPassword4" className="form-label">
+                    <label htmlFor="inputPassword4" className="form-label">
                       Price
                     </label>
                     <input
@@ -130,7 +154,7 @@ function EditProductModal({ updateProductsApi, itemId }) {
                     />
                   </div>
                   <div className="col-md-12">
-                    <label for="inputPassword4" className="form-label">
+                    <label htmlFor="inputPassword4" className="form-label">
                       Discription
                     </label>
                     <input
@@ -144,7 +168,7 @@ function EditProductModal({ updateProductsApi, itemId }) {
                     />
                   </div>
                   <div className="col-md-12">
-                    <label for="inputPassword4" className="form-label">
+                    <label htmlFor="inputPassword4" className="form-label">
                       Picture
                     </label>
                     <input
@@ -154,14 +178,14 @@ function EditProductModal({ updateProductsApi, itemId }) {
                       value={editProductAdmin.picture}
                       className="form-control py-2 px-1"
                       autoComplete="off"
-                      required
+                      // required
                     />
                   </div>
                   <div className=" d-grid text-center">
                     <button
                       type="button"
                       onClick={() => {
-                        updateProductsApi(editProductAdmin, closeModal, iditem);
+                        updateProductsApi(editProductAdmin,setProductAdmin, closeModal, iditem,getProductsApi);
                       }}
                       className="btn btn-color py-3"
                     >

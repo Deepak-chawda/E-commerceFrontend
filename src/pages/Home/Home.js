@@ -15,45 +15,36 @@ import CommanCard from "./comman.card";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 const Home = () => {
-   // here is a get user all product api
-   const [getUserData, setUserData] = useState([]);
+  // state for loader
+  const [Isloader, setIsloader] = useState(false);
+  // here is a get user all product api
+  const [getUserData, setUserData] = useState([]);
   //  console.log("getuserdata",getUserData)
-   useEffect(() => {
-    getUserDataApi() 
-    // getWithouLoginDataApi()
-   }, []);
-   const getUserDataApi = async () => {
-     const token = JSON.parse(localStorage.getItem("token"));
-     try {
-       const response = await axios.get(
-         "http://localhost:4000/api/get/user/product",
-         {
-           headers: {
-             Authorization: `Bearer ${token}`,
-           },
-         }
-       );
-       console.log("user product response=", response);
-       setUserData(response.data.data);
+  useEffect(() => {
+    getUserDataApi();
+  }, []);
+  const getUserDataApi = async () => {
+    const token = JSON.parse(localStorage.getItem("token"));
+    try {
+      setIsloader(true)
+      const response = await axios.get(
+        "http://localhost:4000/api/get/user/product",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // console.log("user product response=", response);
+      setIsloader(false)
+      setUserData(response.data.data);
       //  alert(response.data.error)
-     } catch (error) {
-       console.log("error=>", error.response);
-       alert(error.response.data.error)
-     }
-   };
-  //  get all prodict without log in 
-  // const getWithouLoginDataApi = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       "http://localhost:4000/api/get/all/product"
-  //     );
-  //     console.log("user product response", response);
-  //     setUserData(response.data.data);
-  //   } catch (error) {
-  //     console.log("error", error.response);
-  //     alert(error.response.data.error)
-  //   }
-  // };
+    } catch (error) {
+      setIsloader(false)
+      console.log("error=>", error.response);
+      alert(error.response.data.error);
+    }
+  };
   return (
     <>
       {/* first banner */}
@@ -74,7 +65,8 @@ const Home = () => {
               data-aos="fade-up"
             >
               <h1 className="display-3 text-center text-md-start">
-                Welcome to <span className="text-primary">
+                Welcome to{" "}
+                <span className="text-primary">
                   <strong>i</strong>phoneXR
                 </span>
                 <br />
@@ -198,23 +190,28 @@ const Home = () => {
           </div>
         </div>
         <hr className="featurette-divider" />
-        {/* Comman card components */}
-        {/* <div className="container"> */}
-        {/* <div className="row"> */}
         <h1 className="text-center grident">Here Apple Product For Order </h1>
-        <div className="d-flex flex-wrap text-center justify-content-center">
+        <div className="d-flex flex-wrap text-center justify-content-center m-2">
+          {Isloader && (
+            <>
+              <div className="spinner-border text-danger" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </>
+          )}
           {/*cards*/}
-          {getUserData && getUserData.length !== 0
-                        ? getUserData.map((item) => {
-                            return (
-                              <>
-                <CommanCard key={item._id} Allitem={item}/>
-              </>
-            );
-          }):<p>no Product add by admin yet</p> }
+          {getUserData && getUserData.length !== 0 ? (
+            getUserData.map((item) => {
+              return (
+                <>
+                  <CommanCard key={item._id} Allitem={item} />
+                </>
+              );
+            })
+          ) : (
+            <h5 className=" text-center text-danger">No Product add by admin yet</h5>
+          )}
         </div>
-        {/* </div> */}
-        {/* </div> */}
         <div className="row featurette">
           <div className="col-md-7 order-md-2">
             <h2 className="featurette-heading">

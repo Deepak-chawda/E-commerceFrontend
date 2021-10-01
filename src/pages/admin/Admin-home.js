@@ -1,21 +1,26 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "../admin/admin.css"
+import "../admin/admin.css";
 import appleWatch from "../images/apple_watch.jpeg";
 import AddProductModal from "./add.product.model";
 import DeleteProductAdmin from "./delete.product.admin";
 import EditProductModal from "./edit.product.model";
+import {  toast } from 'react-toastify';
 
 const AdminHome = () => {
+  // state for loader
+  const [Isloader, setIsloader] = useState(false);
   // here is a get admin all product api
   const [productData, setProductData] = useState([]);
   useEffect(() => {
     getProductsApi();
-  },[]);
+  }, []);
   // get all product by admin
   const getProductsApi = async () => {
+    setIsloader(true);
     const token = JSON.parse(localStorage.getItem("token"));
     try {
+      console.log("hello");
       const response = await axios.get(
         "http://localhost:4000/api/get/admin/product",
         {
@@ -24,12 +29,14 @@ const AdminHome = () => {
           },
         }
       );
-// get admin all data
-      // console.log("get admin data response", response);
+      // get admin all data
+      // console.log("get admin data response", response.data.data);
       setProductData(response.data.data);
+      setIsloader(false);
     } catch (error) {
+      setIsloader(false);
       console.log("error=>", error.response);
-      alert(error.response.data.error);
+      // alert(error.response.data.error);
     }
   };
   // add product api
@@ -51,7 +58,7 @@ const AdminHome = () => {
         }
       );
       console.log("response", response);
-      alert(response.data.msg)
+      alert(response.data.msg);
       // remove value after add product
       setProductAdmin({
         ...addProductAdmin,
@@ -61,40 +68,15 @@ const AdminHome = () => {
       });
       closeModal();
       getProductsApi();
+      toast.success("New product added Successfull 👍", {
+        theme: "colored"
+      })
     } catch (error) {
       console.log("error", error.response);
       alert(error.response.data.error);
     }
   };
-  // delete product api
 
- 
-
-
-  // update product api
-  //   useState for store  edit id
-  // const [editId,seteditId]=useState()
-  
-  const updateProductsApi = async (editProductAdmin,closeModal,iditem) => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    try {
-      const response = await axios.put(
-        `http://localhost:4000/api/update/product?_id=${iditem}`,
-        {editProductAdmin},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log("response", response);
-      closeModal();
-      getProductsApi();
-    } catch (error) {
-      console.log("error", error.response);
-      alert(error.response.data.error);
-    }
-  };
   return (
     <>
       <section className="pt-4 pt-md-11">
@@ -106,49 +88,83 @@ const AdminHome = () => {
                 <h2 className="">ADD PRODUCT ADMIN</h2>
                 <AddProductModal addProductApi={addProductApi} />
               </div>
-
               <div className="card-body m-0 p-0 text-center">
                 <div className="table-responsive">
                   <table className="table table-hover  align-middle">
                     <thead className="table-dark">
                       <tr>
                         <th scope="col">S.N.</th>
-                        <th scope="col"><i className="icon-picture"></i> Product Image</th>
-                        <th scope="col"><i className="icon-gift"></i> Product Name</th>
-                        <th scope="col"><i className="icon-inr"></i> Price</th>
-                        <th scope="col"> <i className="icon-calendar"></i> Order date</th>
-                        <th scope="col"><i className="icon-edit"></i> Product Discription</th>
-                        <th scope="col"><i className="icon-pushpin"></i> Action</th>
+                        <th scope="col">
+                          <i className="icon-picture"></i> Product Image
+                        </th>
+                        <th scope="col">
+                          <i className="icon-gift"></i> Product Name
+                        </th>
+                        <th scope="col">
+                          <i className="icon-inr"></i> Price
+                        </th>
+                        <th scope="col">
+                          <i className="icon-calendar"></i> Order date
+                        </th>
+                        <th scope="col">
+                          <i className="icon-edit"></i> Product Discription
+                        </th>
+                        <th scope="col">
+                          <i className="icon-pushpin"></i> Action
+                        </th>
                       </tr>
                     </thead>
+
                     <tbody>
-                      {productData && productData.length !== 0
-                        ? productData.map((item, index) => {
-                            return (
-                              <>
-                                <tr>
-                                  <th scope="row">{index + 1}</th>
-                                  <td>
-                                    <img
-                                      className="card-table-img img-fluid me-3"
-                                      src={appleWatch}
-                                      alt="product-img"
-                                      width="100"
-                                    />
-                                  </td>
-                                  <td>{item.productName}</td>
-                                  <td>{item.price}</td>
-                                  <td>22/07/2000</td>
-                                  <td>{item.discription}</td>
-                                  <td>
-                                    <EditProductModal updateProductsApi={updateProductsApi}  key={item._id} itemId={item}/>
-                                    <DeleteProductAdmin itemId={item._id} getProductsApi={getProductsApi} />
-                                  </td>
-                                </tr>
-                              </>
-                            );
-                          })
-                        : "No Data add yet"}
+                      {Isloader && (
+                        <>
+                          <tr
+                            className="spinner-grow text-primary float-end text-center" colSpan="5"
+                            style={{ width: "3rem", height: "3rem" }}
+                            role="status"
+                          >
+                            <td className="visually-hidden">Loading...</td>
+                          </tr>
+                        </>
+                      )}
+                      {productData && productData.length !== 0 ? (
+                        productData.map((item, index) => {
+                          return (
+                            <>
+                              <tr>
+                                <th scope="row">{index + 1}</th>
+                                <td>
+                                  <img
+                                    className="card-table-img img-fluid me-3"
+                                    src={appleWatch}
+                                    alt="product-img"
+                                    width="100"
+                                  />
+                                </td>
+                                <td>{item.productName}</td>
+                                <td>{item.price}</td>
+                                <td>{ Date.now()}</td>
+                                <td>{item.discription}</td>
+                                <td>
+                                  <EditProductModal
+                                    key={item._id}
+                                    itemId={item}
+                                    getProductsApi={getProductsApi}
+                                  />
+                                  <DeleteProductAdmin
+                                    itemId={item._id}
+                                    getProductsApi={getProductsApi}
+                                  />
+                                </td>
+                              </tr>
+                            </>
+                          );
+                        })
+                      ) : (
+                        <td className=" text-danger text-center" colSpan="7">
+                          <h3>No Data add yet</h3>
+                        </td>
+                      )}
                     </tbody>
                   </table>
                 </div>

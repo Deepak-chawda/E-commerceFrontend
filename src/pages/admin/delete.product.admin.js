@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import ReactTooltip from "react-tooltip";
+import {  toast } from 'react-toastify';
 
 const customStyles = {
   content: {
@@ -34,16 +35,16 @@ function DeleteProductAdmin({itemId,getProductsApi}) {
       console.log("response", response);
       closeModal();
       getProductsApi();
+      toast.success("Product Deleted Successfull 👍", {
+        theme: "colored"
+      })
+
       alert(response.data.msg)
     } catch (error) {
       console.log("error", error.response);
       alert(error.response.data.error);
     }
   };
-
-
-
-
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function openModal() {
@@ -88,7 +89,7 @@ function DeleteProductAdmin({itemId,getProductsApi}) {
       >
         <div className=" text-center">
           <button
-            className="absolute bg-white border-0 mt-0  rounded-circle fa-4x text-danger"
+            className="absolute bg-white border-4 mt-0  rounded-circle fa-4x text-danger border-danger px-4"
             onClick={closeModal}
           >
             ×

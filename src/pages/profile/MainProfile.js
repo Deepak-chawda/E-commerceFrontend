@@ -1,16 +1,19 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import EditProfileModal from "./EditProfileModal";
+import avatarImage from "../images/avatar1.svg";
+import dc from "../images/dc.jpg";
+import dgk from "../images/bgProImg.png";
 
 const MainProfile = () => {
   const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-  console.log("userDtails", userDetails);
+  // console.log("userDtails", userDetails);
   return (
     <>
-      <div className="profile-content border rounded-2">
-        <div className="container">
-          <div className="row mt-4">
-            <div className="col-md-12">
+      <div className="profile-content border rounded-2 overflow-hidden">
+        <div className="container px-2">
+          <div className="row p-0">
+            <div className="col-md-12 p-0">
               <div className="profile text-center">
                 <div className="m-3">
                   <h2 className=" bord text-info">
@@ -19,9 +22,10 @@ const MainProfile = () => {
                 </div>
                 <div className="avatar">
                   <img
-                    src="https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTU0NjQzOTk4OTQ4OTkyMzQy/ansel-elgort-poses-for-a-portrait-during-the-baby-driver-premiere-2017-sxsw-conference-and-festivals-on-march-11-2017-in-austin-texas-photo-by-matt-winkelmeyer_getty-imagesfor-sxsw-square.jpg"
-                    alt="Circle Image"
-                    className="img-raised rounded-2 img-fluid"
+                    src={userDetails.profilePic === " " ? avatarImage : dc}
+                    alt="User Image"
+                    className="img-thumbnail rounded-2 img-fluid"
+                    width="280px"
                   />
                 </div>
                 <div className="name">
@@ -56,12 +60,9 @@ const MainProfile = () => {
                         )}
                       </tr>
                       <tr>
-                        <th>
+                        <td colSpan="2">
                           <EditProfileModal />
-                          {/* <button type="button" className="btn btn-color text-dark">
-                            Edit Profile
-                          </button> */}
-                        </th>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -72,11 +73,12 @@ const MainProfile = () => {
         </div>
         <div>
           <img
+            className="p-0"
             width="100%"
             height="auto"
             style={{ verticalAlign: "middle" }}
-            alt="border image"
-            src=""
+            alt="borderImage"
+            src={dgk}
           />
         </div>
       </div>

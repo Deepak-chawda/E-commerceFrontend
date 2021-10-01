@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Modal from "react-modal";
 import "../admin/admin.css";
 import addProduct from "../images/addProduct.svg";
+import {  toast } from 'react-toastify';
 
 const customStyles = {
   content: {
@@ -18,12 +19,14 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 function AddProductModal(props) {
+  // console.log("hello")
   
   // here is  add product by admin api
   const [addProductAdmin, setProductAdmin] = useState({
     productName: "",
     price: "",
     discription: "",
+
     picture : null
   });
   // handle change
@@ -85,7 +88,7 @@ function AddProductModal(props) {
                 <h2 className="text-center">Add More New Product</h2>
                 <form className="row g-3">
                   <div className="col-md-12">
-                    <label for="inputEmail4" className="form-label ">
+                    <label htmlFor="inputEmail4" className="form-label ">
                       Product Name
                     </label>
                     <input
@@ -98,7 +101,7 @@ function AddProductModal(props) {
                     />
                   </div>
                   <div className="col-md-12">
-                    <label for="inputPassword4" className="form-label">
+                    <label htmlFor="inputPassword4" className="form-label">
                       Price
                     </label>
                     <input
@@ -111,7 +114,7 @@ function AddProductModal(props) {
                     />
                   </div>
                   <div className="col-md-12">
-                    <label for="inputPassword4" className="form-label">
+                    <label htmlFor="inputPassword4" className="form-label">
                       Discription
                     </label>
                     <input
@@ -124,7 +127,7 @@ function AddProductModal(props) {
                     />
                   </div>
                   <div className="col-md-12">
-                    <label for="inputPassword4" className="form-label">
+                    <label htmlFor="inputPassword4" className="form-label">
                       Picture
                     </label>
                     <input
@@ -149,11 +152,6 @@ function AddProductModal(props) {
                     >
                       Add
                     </button>
-                    {/* <div className=" col-md-6">
-                    <button type="button"  className="btn btn-color py-3">
-                    Cancel
-                    </button>
-                    </div> */}
                   </div>
                 </form>
               </div>

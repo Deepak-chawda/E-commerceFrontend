@@ -4,15 +4,20 @@ import { useHistory } from "react-router-dom";
 import "./order.css";
 import appleWatch from "../images/apple_watch.jpeg";
 import ReactTooltip from "react-tooltip";
+import {  toast } from 'react-toastify';
 
 const Order = () => {
+  // state for loader
+  const [Isloader, setIsloader] = useState(false);
   const history = useHistory();
   const [getOrder, setGetOrder] = useState([]);
   useEffect(() => {
     getOrderApi();
+    // eslint-disable-line react-hooks/exhaustive-deps
   }, []);
   // call order  api
   const getOrderApi = async () => {
+    setIsloader(true);
     const token = JSON.parse(localStorage.getItem("token"));
     if (!token) {
       return history.push("/login");
@@ -25,47 +30,47 @@ const Order = () => {
         },
       });
       console.log("response", response);
+      setIsloader(false);
       setGetOrder(response.data.data);
     } catch (error) {
+      setIsloader(false);
       console.log("error=>", error.response);
-      alert(error.response.data.error)
+      alert(error.response.data.error);
     }
   };
   // order delete api
-  const orderDeleteApi=async(_id)=>{
+  const orderDeleteApi = async (_id) => {
     const token = JSON.parse(localStorage.getItem("token"));
     try {
-      const response = await axios.delete(`http://localhost:4000/api/delete/order?_id=${_id}` ,{
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }})
-        console.log("response", response);
-        getOrderApi()
-        alert(response.data.msg)
+      const response = await axios.delete(
+        `http://localhost:4000/api/delete/order?_id=${_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("response", response);
+      getOrderApi();
+      toast.success("Deleted order  Successfull 👍", {
+        theme: "colored"
+      })
+      alert(response.data.msg);
     } catch (error) {
-      console.log("error",error.response)
+      console.log("error", error.response);
     }
-  }
+  };
   return (
     <>
       <section className="pt-4 pt-md-11">
         <div className="container">
           <div className="row align-items-center m-2 ">
-            {/* <h2 className="m-3 text-center">MY ORDER</h2> */}
             <div className="card p-0 m-0 pt-2 mb-4">
-              {/* <div className="p-4">
-                <h2 className="">PRODUCT</h2>
-                <AddProductModal addProductApi ={addProductApi}  />
-              </div> */}
               <div className="card-body m-0 p-0 text-center">
                 <div className="table-responsive">
                   <h2 className="fs-4 text-center">My All Order List</h2>
                   <table className="table table-hover  align-middle">
                     <thead className="table-dark">
-                      <tr>
-                        {/* <th className="fs-4 text-center">My All Order List</th> */}
-                        {/* <th className="text-center"><a className="btn btn-sm btn-outline-danger" href="#">Clear Wishlist</a></th> */}
-                      </tr>
                       <tr>
                         <th scope="col">Product Image</th>
                         <th scope="col">Product Name</th>
@@ -76,6 +81,16 @@ const Order = () => {
                       </tr>
                     </thead>
                     <tbody className="text-center">
+                      {Isloader && (
+                        <>
+                          <tr
+                            className="spinner-border text-danger"
+                            role="status"
+                          >
+                            <span className="visually-hidden">Loading...</span>
+                          </tr>
+                        </>
+                      )}
                       {getOrder && getOrder.length !== 0 ? (
                         getOrder.map((item) => {
                           return (
@@ -89,17 +104,17 @@ const Order = () => {
                                     width="100"
                                   />
                                 </td>
-                                <td>{item.product.productName}</td>
-                                <td>{item.product.price}</td>
-                                <td>{item.orderDate}</td>
-                                <td>{item.product.discription}</td>
+                                <td>{item?.product?.productName}</td>
+                                <td>{item?.product?.price}</td>
+                                <td>{item?.orderDate}</td>
+                                <td>{item?.product?.discription}</td>
                                 <td>
                                   <a
                                     className="text-lg text-danger"
                                     href="#!"
                                     data-tip="Delete"
-                                    onClick={()=>{
-                                      orderDeleteApi(item._id)
+                                    onClick={() => {
+                                      orderDeleteApi(item._id);
                                     }}
                                   >
                                     <ReactTooltip

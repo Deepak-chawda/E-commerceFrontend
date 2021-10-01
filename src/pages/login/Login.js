@@ -6,6 +6,8 @@ import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../signup/signup.css";
 import loginImg from "../images/loginImg.svg";
+import {  toast } from 'react-toastify';
+
 
 const Login = () => {
   // state for loader
@@ -36,6 +38,9 @@ const Login = () => {
       );
       setIsloader(false);
       // console.log("response =",response)
+      toast.success("Login Successfull 👍", {
+        theme: "colored"
+      })
       localStorage.setItem(
         "userDetails",
         JSON.stringify(response.data.data.user)
@@ -46,7 +51,7 @@ const Login = () => {
       } else {
         history.push("/");
       }
-      alert(response.data.msg);
+      // alert(response.data.msg);
     } catch (error) {
       setIsloader(false);
       console.log("error response=>", error.response);
@@ -112,10 +117,10 @@ const Login = () => {
                       LOG IN
                       {Isloader && (
                         <div
-                          class="spinner-border text-primary m-1"
+                          className="spinner-border text-primary m-1"
                           role="status"
                         >
-                          <span class="visually-hidden">Loading...</span>
+                          <span className="visually-hidden">Loading...</span>
                         </div>
                       )}
                     </button>

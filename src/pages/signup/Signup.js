@@ -6,7 +6,9 @@ import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../signup/signup.css";
 import signup1 from "../images/signup1.svg";
+import {  toast } from 'react-toastify';
 const Signup = () => {
+  //loader state
   const [Isloader, setIsloader] = useState(false);
   // here call useHistory function for using..use to routing for btw diff componets
   const history = useHistory();
@@ -17,6 +19,7 @@ const Signup = () => {
     userName: " ",
     address: " ",
     contact: " ",
+    profilePic:" "
   });
   // handle Change
   const handlesignupChange = (e) => {
@@ -24,7 +27,6 @@ const Signup = () => {
     setDetails({ ...userDetails, [name]: value });
   };
   const signupApi = async () => {
-  
     console.log("userDetails=", userDetails);
     try {
       // alert massage for fill all field
@@ -41,13 +43,10 @@ const Signup = () => {
         userDetails
       );
       setIsloader(false);
-      localStorage.setItem(
-        "userDetails",
-        JSON.stringify(response.data.data.user)
-      );
-      localStorage.setItem("token", JSON.stringify(response.data.data.token));
-
-      // console.log("response =",response)
+      console.log("response =",response)
+      toast.success("Signup Successfull 👍", {
+        theme: "colored"
+      })
       history.push("/login");
     } catch (error) {
       setIsloader(false);
@@ -100,7 +99,17 @@ const Signup = () => {
                       onChange={handlesignupChange}
                       className="form-control py-3 px-1"
                       id="inputEmail4"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseExample1"
+                      aria-expanded="false"
+                      aria-controls="collapseExample1"
                     />
+                    <p
+                      className="collapse mb-0 text-danger"
+                      id="collapseExample1"
+                    >
+                      You must include "@" in your mail address !
+                    </p>
                   </div>
 
                   <div className="col-md-12">
@@ -116,7 +125,17 @@ const Signup = () => {
                       onChange={handlesignupChange}
                       className="form-control py-3 px-1"
                       id="inputPassword4"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseExample"
+                      aria-expanded="false"
+                      aria-controls="collapseExample"
                     />
+                    <p
+                      className="collapse mb-0 text-danger"
+                      id="collapseExample"
+                    >
+                      Password must be 8 charactor !
+                    </p>
                   </div>
                   <div className="col-md-12">
                     <label
@@ -137,7 +156,7 @@ const Signup = () => {
                         className="form-check-input"
                         type="checkbox"
                         id="gridCheck"
-                        checked={false}
+                        // checked={false}
                       />
                       <label className="form-check-label" htmlFor="gridCheck">
                         &nbsp; I agree to all &nbsp;
@@ -310,9 +329,9 @@ const Signup = () => {
                     <button
                       type="button"
                       onClick={signupApi}
-                      className="btn btn-color fs-5 fw-bold py-3  d-flex justify-content-center align-items-center" 
-                      // disabled={Isloader}
-                      disabled
+                      className="btn btn-color fs-5 fw-bold py-3  d-flex justify-content-center align-items-center"
+                      disabled={Isloader}
+                      // disabled
                     >
                       SIGN UP
                       {Isloader && (

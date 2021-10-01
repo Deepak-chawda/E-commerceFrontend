@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import "../admin/admin.css";
-import addProduct from "../images/addProduct.svg";
+import addProduct from "../images/flower.jpg";
 import ReactTooltip from "react-tooltip";
 const customStyles = {
   content: {
@@ -11,6 +11,9 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-45%",
     margin: "10px",
+    padding :"0px",
+    // width: '80%',
+    // height : '80%',
     transform: "translate(-50%, -50%)",
   },
 };
@@ -66,23 +69,26 @@ function EditProfileModal({ updateProductsApi, itemId }) {
         contentLabel="Example Modal"
       >
         <section className="">
-          <button
+         
+          <div className="container p-0">
+          {/* align-items-center  */}
+            <div className="row  my-auto mx-auto p-0">
+              <div className="col-md-6 col-lg-6  order-md-1 p-0">
+                
+                <img
+                  src={addProduct}
+                  alt=""
+                  className="img-fluid  mb-6 mb-md-0 mb-2"
+                />
+              </div>
+              <div className="col-md-6 col-lg-6 order-md-2">
+                  <button
             className="absolute bg-white border-0 mt-0  rounded-circle fa-3x"
             onClick={closeModal}
           >
             ×
           </button>
-          <div className="container ">
-            <div className="row align-items-center  my-auto mx-auto">
-              <div className="col-md-6 col-lg-6 order-md-1 ">
-                <img
-                  src={addProduct}
-                  alt=""
-                  className="img-fluid  mw-lg-130 mb-6 mb-md-0 mb-2"
-                />
-              </div>
-              <div className="col-md-6 col-lg-6 order-md-2">
-                <h1 className="text-center">Edit Profile</h1>
+                <h4 className="text-center">Edit Profile</h4>
                 <form className="row g-3">
                   <div className="col-md-12">
                     <label for="inputUserName" className="form-label ">
