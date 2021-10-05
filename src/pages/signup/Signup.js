@@ -35,7 +35,9 @@ const Signup = () => {
         userDetails.password === "" ||
         userDetails.userName === ""
       ) {
-        return alert("plz fill all required field");
+        return toast.info("Plz fill all fields", {
+          theme: "colored"
+        });
       }
       setIsloader(true);
       const response = await axios.post(
@@ -101,7 +103,6 @@ const Signup = () => {
                       id="inputEmail4"
                       data-bs-toggle="collapse"
                       data-bs-target="#collapseExample1"
-                      aria-expanded="false"
                       aria-controls="collapseExample1"
                     />
                     <p
@@ -125,21 +126,21 @@ const Signup = () => {
                       onChange={handlesignupChange}
                       className="form-control py-3 px-1"
                       id="inputPassword4"
+                      autoComplete="off"
                       data-bs-toggle="collapse"
                       data-bs-target="#collapseExample"
-                      aria-expanded="false"
-                      aria-controls="collapseExample"
+                      aria-controls="collapseExample2"
                     />
                     <p
                       className="collapse mb-0 text-danger"
-                      id="collapseExample"
+                      id="collapseExample2"
                     >
                       Password must be 8 charactor !
                     </p>
                   </div>
                   <div className="col-md-12">
                     <label
-                      htmlFor="inputPassword4"
+                      htmlFor="inputConformPass"
                       className="form-label fa-1x fw-bold"
                     >
                       Conform password
@@ -147,7 +148,8 @@ const Signup = () => {
                     <input
                       type="password"
                       className="form-control py-3 px-1"
-                      id="inputPassword4"
+                      autoComplete="off"
+                      id="inputConformPass"
                     />
                   </div>
                   <div className="col-12">

@@ -5,7 +5,7 @@ import appleWatch from "../images/apple_watch.jpeg";
 import AddProductModal from "./add.product.model";
 import DeleteProductAdmin from "./delete.product.admin";
 import EditProductModal from "./edit.product.model";
-import {  toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const AdminHome = () => {
   // state for loader
@@ -15,12 +15,11 @@ const AdminHome = () => {
   useEffect(() => {
     getProductsApi();
   }, []);
-  // get all product by admin
+  // get all product by adm
   const getProductsApi = async () => {
     setIsloader(true);
     const token = JSON.parse(localStorage.getItem("token"));
     try {
-      console.log("hello");
       const response = await axios.get(
         "http://localhost:4000/api/get/admin/product",
         {
@@ -58,7 +57,7 @@ const AdminHome = () => {
         }
       );
       console.log("response", response);
-      alert(response.data.msg);
+      // alert(response.data.msg);
       // remove value after add product
       setProductAdmin({
         ...addProductAdmin,
@@ -68,12 +67,15 @@ const AdminHome = () => {
       });
       closeModal();
       getProductsApi();
-      toast.success("New product added Successfull 👍", {
-        theme: "colored"
-      })
+      toast.success(`${response.data.msg}✔️`, {
+        theme: "colored",
+      });
     } catch (error) {
       console.log("error", error.response);
-      alert(error.response.data.error);
+      // alert(error.response.data.error);
+      toast.error(`${error.response.data.msg}'❌'`, {
+        theme: "colored",
+      });
     }
   };
 
@@ -84,90 +86,97 @@ const AdminHome = () => {
           <div className="row align-items-center m-2 ">
             <h2 className="m-3 text-center">All PRODUCT IN STORE</h2>
             <div className="card p-0 m-0 pt-2 mb-4">
-              <div className="p-4">
+              <div className="table-responsive p-4">
                 <h2 className="">ADD PRODUCT ADMIN</h2>
                 <AddProductModal addProductApi={addProductApi} />
               </div>
               <div className="card-body m-0 p-0 text-center">
                 <div className="table-responsive">
-                  <table className="table table-hover  align-middle">
-                    <thead className="table-dark">
+                <table className="table table-hover  align-middle">
+                  <thead className="table-dark ">
+                    <tr>
+                      <th scope="col">S.N.</th>
+                      <th scope="col">
+                        <i className="icon-picture"></i> Product Image
+                      </th>
+                      <th scope="col">
+                        <i className="icon-gift"></i> Product Name
+                      </th>
+                      <th scope="col">
+                        <i className="icon-inr"></i> Price
+                      </th>
+                      <th scope="col">
+                        <i className="icon-calendar"></i> Order date
+                      </th>
+                      <th scope="col">
+                        <i className="icon-edit"></i> Product Discription
+                      </th>
+                      <th scope="col">
+                        <i className="icon-pushpin"></i> Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="text-center" colSpan="7">
+                        {Isloader && (
+                          <>
+                            <tr
+                              className="spinner-grow text-primary"
+                              style={{ width: "3rem", height: "3rem" }}
+                              role="status"
+                            >
+                              <td className="visually-hidden">Loading...</td>
+                            </tr>
+                            <p>Loading...</p>
+                          </>
+                        )}
+                      </td>
+                    </tr>
+                    {productData && productData.length !== 0 ? (
+                      productData.map((item, index) => {
+                        return (
+                          <>
+                            <tr>
+                              <th scope="row">{index + 1}</th>
+                              <td>
+                                <img
+                                  className="card-table-img img-fluid me-3"
+                                  src={appleWatch}
+                                  alt="product-img"
+                                  width="100"
+                                />
+                              </td>
+                              <td>{item.productName}</td>
+                              <td>{item.price}</td>
+                              <td>{Date.now()}</td>
+                              <td>{item.discription}</td>
+                              <td>
+                                <EditProductModal
+                                  key={item._id}
+                                  editId={item}
+                                  getProductsApi={getProductsApi}
+                                />
+                                <DeleteProductAdmin
+                                  key={item}
+                                  itemId={item._id}
+                                  getProductsApi={getProductsApi}
+                                />
+                              </td>
+                            </tr>
+                          </>
+                        );
+                      })
+                    ) : (
                       <tr>
-                        <th scope="col">S.N.</th>
-                        <th scope="col">
-                          <i className="icon-picture"></i> Product Image
-                        </th>
-                        <th scope="col">
-                          <i className="icon-gift"></i> Product Name
-                        </th>
-                        <th scope="col">
-                          <i className="icon-inr"></i> Price
-                        </th>
-                        <th scope="col">
-                          <i className="icon-calendar"></i> Order date
-                        </th>
-                        <th scope="col">
-                          <i className="icon-edit"></i> Product Discription
-                        </th>
-                        <th scope="col">
-                          <i className="icon-pushpin"></i> Action
-                        </th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-                      {Isloader && (
-                        <>
-                          <tr
-                            className="spinner-grow text-primary float-end text-center" colSpan="5"
-                            style={{ width: "3rem", height: "3rem" }}
-                            role="status"
-                          >
-                            <td className="visually-hidden">Loading...</td>
-                          </tr>
-                        </>
-                      )}
-                      {productData && productData.length !== 0 ? (
-                        productData.map((item, index) => {
-                          return (
-                            <>
-                              <tr>
-                                <th scope="row">{index + 1}</th>
-                                <td>
-                                  <img
-                                    className="card-table-img img-fluid me-3"
-                                    src={appleWatch}
-                                    alt="product-img"
-                                    width="100"
-                                  />
-                                </td>
-                                <td>{item.productName}</td>
-                                <td>{item.price}</td>
-                                <td>{ Date.now()}</td>
-                                <td>{item.discription}</td>
-                                <td>
-                                  <EditProductModal
-                                    key={item._id}
-                                    itemId={item}
-                                    getProductsApi={getProductsApi}
-                                  />
-                                  <DeleteProductAdmin
-                                    itemId={item._id}
-                                    getProductsApi={getProductsApi}
-                                  />
-                                </td>
-                              </tr>
-                            </>
-                          );
-                        })
-                      ) : (
-                        <td className=" text-danger text-center" colSpan="7">
+                        <td className=" text-danger text-center">
                           <h3>No Data add yet</h3>
                         </td>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
               </div>
             </div>
           </div>

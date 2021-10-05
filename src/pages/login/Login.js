@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 // install axios and require here
 import axios from "axios";
 // here use hook for routing page
@@ -7,9 +7,12 @@ import { Link } from "react-router-dom";
 import "../signup/signup.css";
 import loginImg from "../images/loginImg.svg";
 import {  toast } from 'react-toastify';
+import ForgetPassModal from "./ForgetPassModal";
+import UserDetailContext from "../../useContext/TokenContext";
 
 
 const Login = () => {
+  const userDetailsd = useContext(UserDetailContext)
   // state for loader
   const [Isloader, setIsloader] = useState(false);
   // here call useHistory function for using..use to routing for btw diff componets
@@ -37,8 +40,9 @@ const Login = () => {
         userDetails
       );
       setIsloader(false);
+      userDetailsd.setcontextChange("hiiiii")
       // console.log("response =",response)
-      toast.success("Login Successfull 👍", {
+      toast.success(`${response.data.msg} 👍`, {
         theme: "colored"
       })
       localStorage.setItem(
@@ -56,7 +60,11 @@ const Login = () => {
       setIsloader(false);
       console.log("error response=>", error.response);
       // error showing in front end
-      alert(error.response.data.error);
+      // alert(error.response.data.error);
+      toast.error(`${error.response.data.error}`, {
+        theme: "colored"
+      })
+
     }
   };
   return (
@@ -136,14 +144,18 @@ const Login = () => {
                         Sign up here
                       </Link>
                     </p>
-                    <p className="mt-2">
-                      <Link
-                        className="text-danger text-decoration-none text-nowrap"
-                        to="/#"
+                    <div className="mt-2">
+                      <a
+                        className="text-danger text-decoration-none"
+                        data-bs-toggle="modal"
+                         data-bs-target="#exampleModal"
+                         href="#/"
                       >
                         Forget password ?
-                      </Link>
-                    </p>
+                        
+                      </a>
+                      <ForgetPassModal/>
+                    </div>
                   </div>
                 </form>
               </div>

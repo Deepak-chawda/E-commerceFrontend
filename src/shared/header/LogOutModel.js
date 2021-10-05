@@ -1,8 +1,11 @@
-import React from "react";
+import React,{useContext} from "react";
 import {  useHistory } from "react-router-dom";
 import {  toast } from 'react-toastify';
+import userDetailContext from "../../useContext/TokenContext";
 
 const LogOutModel = () => {
+  const userDetails = useContext(userDetailContext)
+  // console.log("this is sds",userDetails)
     const history = useHistory();
   return (
     <>
@@ -42,6 +45,7 @@ const LogOutModel = () => {
                 onClick={() => {
                   localStorage.clear();
                   history.push("/");
+                  userDetails.setcontextChange("hello")
                   toast.success("LogOut Successfull 👍", {
                     theme: "colored"
                   })

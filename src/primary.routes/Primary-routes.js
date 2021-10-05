@@ -9,6 +9,7 @@ import Admin from "../pages/admin/Admin-home";
 // import Order from "../pages/order/Order";
 // import Wishlist from "../pages/wishlist/Wishlist";
 import Profile from "../pages/profile/Profile"
+import ErrorPage from "../pages/Error page 404/ErrorPage";
 
 const PrimaryRoutes = () => {
   return (
@@ -22,6 +23,7 @@ const PrimaryRoutes = () => {
         <Route exact  path="/profile/wishlist" component={Profile} />
         <Route exact  path="/profile/order" component={Profile} />
         <Route exact  path="/MainProfile/profile" component={Profile} />
+        <Route path="*" component={ErrorPage}/>
       </Switch>
       <Footer />
     </>

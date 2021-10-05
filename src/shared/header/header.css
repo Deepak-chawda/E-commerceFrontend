@@ -7,10 +7,6 @@
 .navbar-brand {
   color: rgb(17, 19, 27) !important;
 }
-.selected {
-  font-weight: bold;
-  border-bottom: 2px solid rgb(63, 192, 13) !important;
-}
 .nav-item a:hover {
   color: rgb(26, 50, 230) !important;
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 // import { useHistory } from "react-router-dom";
 import EditProfileModal from "./EditProfileModal";
 import avatarImage from "../images/avatar1.svg";
@@ -6,8 +6,16 @@ import dc from "../images/dc.jpg";
 import dgk from "../images/bgProImg.png";
 
 const MainProfile = () => {
-  const userDetails = JSON.parse(localStorage.getItem("userDetails"));
-  // console.log("userDtails", userDetails);
+  const [userDetails,setuserDetails]=useState()
+  useEffect(()=>{
+    getUserDetails()
+    //  userDetails = JSON.parse(localStorage.getItem("userDetails"));
+  },[ ])
+  const getUserDetails=()=>{
+    const userD = JSON.parse(localStorage.getItem("userDetails"));
+    setuserDetails(userD)
+  }
+  // console.log(userDetails)
   return (
     <>
       <div className="profile-content border rounded-2 overflow-hidden">
@@ -22,8 +30,8 @@ const MainProfile = () => {
                 </div>
                 <div className="avatar">
                   <img
-                    src={userDetails.profilePic === " " ? avatarImage : dc}
-                    alt="User Image"
+                    src={userDetails?.profilePic===null ? avatarImage : dc}
+                    alt="UserImage"
                     className="img-thumbnail rounded-2 img-fluid"
                     width="280px"
                   />

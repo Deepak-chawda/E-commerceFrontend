@@ -12,16 +12,20 @@ import air_pots2 from "../images/air_pots2.jfif";
 import apple_laptop from "../images/apple_laptop.jfif";
 import ipad from "../images/ipad.jfif";
 import CommanCard from "./comman.card";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import axios from "axios";
+import UserDetailContext from "../../useContext/TokenContext";
 const Home = () => {
+  const userDetails = useContext(UserDetailContext)
   // state for loader
   const [Isloader, setIsloader] = useState(false);
   // here is a get user all product api
   const [getUserData, setUserData] = useState([]);
   //  console.log("getuserdata",getUserData)
   useEffect(() => {
+    userDetails.setcontextChange("this is changed")
     getUserDataApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const getUserDataApi = async () => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -192,13 +196,7 @@ const Home = () => {
         <hr className="featurette-divider" />
         <h1 className="text-center grident">Here Apple Product For Order </h1>
         <div className="d-flex flex-wrap text-center justify-content-center m-2">
-          {Isloader && (
-            <>
-              <div className="spinner-border text-danger" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
-            </>
-          )}
+        
           {/*cards*/}
           {getUserData && getUserData.length !== 0 ? (
             getUserData.map((item) => {
@@ -209,9 +207,18 @@ const Home = () => {
               );
             })
           ) : (
-            <h5 className=" text-center text-danger">No Product add by admin yet</h5>
+            <h5 className=" text-center text-danger m-2">No Product added by admin yet</h5>
           )}
         </div>
+        {Isloader && (
+            <>
+            <div className="text-center mb-4">
+              <div className="spinner-border text-danger" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+              </div>
+            </>
+          )}
         <div className="row featurette">
           <div className="col-md-7 order-md-2">
             <h2 className="featurette-heading">

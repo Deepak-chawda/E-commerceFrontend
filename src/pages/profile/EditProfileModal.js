@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
 import "../admin/admin.css";
-import addProduct from "../images/flower.jpg";
+import addProduct from "../images/Editprofile.svg";
 import ReactTooltip from "react-tooltip";
+import axios from "axios";
+import { toast } from "react-toastify";
 const customStyles = {
   content: {
     top: "50%",
@@ -11,32 +13,56 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-45%",
     margin: "10px",
-    padding :"0px",
-    // width: '80%',
+    padding: "0px",
+    width: "70%",
     // height : '80%',
     transform: "translate(-50%, -50%)",
   },
 };
 Modal.setAppElement("#root");
-
-function EditProfileModal({ updateProductsApi, itemId }) {
+function EditUserProfile() {
+  
+  const localUser = JSON.parse(localStorage.getItem("userDetails"));
   const [editProfileUser, setProfileUser] = useState({
-    userName: "",
-    email: "",
-    address: "",
-    contact: "",
-    profilePic:""
+    userName: localUser.userName,
+    email: localUser.email,
+    address: localUser.address,
+    contact: localUser.contact,
+    profilePic: localUser.profilePic,
   });
   // handle change
   const handleProductChange = (e) => {
     const { name, value } = e.target;
     setProfileUser({ ...editProfileUser, [name]: value });
   };
+  // call edit user details Api
+  const EditUserProfileApi = async (id, editProfileUser, closeModal) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:4000/api/editPofile/details?_id=${id}`,
+        editProfileUser
+      );
+      // console.log("update user details data", response);
+      // alert(response.data.msg)
+      localStorage.setItem(
+        "userDetails",
+        JSON.stringify(response.data.data)
+      );
+      closeModal();
+      toast.success(`${response.data.msg}✔️`, {
+        theme: "colored",
+      });
+    } catch (error) {
+      console.log("error=>", error.response);
+      toast.error(`${error.response.data.msg}'❌'`, {
+        theme: "colored",
+      });
+    }
+  };
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
     setIsOpen(true);
   }
-
   function closeModal() {
     setIsOpen(false);
   }
@@ -47,7 +73,6 @@ function EditProfileModal({ updateProductsApi, itemId }) {
         className="btn btn-color text-dark"
         data-tip="Edit profile"
         href="#/"
-        // style={{ cursor: "pointer" }}
         onClick={
           openModal
           //   setProductAdmin({...editProductAdmin,
@@ -69,25 +94,21 @@ function EditProfileModal({ updateProductsApi, itemId }) {
         contentLabel="Example Modal"
       >
         <section className="">
-         
           <div className="container p-0">
-          {/* align-items-center  */}
-            <div className="row  my-auto mx-auto p-0">
-              <div className="col-md-6 col-lg-6  order-md-1 p-0">
-                
-                <img
-                  src={addProduct}
-                  alt=""
-                  className="img-fluid  mb-6 mb-md-0 mb-2"
-                />
+            {/* align-items-center  */}
+            <div className="row align-items-center mx-auto p-0">
+              <div className=" col-md-6 col-lg-6	d-none d-lg-block d-md-none">
+                <img src={addProduct} alt="" className="img-fluid" />
               </div>
-              <div className="col-md-6 col-lg-6 order-md-2">
+              <div className="col-md-12 col-lg-6">
+                <div className="d-flex justify-content-end align-items-end">
                   <button
-            className="absolute bg-white border-0 mt-0  rounded-circle fa-3x"
-            onClick={closeModal}
-          >
-            ×
-          </button>
+                    className="bg-white border-0 mt-0  rounded-circle fa-3x p-0s"
+                    onClick={closeModal}
+                  >
+                    ×
+                  </button>
+                </div>
                 <h4 className="text-center">Edit Profile</h4>
                 <form className="row g-3">
                   <div className="col-md-12">
@@ -96,7 +117,7 @@ function EditProfileModal({ updateProductsApi, itemId }) {
                     </label>
                     <input
                       type="text"
-                      value={editProfileUser.productName}
+                      value={editProfileUser.userName}
                       name="userName"
                       onChange={handleProductChange}
                       className="form-control py-2 px-1 text-capitalize"
@@ -125,7 +146,7 @@ function EditProfileModal({ updateProductsApi, itemId }) {
                     <input
                       type="string"
                       onChange={handleProductChange}
-                      name="discription"
+                      name="address"
                       value={editProfileUser.address}
                       className="form-control py-2 px-1 text-capitalize"
                       autoComplete="off"
@@ -134,7 +155,7 @@ function EditProfileModal({ updateProductsApi, itemId }) {
                   </div>
                   <div className="col-md-12">
                     <label for="inputPhone" className="form-label">
-                   Phone no.
+                      Phone no.
                     </label>
                     <input
                       type="string"
@@ -164,14 +185,15 @@ function EditProfileModal({ updateProductsApi, itemId }) {
                     <button
                       type="button"
                       onClick={() => {
-                        updateProductsApi(
-                        editProfileUser,
+                        EditUserProfileApi(
+                          localUser._id,
+                          editProfileUser,
                           closeModal
                         );
                       }}
-                      className="btn btn-color py-3"
+                      className="btn btn-color py-3 mb-4"
                     >
-                      Add
+                      Edit Profile
                     </button>
                   </div>
                 </form>
@@ -184,4 +206,4 @@ function EditProfileModal({ updateProductsApi, itemId }) {
   );
 }
 
-export default EditProfileModal;
+export default EditUserProfile;

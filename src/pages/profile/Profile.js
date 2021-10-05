@@ -87,7 +87,7 @@ const Profile = () => {
                     exact
                     path="/MainProfile/profile"
                     component={MainProfile}
-                  />
+                  />  
                 </Switch>
               </table>
             </div>

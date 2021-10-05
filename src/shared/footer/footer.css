@@ -1,4 +1,12 @@
-
+.bi{
+    color: rgba(17, 226, 24, 0.897);
+}
+.bi:hover{
+    color: aqua;
+}
+.mldo li {
+    margin-left: 20px;
+}
 footer {
     position: relative;
     margin: 0 auto;

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, } from "react";
 import { Link } from "react-router-dom";
 import LogOutModel from "./LogOutModel";
 import "../header/header.css";
+// import userDetailContext from "../../useContext/TokenContext";
 
 const Header = () => {
   // const history = useHistory();
@@ -10,6 +11,8 @@ const Header = () => {
   useEffect(() => {
     setchecklogin(JSON.parse(localStorage.getItem("token")));
     setUserName(JSON.parse(localStorage.getItem("userDetails")));
+    // setchecklogin(userDetails.token)
+    // setUserName(userDetails.userDetails)
   }, []);
   return (
     <>
@@ -130,10 +133,7 @@ const Header = () => {
                             {/* <i className="icon-signout"> </i> */}
                             LOGOUT
                           </a>
-                          <LogOutModel />
-
-
-
+                          <LogOutModel/>
                         </li>
                       </>
                     )}

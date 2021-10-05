@@ -9,11 +9,12 @@ import {  toast } from 'react-toastify';
 
 const Wishlist = () => {
   // state for loader
-  const [Isloader, setIsloader] = useState(false);
+  const [Isloader, setIsloader] = useState(true);
   const history = useHistory();
   const [getWishlist, setWishlist] = useState([]);
   useEffect(() => {
     getWishlistApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // call wishlist   api
   const getWishlistApi = async () => {
@@ -32,10 +33,10 @@ const Wishlist = () => {
         }
       );
       console.log("response", response);
-      setIsloader(false)
+      setIsloader(true)
       setWishlist(response.data.data);
     } catch (error) {
-      setIsloader(false)
+      setIsloader(true)
       console.log("error=>", error.response);
       alert(error.response.data.error);
     }
@@ -100,12 +101,7 @@ const Wishlist = () => {
       <div className="pt-4 pt-md-11">
         <div className="container">
           <div className="row align-items-center m-2 ">
-            {/* <h2 className="m-3 text-center">MY ORDER</h2> */}
             <div className="card p-0 m-0 pt-2 mb-4">
-              {/* <div className="p-4">
-                <h2 className="">PRODUCT</h2>
-                <AddProductModal addProductApi ={addProductApi}  />
-              </div> */}
               <div className="card-body m-0 p-0 text-center">
                 <div className="table-responsive">
                   <h2 className="fs-4 text-center">My All Wish List</h2>
@@ -119,17 +115,20 @@ const Wishlist = () => {
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
-                    <tbody className="text-center">
-                      {Isloader && (
+                    <tbody className="text-center " >
+                      {/* {Isloader && (
                         <>
-                          <tr
-                            className="spinner-border text-danger"
+                        <tr className="text-center" >
+                          <td
+                            className="spinner-border text-primary"
                             role="status"
+                            colSpan="3"
                           >
                             <span className="visually-hidden">Loading...</span>
+                          </td>
                           </tr>
                         </>
-                      )}
+                      )} */}
                       {getWishlist && getWishlist.length !== 0 ? (
                         getWishlist.map((item) => {
                           return (
@@ -143,9 +142,9 @@ const Wishlist = () => {
                                     width="100"
                                   />
                                 </td>
-                                <td>{item.product.productName}</td>
-                                <td>{item.product.price}</td>
-                                <td>{item.product.discription}</td>
+                                <td>{item?.product?.productName}</td>
+                                <td>{item?.product?.price}</td>
+                                <td>{item?.product?.discription}</td>
                                 <td>
                                   <a
                                     className="me-3 text-lg text-success"
@@ -192,9 +191,24 @@ const Wishlist = () => {
                           );
                         })
                       ) : (
-                        <div className="fs-3 text-center">
-                          Not add order by user yet
-                        </div>
+                        <tr>
+                        <td className=" text-danger text-center" colSpan="5">
+                          <h3>No Data add yet</h3>
+                          {Isloader && (
+                            <>
+                              <tr
+                                className="spinner-grow text-primary"
+                                style={{ width: "3rem", height: "3rem" }}
+                                role="status"
+                              >
+                                <td className="visually-hidden">
+                                  Loading...
+                                </td>
+                              </tr>
+                            </>
+                          )}
+                        </td>
+                      </tr>
                       )}
                     </tbody>
                   </table>

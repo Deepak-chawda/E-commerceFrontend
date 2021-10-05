@@ -13,7 +13,7 @@ const Order = () => {
   const [getOrder, setGetOrder] = useState([]);
   useEffect(() => {
     getOrderApi();
-    // eslint-disable-line react-hooks/exhaustive-deps
+   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // call order  api
   const getOrderApi = async () => {
@@ -32,6 +32,9 @@ const Order = () => {
       console.log("response", response);
       setIsloader(false);
       setGetOrder(response.data.data);
+      toast.info(`${response.data.msg} ☹️`, {
+        theme: "colored"
+      })
     } catch (error) {
       setIsloader(false);
       console.log("error=>", error.response);
@@ -52,7 +55,7 @@ const Order = () => {
       );
       console.log("response", response);
       getOrderApi();
-      toast.success("Deleted order  Successfull 👍", {
+      toast.success("Deleted order  Successfull👍", {
         theme: "colored"
       })
       alert(response.data.msg);
@@ -74,7 +77,7 @@ const Order = () => {
                       <tr>
                         <th scope="col">Product Image</th>
                         <th scope="col">Product Name</th>
-                        <th scope="col rupes">Price</th>
+                        <th scope="col">Price</th>
                         <th scope="col">Order date</th>
                         <th scope="col">Product Discription</th>
                         <th scope="col">Action</th>

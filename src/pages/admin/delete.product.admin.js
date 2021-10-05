@@ -35,14 +35,18 @@ function DeleteProductAdmin({itemId,getProductsApi}) {
       console.log("response", response);
       closeModal();
       getProductsApi();
-      toast.success("Product Deleted Successfull 👍", {
-        theme: "colored"
-      })
+      toast.success(`${response.data.msg}✔️`, {
+        theme: "colored",
+        icon: "🚀"
+      });
 
-      alert(response.data.msg)
+      // alert(response.data.msg)
     } catch (error) {
       console.log("error", error.response);
-      alert(error.response.data.error);
+      // alert(error.response.data.error);
+      toast.success(`${error.response.data.msg}'❌'`, {
+        theme: "colored",
+      });
     }
   };
   const [modalIsOpen, setIsOpen] = React.useState(false);

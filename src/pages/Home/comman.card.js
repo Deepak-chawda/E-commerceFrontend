@@ -45,7 +45,7 @@ const CommanCard = ({ Allitem }) => {
         }
       );
       setIsloader(false);
-      toast.success("Successfull added in wish list 👍", {
+      toast.success("Successfull added in wish list ✔️", {
         theme: "colored",
       });
       console.log("response", response);
@@ -53,7 +53,10 @@ const CommanCard = ({ Allitem }) => {
     } catch (error) {
       setIsloader(false);
       console.log("error", error.response);
-      alert(error.response.data.error);
+      // alert(error.response.data.error);
+      toast.info(`${error.response.data.error} ❗`, {
+        theme: "colored"
+      })
     }
   };
   // call placeOrder api
@@ -79,7 +82,7 @@ const CommanCard = ({ Allitem }) => {
         }
       );
       setIsloaderO(false);
-      toast.success("Placed order Successfull 👍", {
+      toast.success(`${ response.data.msg} ✔️`, {
         theme: "colored"
       })
       console.log("response", response);
@@ -87,7 +90,10 @@ const CommanCard = ({ Allitem }) => {
     } catch (error) {
       setIsloaderO(false);
       console.log("error=>", error.response);
-      alert(error.response.data.error);
+      // alert(error.response.data.error);
+      toast.info(`${error.response.data.error} ❗`, {
+        theme: "colored"
+      })
     }
   };
   return (
@@ -106,8 +112,9 @@ const CommanCard = ({ Allitem }) => {
               <h5 className="card-title">{newProductName}</h5>
               <h4 className="card-title rup">{Allitem.price}</h4>
               <p className="card-text">{newdiscripName}</p>
+              <div className="d-grid gap-2">
               <button
-                className="btn btn-primary m-2 d-grid"
+                className="btn btn-primary p-2  d-flex justify-content-center align-items-center"
                 disabled={IsloaderO}
                 onClick={() => {
                   placeOrder(Allitem._id);
@@ -116,14 +123,14 @@ const CommanCard = ({ Allitem }) => {
                 Place Order
                 {IsloaderO && (
                   <>
-                    <div className="spinner-border text-danger" role="status">
+                    <div className="spinner-border text-dark m-1" role="status">
                       <span className="visually-hidden">Loading...</span>
                     </div>
                   </>
                 )}
               </button>
               <button
-                className="btn btn-danger m-2 d-grid"
+                className="btn btn-danger p-2  d-flex justify-content-center align-items-center"
                 disabled={Isloader}
                 onClick={() => {
                   addToWishlist(Allitem._id);
@@ -132,12 +139,13 @@ const CommanCard = ({ Allitem }) => {
                 Add to wishlist
                 {Isloader && (
                   <>
-                    <div className="spinner-border text-dark" role="status">
+                    <div className="spinner-border text-dark m-1" role="status">
                       <span className="visually-hidden">Loading...</span>
                     </div>
                   </>
                 )}
               </button>
+              </div>
             </div>
           </div>
         </div>

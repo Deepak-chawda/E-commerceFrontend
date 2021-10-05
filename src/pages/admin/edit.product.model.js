@@ -4,6 +4,7 @@ import axios from "axios";
 import "../admin/admin.css";
 import addProduct from "../images/addProduct.svg";
 import ReactTooltip from "react-tooltip";
+import { toast } from "react-toastify";
 
 const customStyles = {
   content: {
@@ -18,15 +19,15 @@ const customStyles = {
 };
 Modal.setAppElement("#root");
 
-function EditProductModal({ itemId,getProductsApi }) {
-  const iditem = itemId._id;
-  // console.log(iditem)
+function EditProductModal({ editId,getProductsApi }) {
+  const fetcheditId = editId._id;
+  // console.log("fetcheditId for delete item",fetcheditId)
   // here is  add product by admin api
   const [editProductAdmin, setProductAdmin] = useState({
-    productName: itemId.productName,
-    price: itemId.price,
-    discription: itemId.discription,
-    picture: itemId.picture,
+    productName: editId.productName,
+    price: editId.price,
+    discription: editId.discription,
+    picture: editId.picture,
   });
   // handle change
   const handleProductChange = (e) => {
@@ -35,32 +36,31 @@ function EditProductModal({ itemId,getProductsApi }) {
     // console.log("edit prodict admin",editProductAdmin)
   };
 // update product api
-const updateProductsApi = async (editProductAdmin, setProductAdmin,closeModal,ditem,getProductsApi) => {
+const updateProductsApi = async (editProductAdmin, setProductAdmin,closeModal,fetcheditId,getProductsApi) => {
   console.log("update data",editProductAdmin)
-  const token = JSON.parse(localStorage.getItem("token"));
+  console.log("id",fetcheditId)
+  const tokens = JSON.parse(localStorage.getItem("token"));
+  console.log(tokens)
   try {
     const response = await axios.put(
-      `http://localhost:4000/api/update/product?_id=${iditem}`,
-      {editProductAdmin},
+      `http://localhost:4000/api/update/product?_id=${fetcheditId}`,
+      editProductAdmin,
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
+        headers: { 
+          Authorization: `Bearer ${tokens}`,
         },
       },
     );
-    //  setProductAdmin({
-    //   productName: "",
-    //     price: "",
-    //     discription: "",
-    //     picture: "",
-    //   })
-    console.log("response", response);
+        console.log("response", response);
     closeModal();
     getProductsApi();
-    alert(response.data.msg);
+    // alert(response.data.msg);
+    toast.success(`${response.data.msg}✔️`, {
+      theme: "colored",
+    });
   } catch (error) {
     console.log("error=>", error.response);
-    // alert(error.response.data.error);
+    alert(error.response.data.error);
   }
 };
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -185,11 +185,11 @@ const updateProductsApi = async (editProductAdmin, setProductAdmin,closeModal,di
                     <button
                       type="button"
                       onClick={() => {
-                        updateProductsApi(editProductAdmin,setProductAdmin, closeModal, iditem,getProductsApi);
+                        updateProductsApi(editProductAdmin,setProductAdmin, closeModal, fetcheditId,getProductsApi);
                       }}
                       className="btn btn-color py-3"
                     >
-                      Add
+                    Edit
                     </button>
                   </div>
                 </form>
