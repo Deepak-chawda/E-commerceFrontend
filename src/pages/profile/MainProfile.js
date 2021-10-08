@@ -30,7 +30,7 @@ const MainProfile = () => {
                 </div>
                 <div className="avatar">
                   <img
-                    src={userDetails?.profilePic===null ? avatarImage : dc}
+                    src={userDetails?.profilePic===" " ? avatarImage : dc}
                     alt="UserImage"
                     className="img-thumbnail rounded-2 img-fluid"
                     width="280px"

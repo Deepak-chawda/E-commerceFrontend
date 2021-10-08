@@ -1,35 +1,50 @@
-.bi{
-    color: rgba(17, 226, 24, 0.897);
+.new_img{
+  background-image: url("../../pages/images/home-footer-pattern.webp");
+  background-repeat: no-repeat;
 }
-.bi:hover{
-    color: aqua;
+.faceBg{
+  background-color: blue;
+  padding: 10px;
+  color: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* .text-hover .bi {
+  color: white;
+  background-color: blue;
+} */
+ .text-hover .bi:hover {
+  color: rgb(60, 255, 0);
+  border-bottom: 3px solid;
 }
 .mldo li {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 footer {
-    position: relative;
-    margin: 0 auto;
-    padding: 5rem 0;
+  position: relative;
+  margin: 0 auto;
+  padding: 5rem 0;
 }
 .text-white .eyebrow {
-    color: rgba(255, 255, 255, 0.5)!important;
+  color: rgba(255, 255, 255, 0.5) !important;
 }
 .eyebrow {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: .1em;
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
-ul, ol {
-    list-style:none!important;
-    padding: 0px !important;
+ul,
+ol {
+  list-style: none !important;
+  padding: 0px !important;
 }
-.menu-list-link{
-    text-decoration: none;
+.menu-list-link {
+  text-decoration: none;
 }
-#GFG{
-    text-decoration: none;
-    
+#GFG {
+  text-decoration: none;
 }

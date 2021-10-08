@@ -55,8 +55,8 @@ const CommanCard = ({ Allitem }) => {
       console.log("error", error.response);
       // alert(error.response.data.error);
       toast.info(`${error.response.data.error} ❗`, {
-        theme: "colored"
-      })
+        theme: "colored",
+      });
     }
   };
   // call placeOrder api
@@ -82,9 +82,9 @@ const CommanCard = ({ Allitem }) => {
         }
       );
       setIsloaderO(false);
-      toast.success(`${ response.data.msg} ✔️`, {
-        theme: "colored"
-      })
+      toast.info(`${response.data.msg}❗`, {
+        theme: "colored",
+      });
       console.log("response", response);
       // alert(response.data.msg);
     } catch (error) {
@@ -92,8 +92,8 @@ const CommanCard = ({ Allitem }) => {
       console.log("error=>", error.response);
       // alert(error.response.data.error);
       toast.info(`${error.response.data.error} ❗`, {
-        theme: "colored"
-      })
+        theme: "colored",
+      });
     }
   };
   return (
@@ -102,7 +102,11 @@ const CommanCard = ({ Allitem }) => {
         <div className="row g-0 hover-shadow-lg hover-translate-y-n10">
           <div className="col-md-6 col-sm-5">
             <img
-              src="https://cdn.pixabay.com/photo/2016/12/28/19/12/iphone-1936818_960_720.png"
+              src={
+                Allitem.picture
+                  ? Allitem.picture
+                  : "https://cdn.pixabay.com/photo/2016/12/28/19/12/iphone-1936818_960_720.png"
+              }
               className="img-fluid rounded-start p-2 "
               alt="img"
             />
@@ -113,38 +117,44 @@ const CommanCard = ({ Allitem }) => {
               <h4 className="card-title rup">{Allitem.price}</h4>
               <p className="card-text">{newdiscripName}</p>
               <div className="d-grid gap-2">
-              <button
-                className="btn btn-primary p-2  d-flex justify-content-center align-items-center"
-                disabled={IsloaderO}
-                onClick={() => {
-                  placeOrder(Allitem._id);
-                }}
-              >
-                Place Order
-                {IsloaderO && (
-                  <>
-                    <div className="spinner-border text-dark m-1" role="status">
-                      <span className="visually-hidden">Loading...</span>
-                    </div>
-                  </>
-                )}
-              </button>
-              <button
-                className="btn btn-danger p-2  d-flex justify-content-center align-items-center"
-                disabled={Isloader}
-                onClick={() => {
-                  addToWishlist(Allitem._id);
-                }}
-              >
-                Add to wishlist
-                {Isloader && (
-                  <>
-                    <div className="spinner-border text-dark m-1" role="status">
-                      <span className="visually-hidden">Loading...</span>
-                    </div>
-                  </>
-                )}
-              </button>
+                <button
+                  className="btn btn-primary p-2  d-flex justify-content-center align-items-center"
+                  disabled={IsloaderO}
+                  onClick={() => {
+                    placeOrder(Allitem._id);
+                  }}
+                >
+                  Place Order
+                  {IsloaderO && (
+                    <>
+                      <div
+                        className="spinner-border text-dark m-1"
+                        role="status"
+                      >
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    </>
+                  )}
+                </button>
+                <button
+                  className="btn btn-danger p-2  d-flex justify-content-center align-items-center"
+                  disabled={Isloader}
+                  onClick={() => {
+                    addToWishlist(Allitem._id);
+                  }}
+                >
+                  Add to wishlist
+                  {Isloader && (
+                    <>
+                      <div
+                        className="spinner-border text-dark m-1"
+                        role="status"
+                      >
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    </>
+                  )}
+                </button>
               </div>
             </div>
           </div>

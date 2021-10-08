@@ -195,8 +195,17 @@ const Home = () => {
         </div>
         <hr className="featurette-divider" />
         <h1 className="text-center grident">Here Apple Product For Order </h1>
+          {Isloader && (
+            <>
+            <div className="text-center mb-4">
+              <div className="spinner-border text-danger" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+              </div>
+            </>
+          )}
         <div className="d-flex flex-wrap text-center justify-content-center m-2">
-        
+      
           {/*cards*/}
           {getUserData && getUserData.length !== 0 ? (
             getUserData.map((item) => {
@@ -210,15 +219,7 @@ const Home = () => {
             <h5 className=" text-center text-danger m-2">No Product added by admin yet</h5>
           )}
         </div>
-        {Isloader && (
-            <>
-            <div className="text-center mb-4">
-              <div className="spinner-border text-danger" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
-              </div>
-            </>
-          )}
+       
         <div className="row featurette">
           <div className="col-md-7 order-md-2">
             <h2 className="featurette-heading">

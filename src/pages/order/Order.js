@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import "./order.css";
 import appleWatch from "../images/apple_watch.jpeg";
 import ReactTooltip from "react-tooltip";
-import {  toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const Order = () => {
   // state for loader
@@ -13,7 +13,7 @@ const Order = () => {
   const [getOrder, setGetOrder] = useState([]);
   useEffect(() => {
     getOrderApi();
-   // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // call order  api
   const getOrderApi = async () => {
@@ -32,9 +32,9 @@ const Order = () => {
       console.log("response", response);
       setIsloader(false);
       setGetOrder(response.data.data);
-      toast.info(`${response.data.msg} ☹️`, {
-        theme: "colored"
-      })
+      // toast.info(`${response.data.msg} ☹️`, {
+      //   theme: "colored",
+      // });
     } catch (error) {
       setIsloader(false);
       console.log("error=>", error.response);
@@ -56,8 +56,8 @@ const Order = () => {
       console.log("response", response);
       getOrderApi();
       toast.success("Deleted order  Successfull👍", {
-        theme: "colored"
-      })
+        theme: "colored",
+      });
       alert(response.data.msg);
     } catch (error) {
       console.log("error", error.response);
@@ -84,16 +84,23 @@ const Order = () => {
                       </tr>
                     </thead>
                     <tbody className="text-center">
+                    <tr>
+                      <td className=" border-bottom-0" colSpan="6">
                       {Isloader && (
                         <>
-                          <tr
-                            className="spinner-border text-danger"
+                          <td
+                            className="spinner-grow text-primary" colSpan="5"
+                            style={{ width: "3rem", height: "3rem" }}
                             role="status"
                           >
                             <span className="visually-hidden">Loading...</span>
-                          </tr>
+                          </td>
+                        
                         </>
                       )}
+                      
+                      </td>
+                      </tr>
                       {getOrder && getOrder.length !== 0 ? (
                         getOrder.map((item) => {
                           return (
@@ -147,9 +154,11 @@ const Order = () => {
                           );
                         })
                       ) : (
-                        <div className="fs-3 text-center">
+                        <tr className="text-center"  >
+                        <td className="fs-3 text-center" colSpan="6">
                           Not add order by user yet
-                        </div>
+                        </td>
+                        </tr>
                       )}
                     </tbody>
                   </table>

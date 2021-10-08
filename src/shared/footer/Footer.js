@@ -1,14 +1,13 @@
 import React from "react";
 import "../footer/footer.css";
-// import visa from "../../pages/images/visa.svg"
 
 const footer = () => {
   return (
     <>
-      <footer className="bg-dark  text-white pt-3 pb-0">
+      <footer className="new_img  text-black pt-3 pb-0">
         <div className="container" data-select2-id="10">
           <div class=" text-center title my-md-4  pt-md-3 p-3">
-            <h2 class="text-white  mb-4 text-uppercase">
+            <h2 class=" text-black    mb-4 text-uppercase">
               Store. The best way to buy the products you love.
               {/* THE BRAND OF APPLE new way of{" "}
               LIVING */}
@@ -79,7 +78,7 @@ const footer = () => {
                   </ul>
                 </div>
               </div>
-            </div>
+            </div> 
 
             {/* <!-- subscribe --> */}
             <div className="order-3 order-md-3 order-lg-2 col-md-12 col-lg-4">
@@ -93,7 +92,7 @@ const footer = () => {
                   aria-describedby="button-addon2"
                 />
                 <button
-                  className="btn btn-outline-warning m-2 px-5 py-2 fs-5 rounded-pill"
+                  className="btn btn-outline-danger m-2 px-5 py-2 fs-5 rounded-pill"
                   type="button"
                   id="button-addon2"
                 >
@@ -111,7 +110,8 @@ const footer = () => {
               <h4 className="mb-1 fa-2x mb-4">Social connection</h4>
               <ul className="list d-flex  align-items-center justify-content-between mt-3">
                 <li className="ml-4">
-                  <a class="fb-ic">
+                  <a 
+                   className="text-hover faceBg">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="30"
@@ -125,7 +125,7 @@ const footer = () => {
                   </a>
                 </li>
                 <li className="mr-4">
-                  <a href="#!" className="text-hover-instagram" id="GFG">
+                  <a href="#!" className="text-hover" id="GFG">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="30"
@@ -139,7 +139,7 @@ const footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#!" className="text-hover-twitter" id="GFG">
+                  <a href="#!" className="text-hover" id="GFG">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="30"
@@ -153,7 +153,7 @@ const footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#!" className="text-hover-whatsapp" id="GFG">
+                  <a href="#!" className="text-hover" id="GFG">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="30"
@@ -170,7 +170,7 @@ const footer = () => {
             </div>
           </div>
         </div>
-        <p class="mb-0 text-center text-white py-4 border-top border-secondary font-size-14">
+        <p class="mb-0 text-center text-dark py-4 border-top border-secondary font-size-14">
           Copyright 2021. Dead Lock Designer All Rights Reserved.
         </p>
       </footer>

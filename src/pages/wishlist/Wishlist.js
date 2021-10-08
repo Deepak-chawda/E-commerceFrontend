@@ -9,7 +9,7 @@ import {  toast } from 'react-toastify';
 
 const Wishlist = () => {
   // state for loader
-  const [Isloader, setIsloader] = useState(true);
+  const [Isloader, setIsloader] = useState(false);
   const history = useHistory();
   const [getWishlist, setWishlist] = useState([]);
   useEffect(() => {
@@ -33,10 +33,10 @@ const Wishlist = () => {
         }
       );
       console.log("response", response);
-      setIsloader(true)
+      setIsloader(false)
       setWishlist(response.data.data);
     } catch (error) {
-      setIsloader(true)
+      setIsloader(false)
       console.log("error=>", error.response);
       alert(error.response.data.error);
     }

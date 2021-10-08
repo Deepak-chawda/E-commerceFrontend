@@ -60,12 +60,6 @@ const Profile = () => {
               >
                 <i className="icon-heart icon-2x text-danger" ></i>Wishlist
               </Link>
-              <Link
-                className="list-group-item with-badge"
-                to="/profile/mytickets"
-              >
-                <i className="fa fa-tag icon-2x text-info"></i>My Tickets
-              </Link>
               <a
                 className="list-group-item"
                 data-bs-toggle="modal"

@@ -28,13 +28,13 @@ const Login = () => {
     setDetails({ ...userDetails, [name]: value });
   };
   const loginApi = async () => {
-    setIsloader(true);
     // console.log("userDetails=", userDetails)
     try {
       // alert massage for fill all field
       if (userDetails.email === "" || userDetails.password === "") {
         return alert("plz fill all required field");
       }
+      setIsloader(true);
       const response = await axios.post(
         "http://localhost:4000/api/sigin",
         userDetails

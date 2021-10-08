@@ -19,7 +19,7 @@ const customStyles = {
 };
 Modal.setAppElement("#root");
 
-function EditProductModal({ editId,getProductsApi }) {
+function EditProductModal({ editId, getProductsApi }) {
   const fetcheditId = editId._id;
   // console.log("fetcheditId for delete item",fetcheditId)
   // here is  add product by admin api
@@ -27,42 +27,60 @@ function EditProductModal({ editId,getProductsApi }) {
     productName: editId.productName,
     price: editId.price,
     discription: editId.discription,
-    picture: editId.picture,
+    picture:editId.picture,
+    // picture: editId.picture,
   });
+  console.log("picture",editProductAdmin.picture.public_id)
   // handle change
   const handleProductChange = (e) => {
     const { name, value } = e.target;
     setProductAdmin({ ...editProductAdmin, [name]: value });
     // console.log("edit prodict admin",editProductAdmin)
   };
-// update product api
-const updateProductsApi = async (editProductAdmin, setProductAdmin,closeModal,fetcheditId,getProductsApi) => {
-  console.log("update data",editProductAdmin)
-  console.log("id",fetcheditId)
-  const tokens = JSON.parse(localStorage.getItem("token"));
-  console.log(tokens)
-  try {
-    const response = await axios.put(
-      `http://localhost:4000/api/update/product?_id=${fetcheditId}`,
-      editProductAdmin,
-      {
-        headers: { 
-          Authorization: `Bearer ${tokens}`,
-        },
-      },
-    );
-        console.log("response", response);
-    closeModal();
-    getProductsApi();
-    // alert(response.data.msg);
-    toast.success(`${response.data.msg}✔️`, {
-      theme: "colored",
-    });
-  } catch (error) {
-    console.log("error=>", error.response);
-    alert(error.response.data.error);
+  // 
+  const updateSingleFile =(e)=>{
+    if(e.target.files[0]){
+      const reader = new FileReader()
+      reader.readAsDataURL(e.target.files[0])
+      reader.onloadend = ()=>{
+        setProductAdmin({ ...editProductAdmin,["picture"] : reader.result})
+      }
+    }
   }
-};
+  // update product api
+  const updateProductsApi = async (
+    editProductAdmin,
+    setProductAdmin,
+    closeModal,
+    fetcheditId,
+    getProductsApi
+  ) => {
+    console.log("update data", editProductAdmin);
+    // console.log("id", fetcheditId);
+    const tokens = JSON.parse(localStorage.getItem("token"));
+    // console.log(tokens);
+    // try {
+    //   const response = await axios.put(
+    //     `http://localhost:4000/api/update/product?_id=${fetcheditId}`,
+    //     editProductAdmin,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${tokens}`,
+    //       },
+    //     }
+    //   );
+    //   console.log("response", response);
+    //   closeModal();
+    //   getProductsApi();
+      // alert(response.data.msg);
+    //   toast.success(`${response.data.msg}✔️`, {
+    //     theme: "colored",
+    //   });
+    // } catch (error) {
+    //   console.log("error=>", error.response);
+    //   alert(error.response.data.error);
+    // }
+  };
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
     setIsOpen(true);
@@ -76,11 +94,9 @@ const updateProductsApi = async (editProductAdmin, setProductAdmin,closeModal,fe
       <a
         className="me-3 text-lg text-success"
         data-tip="Edit"
-        href="#/"
+        // href="#/"
         style={{ cursor: "pointer" }}
-        onClick={ 
-          openModal
-        }
+        onClick={openModal}
       >
         <ReactTooltip place="top" type="dark" effect="solid" />
         <svg
@@ -173,11 +189,11 @@ const updateProductsApi = async (editProductAdmin, setProductAdmin,closeModal,fe
                     </label>
                     <input
                       type="file"
-                      onChange={handleProductChange}
+                      onChange={updateSingleFile}
                       name="picture"
                       value={editProductAdmin.picture}
                       className="form-control py-2 px-1"
-                      autoComplete="off"
+                      // autoComplete="off"
                       // required
                     />
                   </div>
@@ -185,11 +201,17 @@ const updateProductsApi = async (editProductAdmin, setProductAdmin,closeModal,fe
                     <button
                       type="button"
                       onClick={() => {
-                        updateProductsApi(editProductAdmin,setProductAdmin, closeModal, fetcheditId,getProductsApi);
+                        updateProductsApi(
+                          editProductAdmin,
+                          setProductAdmin,
+                          closeModal,
+                          fetcheditId,
+                          getProductsApi
+                        );
                       }}
                       className="btn btn-color py-3"
                     >
-                    Edit
+                      Edit
                     </button>
                   </div>
                 </form>

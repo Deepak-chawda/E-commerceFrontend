@@ -17,8 +17,7 @@ const customStyles = {
   },
 };
 Modal.setAppElement("#root");
-
-function AddProductModal(props) {
+function  AddProductModal(props) {
   // console.log("hello")
 
   // here is  add product by admin api
@@ -26,24 +25,32 @@ function AddProductModal(props) {
     productName: "",
     price: "",
     discription: "",
-
-    picture: null,
+    picture: "",
   });
   // handle change
   const handleProductChange = (e) => {
     const { name, value } = e.target;
     setProductAdmin({ ...addProductAdmin, [name]: value });
   };
-
+  // handle bar for file upload
+  const uploadSingleFile = (e) => {
+    if (e.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onloadend = () => {
+        // console.log("reader result", reader.result);
+        setProductAdmin({ ...addProductAdmin, ["picture"] : reader.result });
+      };
+    }
+  };
+  // console.log("addProductAdmin",addProductAdmin)
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
     setIsOpen(true);
   }
-
   function closeModal() {
     setIsOpen(false);
   }
-
   return (
     <div>
       <button type="button" className="btn btn-info " onClick={openModal}>
@@ -140,7 +147,7 @@ function AddProductModal(props) {
                   </label>
                   <input
                     type="file"
-                    onChange={handleProductChange}
+                    onChange={uploadSingleFile}
                     name="picture"
                     className="form-control py-2 px-1"
                     autoComplete="off"
@@ -154,7 +161,8 @@ function AddProductModal(props) {
                       if (
                         addProductAdmin.productName === "" ||
                         addProductAdmin.price === "" ||
-                        addProductAdmin.discription === ""
+                        addProductAdmin.discription === "" ||
+                        addProductAdmin.picture === ""
                       ) {
                         return alert("plz fill all fields");
                       }
@@ -164,9 +172,17 @@ function AddProductModal(props) {
                         setProductAdmin
                       );
                     }}
-                    className="btn btn-color py-3"
+                    className="btn btn-color d-flex justify-content-center align-items-center"
                   >
                     Add
+                    {props.Isloader && (
+                        <div
+                          className="spinner-border text-primary m-1"
+                          role="status"
+                        >
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      )}
                   </button>
                 </div>
               </form>

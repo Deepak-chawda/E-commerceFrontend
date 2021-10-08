@@ -45,8 +45,8 @@ const AdminHome = () => {
     setProductAdmin
   ) => {
     const token = JSON.parse(localStorage.getItem("token"));
-
     try {
+      setIsloader(true);
       const response = await axios.post(
         "http://localhost:4000/api/add/product",
         addProductAdmin,
@@ -65,6 +65,7 @@ const AdminHome = () => {
         price: "",
         discription: "",
       });
+      setIsloader(false);
       closeModal();
       getProductsApi();
       toast.success(`${response.data.msg}✔️`, {
@@ -72,6 +73,7 @@ const AdminHome = () => {
       });
     } catch (error) {
       console.log("error", error.response);
+      setIsloader(false);
       // alert(error.response.data.error);
       toast.error(`${error.response.data.msg}'❌'`, {
         theme: "colored",
@@ -88,7 +90,7 @@ const AdminHome = () => {
             <div className="card p-0 m-0 pt-2 mb-4">
               <div className="table-responsive p-4">
                 <h2 className="">ADD PRODUCT ADMIN</h2>
-                <AddProductModal addProductApi={addProductApi} />
+                <AddProductModal addProductApi={addProductApi} Isloader={Isloader} />
               </div>
               <div className="card-body m-0 p-0 text-center">
                 <div className="table-responsive">
@@ -118,11 +120,11 @@ const AdminHome = () => {
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="text-center" colSpan="7">
+                      <td className="text-center border-bottom-0" colSpan="7">
                         {Isloader && (
                           <>
                             <tr
-                              className="spinner-grow text-primary"
+                              className="spinner-grow text-primary  "
                               style={{ width: "3rem", height: "3rem" }}
                               role="status"
                             >
@@ -142,7 +144,7 @@ const AdminHome = () => {
                               <td>
                                 <img
                                   className="card-table-img img-fluid me-3"
-                                  src={appleWatch}
+                                  src={item.picture ? item.picture:appleWatch}
                                   alt="product-img"
                                   width="100"
                                 />
@@ -168,8 +170,8 @@ const AdminHome = () => {
                         );
                       })
                     ) : (
-                      <tr>
-                        <td className=" text-danger text-center">
+                      <tr >
+                        <td className=" text-danger text-center border-bottom-0" colSpan="7">
                           <h3>No Data add yet</h3>
                         </td>
                       </tr>
