@@ -20,29 +20,40 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 function EditProductModal({ editId, getProductsApi }) {
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
+  function closeModal() {
+    setIsOpen(false);
+    setPreview(null);
+  }
   const fetcheditId = editId._id;
+  const cloudId = editId.cloudinary_id
+  // console.log("cloudId",cloudId)
   // console.log("fetcheditId for delete item",fetcheditId)
-  // here is  add product by admin api
+    // state for loader
+    const [Isloader, setIsloader] = useState(false);
+  const [preview, setPreview] = useState();
   const [editProductAdmin, setProductAdmin] = useState({
     productName: editId.productName,
     price: editId.price,
     discription: editId.discription,
     picture:editId.picture,
-    // picture: editId.picture,
   });
-  console.log("picture",editProductAdmin.picture.public_id)
+  // console.log("picture",editProductAdmin.picture.public_id)
   // handle change
   const handleProductChange = (e) => {
     const { name, value } = e.target;
     setProductAdmin({ ...editProductAdmin, [name]: value });
     // console.log("edit prodict admin",editProductAdmin)
   };
-  // 
   const updateSingleFile =(e)=>{
     if(e.target.files[0]){
       const reader = new FileReader()
       reader.readAsDataURL(e.target.files[0])
       reader.onloadend = ()=>{
+        setPreview(reader.result);
         setProductAdmin({ ...editProductAdmin,["picture"] : reader.result})
       }
     }
@@ -51,44 +62,39 @@ function EditProductModal({ editId, getProductsApi }) {
   const updateProductsApi = async (
     editProductAdmin,
     setProductAdmin,
-    closeModal,
     fetcheditId,
     getProductsApi
   ) => {
-    console.log("update data", editProductAdmin);
+    // console.log("update data", editProductAdmin);
     // console.log("id", fetcheditId);
     const tokens = JSON.parse(localStorage.getItem("token"));
     // console.log(tokens);
-    // try {
-    //   const response = await axios.put(
-    //     `http://localhost:4000/api/update/product?_id=${fetcheditId}`,
-    //     editProductAdmin,
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${tokens}`,
-    //       },
-    //     }
-    //   );
-    //   console.log("response", response);
-    //   closeModal();
-    //   getProductsApi();
+    try {
+      setIsloader(true);
+      const response = await axios.put(
+        `http://localhost:4000/api/update/product?_id=${fetcheditId}&cloudId=${cloudId}`,
+        editProductAdmin,
+        {
+          headers: {
+            Authorization: `Bearer ${tokens}`,
+          },
+        }
+      );
+      console.log("response", response);
+      closeModal();
+      setIsloader(false);
+      getProductsApi();
       // alert(response.data.msg);
-    //   toast.success(`${response.data.msg}✔️`, {
-    //     theme: "colored",
-    //   });
-    // } catch (error) {
-    //   console.log("error=>", error.response);
-    //   alert(error.response.data.error);
-    // }
+      toast.success(`${response.data.msg}✔️`, {
+        theme: "colored",
+      });
+    } catch (error) {
+      console.log("error=>", error);
+      setIsloader(false);
+      // alert(error.response.data.error);
+    }
   };
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
+  
   return (
     <>
       <a
@@ -132,11 +138,22 @@ function EditProductModal({ editId, getProductsApi }) {
           <div className="container ">
             <div className="row align-items-center  my-auto mx-auto">
               <div className="col-md-6 col-lg-6 order-md-1 ">
+              {preview ? (
+                <>
+                  <p className="p-0 m-0">Pre-view</p>
+                  <img
+                    src={preview}
+                    alt="image"
+                    className="img-fluid  mw-lg-130 mb-6 mb-md-0 mb-2"
+                  />
+                </>
+              ) : (
                 <img
                   src={addProduct}
-                  alt=""
+                  alt="image"
                   className="img-fluid  mw-lg-130 mb-6 mb-md-0 mb-2"
                 />
+              )}
               </div>
               <div className="col-md-6 col-lg-6 order-md-2">
                 <h1 className="text-center">Edit Product</h1>
@@ -191,7 +208,6 @@ function EditProductModal({ editId, getProductsApi }) {
                       type="file"
                       onChange={updateSingleFile}
                       name="picture"
-                      value={editProductAdmin.picture}
                       className="form-control py-2 px-1"
                       // autoComplete="off"
                       // required
@@ -203,15 +219,26 @@ function EditProductModal({ editId, getProductsApi }) {
                       onClick={() => {
                         updateProductsApi(
                           editProductAdmin,
-                          setProductAdmin,
+                          // setProductAdmin,
                           closeModal,
                           fetcheditId,
                           getProductsApi
                         );
                       }}
-                      className="btn btn-color py-3"
+                      className="btn btn-color d-flex justify-content-center align-items-center py-2"
+                      disabled={Isloader}
+                      
                     >
                       Edit
+                      {Isloader && (
+                      <div
+                        className="spinner-border text-primary m-1"
+                        role="status"
+                        // style={{width: "50px;", height: "50px;"}}
+                      >
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    )}
                     </button>
                   </div>
                 </form>

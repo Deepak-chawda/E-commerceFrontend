@@ -42,23 +42,6 @@ const ForgetPassModal = () => {
                 SEND
               </button>
             </div>
-
-            {/* <div className="modal-footer border-top-0">
-              <button
-                type="button"
-                className="btn btn-danger"
-                data-bs-dismiss="modal"
-                // onClick={() => {
-                //   localStorage.clear();
-                //   history.push("/");
-                //   toast.success("LogOut Successfull 👍", {
-                //     theme: "colored",
-                //   });
-                // }}
-              >
-                Conform
-              </button> */}
-            {/* </div> */}
           </div>
         </div>
       </div>

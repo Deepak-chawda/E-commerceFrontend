@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import ReactTooltip from "react-tooltip";
@@ -14,25 +14,27 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
   },
 };
-
-// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement("#root");
 
-function DeleteProductAdmin({itemId,getProductsApi}) {
-  // console.log("item id =",itemId)
+function DeleteProductAdmin({itemId,getProductsApi ,itemimage}) {
+  //  state for loader
+  const [Isloader, setIsloader] = useState(false);
+  // console.log("item cloudnary=",itemimage.cloudinary_id)
   const deleteProductsApis = async (itemId) => {
     // console.log("itemId=",itemId)
     const token = JSON.parse(localStorage.getItem("token"));
     try {
+      setIsloader(true);
       const response = await axios.delete(
-        `http://localhost:4000/api/delete/product?_id=${itemId}`,
+        `http://localhost:4000/api/delete/product?_id=${itemId}&imgId=${itemimage.cloudinary_id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      console.log("response", response);
+      // console.log("response", response);
+      setIsloader(false);
       closeModal();
       getProductsApi();
       toast.success(`${response.data.msg}✔️`, {
@@ -43,6 +45,7 @@ function DeleteProductAdmin({itemId,getProductsApi}) {
       // alert(response.data.msg)
     } catch (error) {
       console.log("error", error.response);
+      setIsloader(false);
       // alert(error.response.data.error);
       toast.success(`${error.response.data.msg}'❌'`, {
         theme: "colored",
@@ -93,10 +96,9 @@ function DeleteProductAdmin({itemId,getProductsApi}) {
       >
         <div className=" text-center">
           <button
-            className="absolute bg-white border-4 mt-0  rounded-circle fa-4x text-danger border-danger px-4"
-            onClick={closeModal}
+            className="text-danger border-0  bg-white"
           >
-            ×
+           <i class="icon-info-sign icon-4x"></i>
           </button>
 
           <h4 className="modal-title w-100">Are you sure?</h4>
@@ -110,9 +112,19 @@ function DeleteProductAdmin({itemId,getProductsApi}) {
           <button type="button" className="btn btn-danger m-2"
           onClick={()=>{
             deleteProductsApis(itemId) 
+            
           }} 
+          disabled={Isloader}
            >
-            Delete
+          
+            {Isloader ? (
+                      <div
+                        className="  spinner-border spinner-border-sm  mx-4"
+                        role="status"
+                      >
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    ): "Delete"}
           </button>
         </div>
       </Modal>

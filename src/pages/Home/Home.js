@@ -204,8 +204,7 @@ const Home = () => {
               </div>
             </>
           )}
-        <div className="d-flex flex-wrap text-center justify-content-center m-2">
-      
+        <div className="d-flex flex-wrap justify-content-center text-center ">
           {/*cards*/}
           {getUserData && getUserData.length !== 0 ? (
             getUserData.map((item) => {
@@ -219,7 +218,6 @@ const Home = () => {
             <h5 className=" text-center text-danger m-2">No Product added by admin yet</h5>
           )}
         </div>
-       
         <div className="row featurette">
           <div className="col-md-7 order-md-2">
             <h2 className="featurette-heading">

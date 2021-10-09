@@ -6,7 +6,7 @@ import MainProfile from "../profile/MainProfile";
 import LogOutModel from "../../shared/header/LogOutModel";
 import "./profile.css";
 import { Link } from "react-router-dom";
-import dc from "../images/dc.jpg";
+// import dc from "../images/dc.jpg";
 import avatarImage from "../images/avatar1.svg"
 
 const Profile = () => {
@@ -30,9 +30,8 @@ const Profile = () => {
                 </div>
               </div>
               <div className="user-info zIndex">
-                <div className="user-avatar">
-                  {/* <a className="edit-avatar" href="#/"></a> */}
-                  <img src={proName.profilePic===" " ? avatarImage : dc} alt="User" />
+                <div className="user-avatar playWH">
+                  <img src={proName?.profilePic ?proName.profilePic : avatarImage} alt="User"  />
                 </div>
                 <div className="user-data">
                   <h6>Hii.....</h6>

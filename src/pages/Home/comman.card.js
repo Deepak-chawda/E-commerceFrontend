@@ -82,7 +82,7 @@ const CommanCard = ({ Allitem }) => {
         }
       );
       setIsloaderO(false);
-      toast.info(`${response.data.msg}❗`, {
+      toast.success(`${response.data.msg}❗`, {
         theme: "colored",
       });
       console.log("response", response);
@@ -98,9 +98,9 @@ const CommanCard = ({ Allitem }) => {
   };
   return (
     <>
-      <div className="card mb-3 m-3  " style={{ maxWidth: " 400px" }}>
+      <div className="card col-xl-4 col-lg-4 col-md-12 mb-3 m-2" style={{ maxWidth: " 400px"}}>
         <div className="row g-0 hover-shadow-lg hover-translate-y-n10">
-          <div className="col-md-6 col-sm-5">
+          <div className="col-md-6 col-sm-6 align-content-center">
             <img
               src={
                 Allitem.picture

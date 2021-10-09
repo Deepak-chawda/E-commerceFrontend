@@ -3,22 +3,54 @@
   background-repeat: no-repeat;
 }
 .faceBg{
+  background-color: white;
+  padding: 8px;
+  /* color: blue; */
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 3px 10px rgba(0,0,0,.25);
+}
+.md li:hover{
+  transform: scale(1.1)
+}
+ /* .faceBg:hover {
+  color:white;
   background-color: blue;
-  padding: 10px;
-  color: white;
+} */
+.instaBg{
+  background: #d6249f;
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+  box-shadow: 0px 3px 10px rgba(0,0,0,.25);
+  padding: 8px;
+  color: #fff;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-/* .text-hover .bi {
-  color: white;
-  background-color: blue;
-} */
- .text-hover .bi:hover {
-  color: rgb(60, 255, 0);
-  border-bottom: 3px solid;
+.tweetBg{
+  background-color : rgb(29,161,242);
+ box-shadow: 0px 3px 10px rgba(0,0,0,.25);
+  padding: 8px;
+  color: #fff;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+.whatsappBg{
+  background-color : rgb(37, 211, 102);
+ box-shadow: 0px 3px 10px rgba(0,0,0,.25);
+  padding: 8px;
+  color: #fff;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .mldo li {
   margin-left: 20px;
 }

@@ -21,8 +21,12 @@ const customStyles = {
 };
 Modal.setAppElement("#root");
 function EditUserProfile() {
-  
+  // state for loader
+  const [Isloader, setIsloader] = useState(false);
+  const [preview, setPreview] = useState();
+
   const localUser = JSON.parse(localStorage.getItem("userDetails"));
+
   const [editProfileUser, setProfileUser] = useState({
     userName: localUser.userName,
     email: localUser.email,
@@ -30,30 +34,45 @@ function EditUserProfile() {
     contact: localUser.contact,
     profilePic: localUser.profilePic,
   });
+  const cloudId = localUser.cloudinary_id;
+  console.log("cloudId=",cloudId)
   // handle change
   const handleProductChange = (e) => {
     const { name, value } = e.target;
     setProfileUser({ ...editProfileUser, [name]: value });
   };
+  // handle bar for file upload
+  const uploadSingleFile = (e) => {
+    if (e.target.files[0]) {
+      const reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onloadend = () => {
+        // console.log("reader result", reader.result);
+        setPreview(reader.result);
+        setProfileUser({ ...editProfileUser, ["profilePic"]: reader.result });
+      };
+    }
+  };
+  // console.log("editProfileUser",editProfileUser)
   // call edit user details Api
   const EditUserProfileApi = async (id, editProfileUser, closeModal) => {
     try {
+      setIsloader(true);
       const response = await axios.put(
-        `http://localhost:4000/api/editPofile/details?_id=${id}`,
+        `http://localhost:4000/api/editPofile/details?_id=${id}&cloudId=${cloudId}`,
         editProfileUser
       );
       // console.log("update user details data", response);
       // alert(response.data.msg)
-      localStorage.setItem(
-        "userDetails",
-        JSON.stringify(response.data.data)
-      );
+      localStorage.setItem("userDetails", JSON.stringify(response.data.data));
+      setIsloader(false);
       closeModal();
       toast.success(`${response.data.msg}✔️`, {
         theme: "colored",
       });
     } catch (error) {
       console.log("error=>", error.response);
+      setIsloader(false);
       toast.error(`${error.response.data.msg}'❌'`, {
         theme: "colored",
       });
@@ -73,15 +92,7 @@ function EditUserProfile() {
         className="btn btn-color text-dark"
         data-tip="Edit profile"
         href="#/"
-        onClick={
-          openModal
-          //   setProductAdmin({...editProductAdmin,
-          //     ["productName"]:itemId.productName,
-          //     ["price"]:itemId.price,
-          //     ["discription"]:itemId.discription,
-          //     ["picture"]: itemId.picture
-          // })
-        }
+        onClick={openModal}
       >
         Edit profile
         <ReactTooltip place="top" type="dark" effect="solid" />
@@ -98,7 +109,22 @@ function EditUserProfile() {
             {/* align-items-center  */}
             <div className="row align-items-center mx-auto p-0">
               <div className=" col-md-6 col-lg-6	d-none d-lg-block d-md-none">
-                <img src={addProduct} alt="" className="img-fluid" />
+                {preview ? (
+                  <>
+                    <p className="p-0 m-0">Pre-view</p>
+                    <img
+                      src={preview}
+                      alt="image"
+                      className="img-fluid  mw-lg-130 mb-6 mb-md-0 mb-2"
+                    />
+                  </>
+                ) : (
+                  <img
+                    src={addProduct}
+                    alt="image"
+                    className="img-fluid  mw-lg-130 mb-6 mb-md-0 mb-2"
+                  />
+                )}
               </div>
               <div className="col-md-12 col-lg-6">
                 <div className="d-flex justify-content-end align-items-end">
@@ -173,9 +199,8 @@ function EditUserProfile() {
                     </label>
                     <input
                       type="file"
-                      onChange={handleProductChange}
-                      name="picture"
-                      value={editProfileUser.picture}
+                      onChange={uploadSingleFile}
+                      name="profilePic"
                       className="form-control py-2 px-1"
                       autoComplete="off"
                       required
@@ -192,8 +217,17 @@ function EditUserProfile() {
                         );
                       }}
                       className="btn btn-color py-3 mb-4"
+                      disabled={Isloader}
                     >
                       Edit Profile
+                      {Isloader && (
+                        <div
+                          className="spinner-border text-primary m-1"
+                          role="status"
+                        >
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      )}
                     </button>
                   </div>
                 </form>

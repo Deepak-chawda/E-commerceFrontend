@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../signup/signup.css";
 import signup1 from "../images/signup1.svg";
-import {  toast } from 'react-toastify';
+import { toast } from "react-toastify";
 const Signup = () => {
   //loader state
   const [Isloader, setIsloader] = useState(false);
@@ -16,10 +16,11 @@ const Signup = () => {
   const [userDetails, setDetails] = useState({
     email: "",
     password: "",
-    userName: " ",
-    address: " ",
-    contact: " ",
-    profilePic:" "
+    userName: "",
+    address: "",
+    contact: "",
+    profilePic: "",
+    cloudinary_id: null
   });
   // handle Change
   const handlesignupChange = (e) => {
@@ -35,8 +36,15 @@ const Signup = () => {
         userDetails.password === "" ||
         userDetails.userName === ""
       ) {
-        return toast.info("Plz fill all fields", {
-          theme: "colored"
+        return toast.error("Plz fill all fields", {
+          theme: "colored",
+        });
+      }
+
+      if(userDetails.password.length<=9)
+      {
+        return toast.error("password must be 8 charactor", {
+          theme: "colored",
         });
       }
       setIsloader(true);
@@ -45,10 +53,10 @@ const Signup = () => {
         userDetails
       );
       setIsloader(false);
-      console.log("response =",response)
+      console.log("response =", response);
       toast.success("Signup Successfull 👍", {
-        theme: "colored"
-      })
+        theme: "colored",
+      });
       history.push("/login");
     } catch (error) {
       setIsloader(false);
@@ -72,7 +80,7 @@ const Signup = () => {
                 />
               </div>
               <div className="col-12 col-md-7 col-lg-6 order-md-1">
-                <form className="row g-3">
+                <form className=" input-group row g-3">
                   <div className="col-md-12">
                     <label
                       htmlFor="inputUserName"
@@ -120,37 +128,33 @@ const Signup = () => {
                     >
                       Password
                     </label>
+                    {/* <div class="input-group-text"> */}
                     <input
                       type="password"
                       name="password"
                       onChange={handlesignupChange}
+                      minLength="8"
                       className="form-control py-3 px-1"
                       id="inputPassword4"
                       autoComplete="off"
                       data-bs-toggle="collapse"
                       data-bs-target="#collapseExample"
                       aria-controls="collapseExample2"
+                      required
                     />
-                    <p
-                      className="collapse mb-0 text-danger"
-                      id="collapseExample2"
+                   {userDetails.password.length>= 8 && ( <p
+                      className="mb-0 text-success"
+                      id="collapseExample"
                     >
-                      Password must be 8 charactor !
-                    </p>
-                  </div>
-                  <div className="col-md-12">
-                    <label
-                      htmlFor="inputConformPass"
-                      className="form-label fa-1x fw-bold"
+                      Strong password
+                    </p>) 
+                    || ( <p
+                      className=" collapse mb-0 text-danger"
+                      id="collapseExample"
                     >
-                      Conform password
-                    </label>
-                    <input
-                      type="password"
-                      className="form-control py-3 px-1"
-                      autoComplete="off"
-                      id="inputConformPass"
-                    />
+                    Password must be 8 charactor !
+                    </p>)
+                    }
                   </div>
                   <div className="col-12">
                     <div className="form-check">
@@ -333,7 +337,6 @@ const Signup = () => {
                       onClick={signupApi}
                       className="btn btn-color fs-5 fw-bold py-3  d-flex justify-content-center align-items-center"
                       disabled={Isloader}
-                      // disabled
                     >
                       SIGN UP
                       {Isloader && (

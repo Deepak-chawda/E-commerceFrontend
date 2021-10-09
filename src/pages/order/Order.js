@@ -58,7 +58,7 @@ const Order = () => {
       toast.success("Deleted order  Successfull👍", {
         theme: "colored",
       });
-      alert(response.data.msg);
+      // alert(response.data.msg);
     } catch (error) {
       console.log("error", error.response);
     }
@@ -109,7 +109,7 @@ const Order = () => {
                                 <td>
                                   <img
                                     className="card-table-img img-fluid me-3"
-                                    src={appleWatch}
+                                    src={item?.product?.picture ? item?.product?.picture : appleWatch}
                                     alt="product-img"
                                     width="100"
                                   />

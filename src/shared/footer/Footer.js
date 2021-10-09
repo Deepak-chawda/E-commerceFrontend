@@ -108,10 +108,10 @@ const footer = () => {
               data-select2-id="16"
             >
               <h4 className="mb-1 fa-2x mb-4">Social connection</h4>
-              <ul className="list d-flex  align-items-center justify-content-between mt-3">
+              <ul className="list d-flex  align-items-center justify-content-between mt-3  md">
                 <li className="ml-4">
                   <a 
-                   className="text-hover faceBg">
+                   className=" faceBg">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="30"
@@ -125,7 +125,7 @@ const footer = () => {
                   </a>
                 </li>
                 <li className="mr-4">
-                  <a href="#!" className="text-hover" id="GFG">
+                  <a href="#!" className=" instaBg" >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="30"
@@ -139,7 +139,7 @@ const footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#!" className="text-hover" id="GFG">
+                  <a href="#!" className="tweetBg">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="30"
@@ -153,7 +153,7 @@ const footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#!" className="text-hover" id="GFG">
+                  <a href="#!" className="whatsappBg" >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="30"
@@ -170,9 +170,11 @@ const footer = () => {
             </div>
           </div>
         </div>
-        <p class="mb-0 text-center text-dark py-4 border-top border-secondary font-size-14">
+        <div>
+        <p class="mb-0 text-center text-dark  py-4 border-top border-secondary font-size-14">
           Copyright 2021. Dead Lock Designer All Rights Reserved.
         </p>
+        </div>
       </footer>
     </>
   );

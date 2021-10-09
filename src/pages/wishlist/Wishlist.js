@@ -137,7 +137,7 @@ const Wishlist = () => {
                                 <td>
                                   <img
                                     className="card-table-img img-fluid me-3"
-                                    src={appleWatch}
+                                    src={item.product.picture ?item.product.picture : appleWatch}
                                     alt="product-img"
                                     width="100"
                                   />

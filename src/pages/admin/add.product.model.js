@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import axios from "axios";
 import Modal from "react-modal";
 import "../admin/admin.css";
 import addProduct from "../images/addProduct.svg";
-// import {  toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 
 const customStyles = {
   content: {
@@ -17,9 +18,10 @@ const customStyles = {
   },
 };
 Modal.setAppElement("#root");
-function  AddProductModal(props) {
-  // console.log("hello")
-
+function AddProductModal({getProductsApi }) {
+  // state for loader
+  const [Isloader, setIsloader] = useState(false);
+  const [preview, setPreview] = useState();
   // here is  add product by admin api
   const [addProductAdmin, setProductAdmin] = useState({
     productName: "",
@@ -39,17 +41,61 @@ function  AddProductModal(props) {
       reader.readAsDataURL(e.target.files[0]);
       reader.onloadend = () => {
         // console.log("reader result", reader.result);
-        setProductAdmin({ ...addProductAdmin, ["picture"] : reader.result });
+        setPreview(reader.result);
+        setProductAdmin({ ...addProductAdmin, ["picture"]: reader.result });
       };
     }
   };
-  // console.log("addProductAdmin",addProductAdmin)
+  // add product api
+  const addProductApi = async (
+    // addProductAdmin,
+    // closeModal,
+    // setProductAdmin
+  ) => {
+    const token = JSON.parse(localStorage.getItem("token"));
+    try {
+      setIsloader(true);
+      const response = await axios.post(
+        "http://localhost:4000/api/add/product",
+        addProductAdmin,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // console.log("response", response);
+      // alert(response.data.msg);
+      // remove value after add product
+      setProductAdmin({
+        ...addProductAdmin,
+        productName: "",
+        price: "",
+        discription: "",
+        picture: "",
+      });
+      setIsloader(false);
+      closeModal();
+      getProductsApi();
+      toast.success(`${response.data.msg}✔️`, {
+        theme: "colored",
+      });
+    } catch (error) {
+      console.log("error", error.response);
+      setIsloader(false);
+      // alert(error.response.data.error);
+      toast.error(`${error.response.data.msg}'❌'`, {
+        theme: "colored",
+      });
+    }
+  };
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
     setIsOpen(true);
   }
   function closeModal() {
     setIsOpen(false);
+    setPreview(null);
   }
   return (
     <div>
@@ -93,11 +139,22 @@ function  AddProductModal(props) {
         <div className="container ">
           <div className="row align-items-center  my-auto mx-auto">
             <div className="col-md-6 col-lg-6 order-md-1 ">
-              <img
-                src={addProduct}
-                alt=""
-                className="img-fluid  mw-lg-130 mb-6 mb-md-0 mb-2"
-              />
+              {preview ? (
+                <>
+                  <p className="p-0 m-0">Pre-view</p>
+                  <img
+                    src={preview}
+                    alt="image"
+                    className="img-fluid  mw-lg-130 mb-6 mb-md-0 mb-2"
+                  />
+                </>
+              ) : (
+                <img
+                  src={addProduct}
+                  alt="image"
+                  className="img-fluid  mw-lg-130 mb-6 mb-md-0 mb-2"
+                />
+              )}
             </div>
             <div className="col-md-6 col-lg-6 order-md-2">
               <h2 className="text-center">Add More New Product</h2>
@@ -164,25 +221,28 @@ function  AddProductModal(props) {
                         addProductAdmin.discription === "" ||
                         addProductAdmin.picture === ""
                       ) {
-                        return alert("plz fill all fields");
+                        return  toast.error(`${"plz fill all require fields"} ❗`, {
+                          theme: "colored",
+                        });
                       }
-                      props.addProductApi(
-                        addProductAdmin,
-                        closeModal,
-                        setProductAdmin
+                      addProductApi(
+                        // addProductAdmin,
+                        // closeModal,
+                        // setProductAdmin
                       );
                     }}
-                    className="btn btn-color d-flex justify-content-center align-items-center"
+                    className="btn btn-color d-flex justify-content-center align-items-center py-3"
+                    disabled={Isloader}
                   >
                     Add
-                    {props.Isloader && (
-                        <div
-                          className="spinner-border text-primary m-1"
-                          role="status"
-                        >
-                          <span className="visually-hidden">Loading...</span>
-                        </div>
-                      )}
+                    {Isloader && (
+                      <div
+                        className="spinner-border text-primary m-1"
+                        role="status"
+                      >
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    )}
                   </button>
                 </div>
               </form>
