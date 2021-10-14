@@ -1,18 +1,17 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 // install axios and require here
 import axios from "axios";
 // here use hook for routing page
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../signup/signup.css";
-import loginImg from "../images/loginImg.svg";
-import {  toast } from 'react-toastify';
+import loginImg from "../images/ninja.png";
+import { toast } from "react-toastify";
 import ForgetPassModal from "./ForgetPassModal";
 import UserDetailContext from "../../useContext/TokenContext";
 
-
 const Login = () => {
-  const userDetailsd = useContext(UserDetailContext)
+  const userDetailsd = useContext(UserDetailContext);
   // state for loader
   const [Isloader, setIsloader] = useState(false);
   // here call useHistory function for using..use to routing for btw diff componets
@@ -40,11 +39,11 @@ const Login = () => {
         userDetails
       );
       setIsloader(false);
-      userDetailsd.setcontextChange("hiiiii")
+      userDetailsd.setcontextChange("hiiiii");
       // console.log("response =",response)
       toast.success(`${response.data.msg} 👍`, {
-        theme: "colored"
-      })
+        theme: "colored",
+      });
       localStorage.setItem(
         "userDetails",
         JSON.stringify(response.data.data.user)
@@ -62,31 +61,30 @@ const Login = () => {
       // error showing in front end
       // alert(error.response.data.error);
       toast.error(`${error.response.data.error}`, {
-        theme: "colored"
-      })
-
+        theme: "colored",
+      });
     }
   };
   return (
     <>
       <section className="py-5 ">
         <div className="container ">
-          <h2 className="text-center pb-2">Log in </h2>
-          <div className="borderbox border border-green rounded-lg p-sm-5 p-3 mt-3 waveIamage">
+          <div className="py-3 p-sm-5 p-3">
             <div className="row align-items-center mx-auto m-4">
-              <div className=" col-12 col-md-5 col-lg-6 order-md-2">
+              <div className=" col-md-6 col-lg-7 order-md-1">
                 <img
                   src={loginImg}
                   alt=""
-                  className="img-fluid mw-md-150 mw-lg-130 mb-6 mb-md-0 mb-2 animat"
+                  className="img-fluid mw-md-150 mw-lg-130 mb-6 mb-md-0 mb-2"
                 />
               </div>
-              <div className="col-12 col-md-7 col-lg-6 order-md-1">
+              <div className="col-md-6 col-lg-5 order-md-2">
+                <h2 className="text-center pb-2">Log in </h2>
                 <form className="row g-3">
                   <div className="col-md-12">
                     <label
                       htmlFor="inputEmail4"
-                      className="form-label fa-1x fw-bold"
+                      className="form-label fa-1x fw-bold  mx-3"
                     >
                       Email
                     </label>
@@ -94,7 +92,7 @@ const Login = () => {
                       type="email"
                       name="email"
                       onChange={handleloginChange}
-                      className="form-control py-3 px-1"
+                      className="form-control py-3 px-4 rounded-pill "
                       id="inputEmail4"
                       required
                     />
@@ -102,7 +100,7 @@ const Login = () => {
                   <div className="col-md-12">
                     <label
                       htmlFor="inputPassword4"
-                      className="form-label fa-1x fw-bold"
+                      className="form-label fa-1x fw-bold mx-3"
                     >
                       Password
                     </label>
@@ -110,7 +108,7 @@ const Login = () => {
                       type="password"
                       onChange={handleloginChange}
                       name="password"
-                      className="form-control py-3 px-1"
+                      className="form-control py-3 px-3 rounded-pill"
                       autoComplete="off"
                       required
                     />
@@ -119,18 +117,19 @@ const Login = () => {
                     <button
                       type="button"
                       onClick={loginApi}
-                      className="btn btn-color fs-5 fw-bold py-3  d-flex justify-content-center align-items-center"
+                      className="btn btn-color fs-5 fw-bold py-3  d-flex justify-content-center align-items-center rounded-pill"
                       disabled={Isloader}
                     >
                       LOG IN
                       {Isloader && (
                         <div
-                          className="spinner-border text-primary m-1"
+                          className="spinner-border text-primary m-1" 
+                          style={{ width: "25px", height: "25px" }}
                           role="status"
                         >
                           <span className="visually-hidden">Loading...</span>
                         </div>
-                      )}
+                     )} 
                     </button>
                   </div>
                   <div className="text-center">
@@ -148,13 +147,12 @@ const Login = () => {
                       <a
                         className="text-danger text-decoration-none"
                         data-bs-toggle="modal"
-                         data-bs-target="#exampleModal"
-                         href="#/"
+                        data-bs-target="#exampleModal"
+                        href="#/"
                       >
                         Forget password ?
-                        
                       </a>
-                      <ForgetPassModal/>
+                      <ForgetPassModal />
                     </div>
                   </div>
                 </form>

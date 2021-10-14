@@ -1,7 +1,7 @@
 import "../Home/home.css";
 import phoneImage from "../../pages/images/front_Iphone.jpg";
 // import secondimg from "../images/offer.jpg";
-import img2 from "../images/iphone2.jpeg";
+import img2 from "../images/iphone8.jpeg";
 import img3 from "../images/iphone3.jpeg";
 import img4 from "../images/iphone4.jpeg";
 import img5 from "../images/iphone5.jpeg";
@@ -204,7 +204,7 @@ const Home = () => {
               </div>
             </>
           )}
-        <div className="d-flex flex-wrap justify-content-center text-center ">
+        <div className="d-flex flex-wrap text-center justify-content-center">
           {/*cards*/}
           {getUserData && getUserData.length !== 0 ? (
             getUserData.map((item) => {

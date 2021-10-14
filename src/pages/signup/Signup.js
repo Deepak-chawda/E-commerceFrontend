@@ -41,7 +41,7 @@ const Signup = () => {
         });
       }
 
-      if(userDetails.password.length<=9)
+      if(userDetails.password.length<=8)
       {
         return toast.error("password must be 8 charactor", {
           theme: "colored",
@@ -67,24 +67,25 @@ const Signup = () => {
   };
   return (
     <>
-      <section className="py-5 ">
+\
         <div className="container ">
-          <h2 className="text-center pb-2">Sign up Form</h2>
-          <div className="borderbox border border-green rounded-lg p-sm-5 p-3 mt-3 waveIamage ">
+          
+          <div className="py-4 p-sm-5">
             <div className="row align-items-center mx-auto m-4">
-              <div className=" col-12 col-md-5 col-lg-6 order-md-2 tex">
+              <div className="col-md-6 col-lg-7 order-md-1 pe-4">
                 <img
                   src={signup1}
                   alt=""
-                  className="img-fluid mw-md-150 mw-lg-130 mb-6 mb-md-0 mb-2 animat"
+                  className="img-fluid mw-md-150 mw-lg-130 mb-6 mb-md-0 mb-2"
                 />
               </div>
-              <div className="col-12 col-md-7 col-lg-6 order-md-1">
+              <div className="col-md-6 col-lg-5 order-md-2">
+              <h2 className="text-center pb-2">Sign up Form</h2>
                 <form className=" input-group row g-3">
                   <div className="col-md-12">
                     <label
                       htmlFor="inputUserName"
-                      className="form-label fa-1x fw-bold"
+                      className="form-label fa-1x fw-bold mx-3"
                     >
                       User Name
                     </label>
@@ -92,14 +93,14 @@ const Signup = () => {
                       type="string"
                       name="userName"
                       onChange={handlesignupChange}
-                      className="form-control py-3 px-1"
+                      className="form-control py-3 px-3 rounded-pill"
                       id="inputUserName"
                     />
                   </div>
                   <div className="col-md-12">
                     <label
                       htmlFor="inputEmail4"
-                      className="form-label fa-1x fw-bold"
+                      className="form-label fa-1x fw-bold mx-3"
                     >
                       Email
                     </label>
@@ -107,7 +108,7 @@ const Signup = () => {
                       type="email"
                       name="email"
                       onChange={handlesignupChange}
-                      className="form-control py-3 px-1"
+                      className="form-control py-3 px-3 rounded-pill"
                       id="inputEmail4"
                       data-bs-toggle="collapse"
                       data-bs-target="#collapseExample1"
@@ -124,17 +125,16 @@ const Signup = () => {
                   <div className="col-md-12">
                     <label
                       htmlFor="inputPassword4"
-                      className="form-label fa-1x fw-bold"
+                      className="form-label fa-1x fw-bold mx-3"
                     >
                       Password
                     </label>
-                    {/* <div class="input-group-text"> */}
                     <input
                       type="password"
                       name="password"
                       onChange={handlesignupChange}
                       minLength="8"
-                      className="form-control py-3 px-1"
+                      className="form-control py-3 px-3 rounded-pill"
                       id="inputPassword4"
                       autoComplete="off"
                       data-bs-toggle="collapse"
@@ -157,7 +157,7 @@ const Signup = () => {
                     }
                   </div>
                   <div className="col-12">
-                    <div className="form-check">
+                    <div className="form-check mx-3">
                       <input
                         className="form-check-input"
                         type="checkbox"
@@ -168,7 +168,6 @@ const Signup = () => {
                         &nbsp; I agree to all &nbsp;
                       </label>
                       <a
-                        // data-target="#terms"
                         data-bs-target="#exampleModal2"
                         data-bs-toggle="modal"
                         data-backdrop="static"
@@ -335,16 +334,16 @@ const Signup = () => {
                     <button
                       type="button"
                       onClick={signupApi}
-                      className="btn btn-color fs-5 fw-bold py-3  d-flex justify-content-center align-items-center"
+                      className="btn btn-color fs-5 fw-bold py-3  d-flex justify-content-center align-items-center rounded-pill"
                       disabled={Isloader}
                     >
                       SIGN UP
                       {Isloader && (
                         <div
-                          class="spinner-border text-primary m-1"
+                          className="spinner-border text-primary m-1"
                           role="status"
                         >
-                          <span class="visually-hidden">Loading...</span>
+                          <span className="visually-hidden">Loading...</span>
                         </div>
                       )}
                     </button>
@@ -365,7 +364,6 @@ const Signup = () => {
             </div>
           </div>
         </div>
-      </section>
     </>
   );
 };

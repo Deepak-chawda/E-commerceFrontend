@@ -98,7 +98,7 @@ function DeleteProductAdmin({itemId,getProductsApi ,itemimage}) {
           <button
             className="text-danger border-0  bg-white"
           >
-           <i class="icon-info-sign icon-4x"></i>
+           <i className="icon-info-sign icon-4x"></i>
           </button>
 
           <h4 className="modal-title w-100">Are you sure?</h4>

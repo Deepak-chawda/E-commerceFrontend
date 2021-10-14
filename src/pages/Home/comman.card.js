@@ -98,23 +98,24 @@ const CommanCard = ({ Allitem }) => {
   };
   return (
     <>
-      <div className="card col-xl-4 col-lg-4 col-md-12 mb-3 m-2" style={{ maxWidth: " 400px"}}>
+      <div className="card col-xl-3 col-lg-4 col-md-6 mb-3 m-2" style={{ maxWidth: " 280px"}}>
         <div className="row g-0 hover-shadow-lg hover-translate-y-n10">
-          <div className="col-md-6 col-sm-6 align-content-center">
+          <div className="col-md-12 col-sm-12 align-content-center">
             <img
               src={
                 Allitem.picture
                   ? Allitem.picture
                   : "https://cdn.pixabay.com/photo/2016/12/28/19/12/iphone-1936818_960_720.png"
               }
-              className="img-fluid rounded-start p-2 "
+              className="img-fluid playhieght"
               alt="img"
+            
             />
           </div>
-          <div className="col-md-6">
-            <div className="card-body">
+          {/* <div className="col-md-6"> */}
+            <div className="card-body p-2">
               <h5 className="card-title">{newProductName}</h5>
-              <h4 className="card-title rup">{Allitem.price}</h4>
+              <h5 className="card-title rup">{Allitem.price}</h5>
               <p className="card-text">{newdiscripName}</p>
               <div className="d-grid gap-2">
                 <button
@@ -157,7 +158,7 @@ const CommanCard = ({ Allitem }) => {
                 </button>
               </div>
             </div>
-          </div>
+          {/* </div> */}
         </div>
       </div>
     </>

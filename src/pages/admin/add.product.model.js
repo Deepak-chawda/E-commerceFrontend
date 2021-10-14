@@ -7,6 +7,7 @@ import {  toast } from 'react-toastify';
 
 const customStyles = {
   content: {
+
     top: "50%",
     left: "50%",
     right: "auto",
@@ -14,7 +15,6 @@ const customStyles = {
     marginRight: "-45%",
     margin: "10px",
     transform: "translate(-50%, -50%)",
-    // backgroundColor: "red"
   },
 };
 Modal.setAppElement("#root");
@@ -54,6 +54,7 @@ function AddProductModal({getProductsApi }) {
   ) => {
     const token = JSON.parse(localStorage.getItem("token"));
     try {
+      console.log(addProductAdmin)
       setIsloader(true);
       const response = await axios.post(
         "http://localhost:4000/api/add/product",
@@ -74,7 +75,8 @@ function AddProductModal({getProductsApi }) {
         discription: "",
         picture: "",
       });
-      setIsloader(false);
+      console.log(response)
+      setIsloader(false); 
       closeModal();
       getProductsApi();
       toast.success(`${response.data.msg}✔️`, {
@@ -84,7 +86,7 @@ function AddProductModal({getProductsApi }) {
       console.log("error", error.response);
       setIsloader(false);
       // alert(error.response.data.error);
-      toast.error(`${error.response.data.msg}'❌'`, {
+      toast.error(`${error.response.data.msg}`, {
         theme: "colored",
       });
     }
@@ -121,7 +123,7 @@ function AddProductModal({getProductsApi }) {
         contentLabel="Example Modal"
       >
         <button
-          className=" bg-white border-0 d-flex justify-content-end mt-0 fa-3x"
+          className="bg-white border-0 d-flex justify-content-end mt-0 fa-3x"
           onClick={closeModal}
         >
           <svg
@@ -129,7 +131,7 @@ function AddProductModal({getProductsApi }) {
             width="30"
             height="30"
             fill="currentColor"
-            class="bi bi-x"
+            className="bi bi-x"
             viewBox="0 0 16 16"
           >
             <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
@@ -137,8 +139,8 @@ function AddProductModal({getProductsApi }) {
         </button>
 
         <div className="container ">
-          <div className="row align-items-center  my-auto mx-auto">
-            <div className="col-md-6 col-lg-6 order-md-1 ">
+          <div className="row align-items-center  my-auto mx-auto ">
+            <div className="col-md-6 col-lg-6  imgmedia">
               {preview ? (
                 <>
                   <p className="p-0 m-0">Pre-view</p>
@@ -156,7 +158,7 @@ function AddProductModal({getProductsApi }) {
                 />
               )}
             </div>
-            <div className="col-md-6 col-lg-6 order-md-2">
+            <div className="col-md-12 col-lg-6">
               <h2 className="text-center">Add More New Product</h2>
               <form className="row g-3">
                 <div className="col-md-12">
@@ -231,7 +233,7 @@ function AddProductModal({getProductsApi }) {
                         // setProductAdmin
                       );
                     }}
-                    className="btn btn-color d-flex justify-content-center align-items-center py-3"
+                    className="btn btn-color d-flex justify-content-center align-items-center py-3 btnqrery "
                     disabled={Isloader}
                   >
                     Add

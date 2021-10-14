@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "../pages/Home/Home";
 import Login from "../pages/login/Login";
@@ -8,6 +8,7 @@ import Footer from "../shared/footer/Footer";
 import Admin from "../pages/admin/Admin-home";
 // import Order from "../pages/order/Order";
 // import Wishlist from "../pages/wishlist/Wishlist";
+import ForgetPass from "../pages/forgetpass/ForgetPass";
 import Profile from "../pages/profile/Profile"
 import ErrorPage from "../pages/Error page 404/ErrorPage";
 
@@ -23,6 +24,8 @@ const PrimaryRoutes = () => {
         <Route exact  path="/profile/wishlist" component={Profile} />
         <Route exact  path="/profile/order" component={Profile} />
         <Route exact  path="/MainProfile/profile" component={Profile} />
+        <Route exact  path="/MainProfile/profile" component={Profile} />
+        <Route exact  path="/api/forgetpass" component={ForgetPass} />
         <Route path="*" component={ErrorPage}/>
       </Switch>
       <Footer />

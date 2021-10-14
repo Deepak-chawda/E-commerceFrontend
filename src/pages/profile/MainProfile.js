@@ -3,18 +3,23 @@ import EditProfileModal from "./EditProfileModal";
 import "./mainProfile.css"
 import avatarImage from "../images/avatar1.svg";
 import dgk from "../images/bgProImg.png";
+import axios from "axios";
 
 const MainProfile = () => {
   const [userDetails,setuserDetails]=useState()
   useEffect(()=>{
     getUserDetails()
-    //  userDetails = JSON.parse(localStorage.getItem("userDetails"));
   },[ ])
-  const getUserDetails=()=>{
-    const userD = JSON.parse(localStorage.getItem("userDetails"));
-    setuserDetails(userD)
+  const getUserDetails= async()=>{
+    const localUser= JSON.parse(localStorage.getItem("userDetails"))._id ;
+    try {
+      const response =await axios.get(`http://localhost:4000/api/userPofile/details?_id=${localUser}`)
+      console.log("response=>",response)
+      setuserDetails(response.data.data)
+    } catch (error) {
+    console.log("error",error.response)
+    }
   }
-  // console.log(userDetails.profilePic)
   return (
     <>
       <div className="profile-content border rounded-2 overflow-hidden">
@@ -24,7 +29,7 @@ const MainProfile = () => {
               <div className="profile text-center">
                 <div className="m-3">
                   <h2 className=" bord text-info">
-                    <u>Profile Detailes</u>{" "}
+                    <u>Profile Detailes</u>
                   </h2>
                 </div>
                 <div className="avatar playMWH">
@@ -68,7 +73,7 @@ const MainProfile = () => {
                       </tr>
                       <tr>
                         <td colSpan="2">
-                          <EditProfileModal />
+                          <EditProfileModal getUserDetails={getUserDetails}/>
                         </td>
                       </tr>
                     </tbody>

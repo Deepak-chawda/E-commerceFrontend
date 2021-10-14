@@ -1,7 +1,32 @@
+import axios from "axios";
 import React from "react";
+import { useState } from "react";
+import { toast } from "react-toastify";
 // import {  toast } from 'react-toastify';
 
 const ForgetPassModal = () => {
+const [forgetMail,setforgetMail] = useState({
+  email :""
+})
+// handle bar
+const handleEmail =(e)=>{
+  // const {name,value}=e.target
+  setforgetMail({...forgetMail,[e.target.name]:e.target.value})
+
+}
+// console.log(forgetMail)
+  const ForgfindMail = async () => {
+    try {
+      const response = await axios.post(`http://localhost:4000/email/finder`,forgetMail);
+      toast.success(`${response.data.msg} 👍`, {
+        theme: "colored"
+      })
+      console.log("response", response);
+    } catch (error) {
+      console.log("error ", error);
+    }
+  };
+
   return (
     <>
       <div
@@ -24,20 +49,24 @@ const ForgetPassModal = () => {
             <div className="modal-body text-center p-4">
               <i className="icon-unlock icon-4x text-danger"></i>
               <h3>Forgot password ?</h3>
-              <p className=" mb-1">Enter your registered email to change password</p>
+              <p className=" mb-1">
+                Enter your registered email to change password
+              </p>
               <label className=" mb-2" htmlFor="">
                 Email id
               </label>
               <input
                 type="email"
                 className="form-control form-control-lg"
-                name="forgotEmail"
-                // value=""
+                name="email"
+                onChange={handleEmail}
+                id="emailidget"
               />
               <button
                 type="button"
                 data-dismiss="modal"
                 className="btn btn-color w-100 form-control-lg  mt-md-4 mt-3 p-3"
+                onClick={ForgfindMail}
               >
                 SEND
               </button>

@@ -9,7 +9,6 @@ import UserDetailContext from "../src/useContext/TokenContext";
 
 const App = () => {
   const [contextChange, setcontextChange]=useState({ })
-  // console.log(contextChange)
   return (
     <BrowserRouter>
       <UserDetailContext.Provider
@@ -17,6 +16,8 @@ const App = () => {
           token: JSON.parse(localStorage.getItem("token")),
           userData: JSON.parse(localStorage.getItem("userDetails")),
           setcontextChange
+          // headerChange
+          
         }}
       >
         <PrimaryRoutes />

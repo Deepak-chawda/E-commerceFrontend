@@ -15,12 +15,11 @@ const customStyles = {
     margin: "10px",
     padding: "0px",
     width: "70%",
-    // height : '80%',
     transform: "translate(-50%, -50%)",
   },
 };
 Modal.setAppElement("#root");
-function EditUserProfile() {
+function EditUserProfile({getUserDetails}) {
   // state for loader
   const [Isloader, setIsloader] = useState(false);
   const [preview, setPreview] = useState();
@@ -35,7 +34,7 @@ function EditUserProfile() {
     profilePic: localUser.profilePic,
   });
   const cloudId = localUser.cloudinary_id;
-  console.log("cloudId=",cloudId)
+  // console.log("cloudId=",cloudId)
   // handle change
   const handleProductChange = (e) => {
     const { name, value } = e.target;
@@ -53,20 +52,19 @@ function EditUserProfile() {
       };
     }
   };
-  // console.log("editProfileUser",editProfileUser)
   // call edit user details Api
-  const EditUserProfileApi = async (id, editProfileUser, closeModal) => {
+  const EditUserProfileApi = async (id, editProfileUser, closeModal,getUserDetails) => {
     try {
       setIsloader(true);
       const response = await axios.put(
         `http://localhost:4000/api/editPofile/details?_id=${id}&cloudId=${cloudId}`,
         editProfileUser
       );
-      // console.log("update user details data", response);
+      console.log("update user details data", response);
       // alert(response.data.msg)
-      localStorage.setItem("userDetails", JSON.stringify(response.data.data));
       setIsloader(false);
       closeModal();
+      getUserDetails()
       toast.success(`${response.data.msg}✔️`, {
         theme: "colored",
       });
@@ -93,6 +91,7 @@ function EditUserProfile() {
         data-tip="Edit profile"
         href="#/"
         onClick={openModal}
+        
       >
         Edit profile
         <ReactTooltip place="top" type="dark" effect="solid" />
@@ -131,6 +130,9 @@ function EditUserProfile() {
                   <button
                     className="bg-white border-0 mt-0  rounded-circle fa-3x p-0s"
                     onClick={closeModal}
+                    style={{
+                      fontSize : "25px"
+                    }}
                   >
                     ×
                   </button>
@@ -213,10 +215,11 @@ function EditUserProfile() {
                         EditUserProfileApi(
                           localUser._id,
                           editProfileUser,
-                          closeModal
+                          closeModal,
+                          getUserDetails
                         );
                       }}
-                      className="btn btn-color py-3 mb-4"
+                      className="btn btn-color py-3 mb-4 d-flex justify-content-center align-items-center"
                       disabled={Isloader}
                     >
                       Edit Profile

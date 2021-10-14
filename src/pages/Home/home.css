@@ -3,6 +3,10 @@
   flex-wrap: wrap;
   font-weight: normal;
 }
+.playhieght{
+  max-height: 164px;
+  width: auto;
+}
 .bg-faded-info {
   background-color: rgba(83, 164, 245, 0.199) !important;
 }
@@ -27,3 +31,6 @@
   content: "\20B9";
   padding-right: 5px;
 }
+/* @media screen (){
+  
+} */

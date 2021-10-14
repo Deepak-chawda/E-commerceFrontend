@@ -2,18 +2,22 @@ import React, { useEffect, useState, } from "react";
 import { Link } from "react-router-dom";
 import LogOutModel from "./LogOutModel";
 import "../header/header.css";
-// import userDetailContext from "../../useContext/TokenContext";
+// import UserDetailContext from "../src/useContext/TokenContext";
 
 const Header = () => {
   // const history = useHistory();
   let [checkLogin, setchecklogin] = useState(null);
   let [getUserName, setUserName] = useState(null);
+  // console.log("checklogin",checkLogin)
+  // console.log("getUserName",getUserName)
   useEffect(() => {
     setchecklogin(JSON.parse(localStorage.getItem("token")));
     setUserName(JSON.parse(localStorage.getItem("userDetails")));
-    // setchecklogin(userDetails.token)
-    // setUserName(userDetails.userDetails)
   }, []);
+  const headerChange =()=>{
+    setchecklogin(JSON.parse(localStorage.getItem("token")));
+    setUserName(JSON.parse(localStorage.getItem("userDetails")));
+  }
   return (
     <>
       <div className="container-fluid nav_bg">
@@ -50,7 +54,9 @@ const Header = () => {
                         HOME
                       </Link>
                     </li>
-                    {checkLogin && getUserName?.role !== "ADMIN" && (
+                   
+                      {/* {((localStorage.getItem('token'))&& getUserName?.role ==='USER')? */}
+                      {checkLogin && getUserName?.role !== "ADMIN" && (
                       <>
                         <li className="nav-item">
                           <Link
@@ -84,7 +90,9 @@ const Header = () => {
                         </li>
                       </>
                     )}
+                    {/* {!(localStorage.getItem('token'))?  */}
                     {!checkLogin && (
+                      
                       <>
                         <li className="nav-item">
                           <Link
@@ -108,7 +116,9 @@ const Header = () => {
                         </li>
                       </>
                     )}
+                       {/* {getUserName?.role === "ADMIN"? ( */}
                     {getUserName?.role === "ADMIN" && (
+                   
                       <li className="nav-item">
                         <Link
                           className="nav-link active"
@@ -120,6 +130,7 @@ const Header = () => {
                         </Link>
                       </li>
                     )}
+                         {/* {(localStorage.getItem('token'))?  */}
                     {checkLogin && (
                       <>
                         <li className="nav-item">
@@ -133,7 +144,7 @@ const Header = () => {
                             {/* <i className="icon-signout"> </i> */}
                             LOGOUT
                           </a>
-                          <LogOutModel/>
+                          <LogOutModel headerChange={headerChange} />
                         </li>
                       </>
                     )}
