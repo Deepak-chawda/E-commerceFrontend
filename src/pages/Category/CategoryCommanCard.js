@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../Home/home.css";
 import { useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
-// import dateFormat from "dateformat";
-// var now = Date.now();
 
-const CommanCard = ({ Allitem }) => {
+const CategoryCommanCard = ({ Allitem }) => {
   // state for loader
   const [Isloader, setIsloader] = useState(false);
   // state for loader
@@ -98,7 +95,7 @@ const CommanCard = ({ Allitem }) => {
   };
   return (
     <>
-      <div className="card col-xl-3 col-lg-4 col-md-6 mb-3 m-2" style={{ maxWidth: " 280px"}}>
+      <div className="card col-xl-3 col-lg-4 col-md-6 mb-3 m-4" style={{ maxWidth: " 280px"}}>
         <div className="row g-0 hover-shadow-lg hover-translate-y-n10">
           <div className="col-md-12 col-sm-12 align-content-center">
             <img
@@ -125,7 +122,7 @@ const CommanCard = ({ Allitem }) => {
                     placeOrder(Allitem._id);
                   }}
                 >
-       BUY NOW <i class="icon-shopping-cart fs-5 m-1"></i>
+                 BUY NOW <i class="icon-shopping-cart fs-5 m-1"></i>
                   {IsloaderO && (
                     <>
                       <div
@@ -138,11 +135,13 @@ const CommanCard = ({ Allitem }) => {
                   )}
                 </button>
                 <button
-                  className="btn btn-danger p-2 d-flex justify-content-center align-items-center"
+                  className="btn btn-danger p-2  d-flex justify-content-center align-items-center"
                   disabled={Isloader}
                   onClick={() => {
                     addToWishlist(Allitem._id);
-                  }}> WISHLIST <i class="icon-heart-empty fs-5 m-1"></i>
+                  }}
+                >
+                  WISHLIST <i class="icon-heart-empty fs-5 m-1"></i>
                   {Isloader && (
                     <>
                       <div
@@ -163,4 +162,4 @@ const CommanCard = ({ Allitem }) => {
   );
 };
 
-export default CommanCard;
+export default CategoryCommanCard;

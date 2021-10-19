@@ -50,7 +50,7 @@ const Header = () => {
                         aria-current="page"
                         to="/"
                       >
-                        {/* <i className="icon-home"> </i> */}
+                        <i className="icon-home"> </i>
                         HOME
                       </Link>
                     </li>
@@ -64,8 +64,8 @@ const Header = () => {
                             aria-current="page"
                             to="/profile/wishlist"
                           >
-                            {/* <i className="icon-heart"> </i> */}
-                            MY WISHLIST
+                            <i className="icon-heart"> </i>
+                             WISHLIST
                           </Link>
                         </li>
                         <li className="nav-item">
@@ -74,8 +74,8 @@ const Header = () => {
                             aria-current="page"
                             to="/profile/order"
                           >
-                            {/* <i className="icon-heart"> </i> */}
-                            MY ORDER
+                            <i class="icon-shopping-cart"> </i>
+                           ORDER
                           </Link>
                         </li>
                         <li className="nav-item">
@@ -84,7 +84,7 @@ const Header = () => {
                             aria-current="page"
                             to="/MainProfile/profile"
                           >
-                            {/* <i className="icon-user"> </i> */}
+                            <i className="icon-user"> </i>
                             PROFILE
                           </Link>
                         </li>
@@ -100,7 +100,7 @@ const Header = () => {
                             aria-current="page"
                             to="/login"
                           >
-                            {/* <i className="icon-signin "> </i> */}
+                            <i className="icon-signin "> </i>
                             LOGIN
                           </Link>
                         </li>
@@ -110,7 +110,6 @@ const Header = () => {
                             aria-current="page"
                             to="/singup"
                           >
-                            {/* <i className="icon-signout"> </i> */}
                             SIGNUP
                           </Link>
                         </li>
@@ -141,8 +140,8 @@ const Header = () => {
                             data-bs-toggle="modal"
                             data-bs-target="#exampleModal"
                           >
-                            {/* <i className="icon-signout"> </i> */}
-                            LOGOUT
+                            <i className="icon-signout"> </i>
+                            {/* LOGOUT */}
                           </a>
                           <LogOutModel headerChange={headerChange} />
                         </li>

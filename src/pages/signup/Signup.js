@@ -94,6 +94,7 @@ const Signup = () => {
                       name="userName"
                       onChange={handlesignupChange}
                       className="form-control py-3 px-3 rounded-pill"
+                      placeholder="User name"
                       id="inputUserName"
                     />
                   </div>
@@ -109,6 +110,7 @@ const Signup = () => {
                       name="email"
                       onChange={handlesignupChange}
                       className="form-control py-3 px-3 rounded-pill"
+                      placeholder="Email id"
                       id="inputEmail4"
                       data-bs-toggle="collapse"
                       data-bs-target="#collapseExample1"
@@ -135,6 +137,7 @@ const Signup = () => {
                       onChange={handlesignupChange}
                       minLength="8"
                       className="form-control py-3 px-3 rounded-pill"
+                      placeholder="*******"
                       id="inputPassword4"
                       autoComplete="off"
                       data-bs-toggle="collapse"

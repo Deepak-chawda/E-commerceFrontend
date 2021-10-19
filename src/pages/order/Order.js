@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "./order.css";
+import emtyOrder from "../images/emtyOrder.png"
 import appleWatch from "../images/apple_watch.jpeg";
 import ReactTooltip from "react-tooltip";
 import { toast } from "react-toastify";
@@ -154,9 +155,14 @@ const Order = () => {
                           );
                         })
                       ) : (
-                        <tr className="text-center"  >
+                        <tr className="text-center">
                         <td className="fs-3 text-center" colSpan="6">
-                          Not add order by user yet
+                          <img className="bg-light" src={emtyOrder} alt="emtyOrderImg" style={{height:"200px",width:"300px"}} />
+                          <p> Not Add order by user yet</p>
+                          <button onClick={()=>{
+                            history.push("/")
+                          }} className="btn btn-outline-warning rounded-pill">Shop now</button>
+                         
                         </td>
                         </tr>
                       )}

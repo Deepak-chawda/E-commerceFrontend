@@ -6,6 +6,8 @@ import AddProductModal from "./add.product.model";
 import DeleteProductAdmin from "./delete.product.admin";
 import EditProductModal from "./edit.product.model";
 const AdminHome = () => {
+  let newdate = new Date().toLocaleString()
+  // console.log(newdate)
   // state for loader
   const [Isloader, setIsloader] = useState(false);
   // here is a get admin all product api
@@ -110,7 +112,7 @@ const AdminHome = () => {
                                 </td>
                                 <td>{item.productName}</td>
                                 <td>{item.price}</td>
-                                <td>{Date.now()}</td>
+                                <td>{newdate}</td>
                                 <td>{item.discription}</td>
                                 <td>
                                   <EditProductModal

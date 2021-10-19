@@ -14,6 +14,7 @@ import ipad from "../images/ipad.jfif";
 import CommanCard from "./comman.card";
 import React, { useEffect, useState,useContext } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import UserDetailContext from "../../useContext/TokenContext";
 const Home = () => {
   const userDetails = useContext(UserDetailContext)
@@ -84,10 +85,10 @@ const Home = () => {
               </p>
 
               <div className="text-center text-md-start">
-                <a href="/#" className="btn btn-primary shadow lift me-1">
+                <Link to="/categoryProduct/Phone" className="btn btn-primary shadow lift me-1">
                   View all Phone
                   <i className="fe fe-arrow-right d-none d-md-inline ms-3"></i>
-                </a>
+                </Link>
                 <a href="/#" className="btn btn-primary-soft lift">
                   Documentation
                 </a>
@@ -118,9 +119,9 @@ const Home = () => {
               active lifestyle. It also ensures that you lead a connected life.
             </p>
             <p>
-              <a className="btn btn-primary" href="/#">
-                View details »
-              </a>
+              <Link className="btn btn-primary" to="/categoryProduct/Watch">
+                View More Watchs »
+              </Link>
             </p>
           </div>
           <div className="col-lg-4">
@@ -140,9 +141,9 @@ const Home = () => {
               steep learning curve, but it is worth the trouble.....
             </p>
             <p>
-              <a className="btn btn-primary" href="/#">
-                View details »
-              </a>
+              <Link className="btn btn-primary" to="/categoryProduct/Laptop">
+                View More Laptops »
+              </Link>
             </p>
           </div>
           <div className="col-lg-4">
@@ -162,9 +163,9 @@ const Home = () => {
               of talk time on asingle charge.
             </p>
             <p>
-              <a className="btn btn-primary" href="/#">
-                View details »
-              </a>
+              <Link className="btn btn-primary" to="/categoryProduct/AirPot">
+                View More AirPots »
+              </Link>
             </p>
           </div>
         </div>
@@ -218,6 +219,19 @@ const Home = () => {
             <h5 className=" text-center text-danger m-2">No Product added by admin yet</h5>
           )}
         </div>
+        <nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#">Next</a>
+    </li>
+  </ul>
+</nav>
         <div className="row featurette">
           <div className="col-md-7 order-md-2">
             <h2 className="featurette-heading">

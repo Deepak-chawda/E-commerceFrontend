@@ -116,19 +116,7 @@ const Wishlist = () => {
                       </tr>
                     </thead>
                     <tbody className="text-center " >
-                      {/* {Isloader && (
-                        <>
-                        <tr className="text-center" >
-                          <td
-                            className="spinner-border text-primary"
-                            role="status"
-                            colSpan="3"
-                          >
-                            <span className="visually-hidden">Loading...</span>
-                          </td>
-                          </tr>
-                        </>
-                      )} */}
+                  
                       {getWishlist && getWishlist.length !== 0 ? (
                         getWishlist.map((item) => {
                           return (

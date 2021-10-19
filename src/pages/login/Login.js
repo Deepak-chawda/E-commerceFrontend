@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import ForgetPassModal from "./ForgetPassModal";
 import UserDetailContext from "../../useContext/TokenContext";
 
-const Login = () => {
+const Login = ({headerChange}) => {
   const userDetailsd = useContext(UserDetailContext);
   // state for loader
   const [Isloader, setIsloader] = useState(false);
@@ -92,7 +92,8 @@ const Login = () => {
                       type="email"
                       name="email"
                       onChange={handleloginChange}
-                      className="form-control py-3 px-4 rounded-pill "
+                      className="form-control py-3 px-4 rounded-pill"
+                      placeholder="Email id"
                       id="inputEmail4"
                       required
                     />
@@ -109,6 +110,7 @@ const Login = () => {
                       onChange={handleloginChange}
                       name="password"
                       className="form-control py-3 px-3 rounded-pill"
+                      placeholder="********"
                       autoComplete="off"
                       required
                     />

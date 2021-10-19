@@ -28,11 +28,13 @@ function AddProductModal({getProductsApi }) {
     price: "",
     discription: "",
     picture: "",
+    category : ""
   });
   // handle change
   const handleProductChange = (e) => {
     const { name, value } = e.target;
-    setProductAdmin({ ...addProductAdmin, [name]: value });
+   setProductAdmin({ ...addProductAdmin, [name]: value });
+
   };
   // handle bar for file upload
   const uploadSingleFile = (e) => {
@@ -74,8 +76,9 @@ function AddProductModal({getProductsApi }) {
         price: "",
         discription: "",
         picture: "",
+        category : ""
       });
-      console.log(response)
+      // console.log(response)
       setIsloader(false); 
       closeModal();
       getProductsApi();
@@ -159,7 +162,7 @@ function AddProductModal({getProductsApi }) {
               )}
             </div>
             <div className="col-md-12 col-lg-6">
-              <h2 className="text-center">Add More New Product</h2>
+              <h4 className="text-center">Add New Product</h4>
               <form className="row g-3">
                 <div className="col-md-12">
                   <label htmlFor="inputEmail4" className="form-label ">
@@ -202,6 +205,19 @@ function AddProductModal({getProductsApi }) {
                 </div>
                 <div className="col-md-12">
                   <label htmlFor="inputPassword4" className="form-label">
+                  Category
+                  </label>
+                  <input
+                    type="text"
+                    onChange={handleProductChange}
+                    name="category"
+                    className="form-control py-2 px-1 text-capitalize"
+                    autoComplete="off"
+                    required
+                  />
+                </div>
+                <div className="col-md-12">
+                  <label htmlFor="inputPassword4" className="form-label">
                     Picture
                   </label>
                   <input
@@ -221,7 +237,9 @@ function AddProductModal({getProductsApi }) {
                         addProductAdmin.productName === "" ||
                         addProductAdmin.price === "" ||
                         addProductAdmin.discription === "" ||
-                        addProductAdmin.picture === ""
+                        addProductAdmin.picture === "" ||
+                        addProductAdmin.category === ""
+
                       ) {
                         return  toast.error(`${"plz fill all require fields"} ❗`, {
                           theme: "colored",
