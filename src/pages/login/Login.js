@@ -10,8 +10,8 @@ import { toast } from "react-toastify";
 import ForgetPassModal from "./ForgetPassModal";
 import UserDetailContext from "../../useContext/TokenContext";
 
-const Login = ({headerChange}) => {
-  const userDetailsd = useContext(UserDetailContext);
+const Login = ({ headerChange }) => {
+  const { setcontextChange, contextChange } = useContext(UserDetailContext);
   // state for loader
   const [Isloader, setIsloader] = useState(false);
   // here call useHistory function for using..use to routing for btw diff componets
@@ -39,7 +39,7 @@ const Login = ({headerChange}) => {
         userDetails
       );
       setIsloader(false);
-      userDetailsd.setcontextChange("hiiiii");
+      // userDetailsd.setcontextChange("hiiiii");
       // console.log("response =",response)
       toast.success(`${response.data.msg} 👍`, {
         theme: "colored",
@@ -49,6 +49,12 @@ const Login = ({headerChange}) => {
         JSON.stringify(response.data.data.user)
       );
       localStorage.setItem("token", JSON.stringify(response.data.data.token));
+      setcontextChange({
+        ...contextChange,
+        userData: response.data.data.user,
+        auth:true,
+        token:response.data.data.token
+      });
       if (response.data.data.user.role === "ADMIN") {
         history.push("/admin");
       } else {
@@ -63,6 +69,8 @@ const Login = ({headerChange}) => {
       toast.error(`${error.response.data.error}`, {
         theme: "colored",
       });
+    }
+    {
     }
   };
   return (
@@ -125,13 +133,13 @@ const Login = ({headerChange}) => {
                       LOG IN
                       {Isloader && (
                         <div
-                          className="spinner-border text-primary m-1" 
+                          className="spinner-border text-primary m-1"
                           style={{ width: "25px", height: "25px" }}
                           role="status"
                         >
                           <span className="visually-hidden">Loading...</span>
                         </div>
-                     )} 
+                      )}
                     </button>
                   </div>
                   <div className="text-center">

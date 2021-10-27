@@ -24,7 +24,7 @@ const Home = () => {
   const [getUserData, setUserData] = useState([]);
   //  console.log("getuserdata",getUserData)
   useEffect(() => {
-    userDetails.setcontextChange("this is changed")
+    // userDetails.setcontextChange("this is changed")
     getUserDataApi();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -33,7 +33,7 @@ const Home = () => {
     try {
       setIsloader(true)
       const response = await axios.get(
-        "http://localhost:4000/api/get/user/product",
+        "http://localhost:4000/api/get/user/product?page=1&limit=8",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -219,7 +219,7 @@ const Home = () => {
             <h5 className=" text-center text-danger m-2">No Product added by admin yet</h5>
           )}
         </div>
-        <nav aria-label="Page navigation example">
+        {/* <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
     <li class="page-item disabled">
       <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
@@ -231,9 +231,9 @@ const Home = () => {
       <a class="page-link" href="#">Next</a>
     </li>
   </ul>
-</nav>
-        <div className="row featurette">
-          <div className="col-md-7 order-md-2">
+</nav> */}
+        <div className="row featurette mt-3">
+          <div className="col-md-7 order-md-2 ">
             <h2 className="featurette-heading">
               More magical than ever.
               <span className="text-muted">With more talk time</span>

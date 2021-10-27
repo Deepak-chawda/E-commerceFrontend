@@ -70,7 +70,7 @@ const Profile = () => {
               </a>
             </nav>
           </div>
-          <div className="col-lg-8  rounded-2 ">
+          <div className="col-lg-8 m-0  rounded-2 ">
             <div className="table-responsive wishlist-table margin-bottom-none">
               <table className="table">
                 <Switch>

@@ -1,23 +1,16 @@
-import React, { useEffect, useState, } from "react";
+import React, { useContext, useEffect, useState, } from "react";
 import { Link } from "react-router-dom";
 import LogOutModel from "./LogOutModel";
 import "../header/header.css";
-// import UserDetailContext from "../src/useContext/TokenContext";
-
+import UserDetailContext from "../../useContext/TokenContext"
 const Header = () => {
-  // const history = useHistory();
-  let [checkLogin, setchecklogin] = useState(null);
-  let [getUserName, setUserName] = useState(null);
-  // console.log("checklogin",checkLogin)
-  // console.log("getUserName",getUserName)
-  useEffect(() => {
-    setchecklogin(JSON.parse(localStorage.getItem("token")));
-    setUserName(JSON.parse(localStorage.getItem("userDetails")));
-  }, []);
-  const headerChange =()=>{
-    setchecklogin(JSON.parse(localStorage.getItem("token")));
-    setUserName(JSON.parse(localStorage.getItem("userDetails")));
-  }
+  const { contextChange } = useContext(UserDetailContext);
+  // let [checkLogin, setchecklogin] = useState(null);
+  // let [getUserName, setUserName] = useState(null);
+  // useEffect(() => {
+  //   setchecklogin(JSON.parse(localStorage.getItem("token")));
+  //   setUserName(JSON.parse(localStorage.getItem("userDetails")));
+  // }, []);
   return (
     <>
       <div className="container-fluid nav_bg">
@@ -55,8 +48,8 @@ const Header = () => {
                       </Link>
                     </li>
                    
-                      {/* {((localStorage.getItem('token'))&& getUserName?.role ==='USER')? */}
-                      {checkLogin && getUserName?.role !== "ADMIN" && (
+                    
+                      {contextChange.auth && contextChange.userData.role!== "ADMIN" && (
                       <>
                         <li className="nav-item">
                           <Link
@@ -90,8 +83,7 @@ const Header = () => {
                         </li>
                       </>
                     )}
-                    {/* {!(localStorage.getItem('token'))?  */}
-                    {!checkLogin && (
+                    {!contextChange?.auth && (
                       
                       <>
                         <li className="nav-item">
@@ -115,8 +107,7 @@ const Header = () => {
                         </li>
                       </>
                     )}
-                       {/* {getUserName?.role === "ADMIN"? ( */}
-                    {getUserName?.role === "ADMIN" && (
+                    { contextChange?.userData?.role === "ADMIN" && (
                    
                       <li className="nav-item">
                         <Link
@@ -124,13 +115,11 @@ const Header = () => {
                           aria-current="page"
                           to="/admin"
                         >
-                          {/* <i className="icon-signout"> </i> */}
                           ADMIN
                         </Link>
                       </li>
                     )}
-                         {/* {(localStorage.getItem('token'))?  */}
-                    {checkLogin && (
+                    {contextChange?.auth && (
                       <>
                         <li className="nav-item">
                           <a
@@ -143,7 +132,10 @@ const Header = () => {
                             <i className="icon-signout"> </i>
                             {/* LOGOUT */}
                           </a>
-                          <LogOutModel headerChange={headerChange} />
+                          <LogOutModel
+                          //  headerChange={headerChange}
+                          // userDataContext ={userDataContext}
+                            />
                         </li>
                       </>
                     )}

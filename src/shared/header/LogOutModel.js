@@ -1,10 +1,11 @@
 import React,{useContext} from "react";
 import {  useHistory } from "react-router-dom";
 import {  toast } from 'react-toastify';
-import userDetailContext from "../../useContext/TokenContext";
+import UserDataContext from "../../useContext/TokenContext";
+const LogOutModel = () => {
+  const { setcontextChange, contextChange } = useContext(UserDataContext);
+  // console.log("bla bla",userDataContext)
 
-const LogOutModel = ({headerChange}) => {
-  const userDetails = useContext(userDetailContext)
     const history = useHistory();
   return (
     <>
@@ -43,12 +44,18 @@ const LogOutModel = ({headerChange}) => {
                 data-bs-dismiss="modal"
                 onClick={() => {
                   localStorage.clear();
-                  history.push("/");
-                  headerChange()
-                  // userDetails.setcontextChange("hello")
+                  // headerChange()
+                  setcontextChange({
+                    ...contextChange,
+                    userData: "",
+                    auth:false,
+                    token:""
+                  });
                   toast.success("LogOut Successfull 👍", {
                     theme: "colored"
                   })
+                  history.push("/");
+                 
                 }}
               >
                 Conform

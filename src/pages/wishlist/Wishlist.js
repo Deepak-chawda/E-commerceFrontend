@@ -3,6 +3,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "./wishlist.css";
 import { v4 as uuidv4 } from "uuid";
+import emtyOrder from "../images/emtyOrder.png"
 import appleWatch from "../images/apple_watch.jpeg";
 import ReactTooltip from "react-tooltip";
 import {  toast } from 'react-toastify';
@@ -85,7 +86,7 @@ const Wishlist = () => {
           },
         }
       );
-      console.log("response", response);
+      // console.log("response", response);
       wishlistDeleteApi(itemId);
       toast.success("Placed order Successfull 👍", {
         theme: "colored"
@@ -93,14 +94,17 @@ const Wishlist = () => {
       // alert(response.data.msg);
     } catch (error) {
       console.log("error=>", error.response);
-      alert(error.response.data.error)
+      toast.success(`${error.response.data.error}❗`, {
+        theme: "colored",
+      });
+      // alert(error.response.data.error)
     }
   };
   return (
     <>
       <div className="pt-4 pt-md-11">
         <div className="container">
-          <div className="row align-items-center m-2 ">
+          <div className="row align-items-center">
             <div className="card p-0 m-0 pt-2 mb-4">
               <div className="card-body m-0 p-0 text-center">
                 <div className="table-responsive">
@@ -112,10 +116,27 @@ const Wishlist = () => {
                         <th scope="col">Product Name</th>
                         <th scope="col">Price</th>
                         <th scope="col">Product Discription</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">Action for wishlist</th>
                       </tr>
                     </thead>
                     <tbody className="text-center " >
+                    <tr>
+                      <td className=" border-bottom-0" colSpan="6">
+                      {Isloader && (
+                        <>
+                          <td
+                            className="spinner-grow text-primary" colSpan="5"
+                            style={{ width: "3rem", height: "3rem" }}
+                            role="status"
+                          >
+                            <span className="visually-hidden">Loading...</span>
+                          </td>
+                        
+                        </>
+                      )}
+                      
+                      </td>
+                      </tr>
                   
                       {getWishlist && getWishlist.length !== 0 ? (
                         getWishlist.map((item) => {
@@ -180,9 +201,15 @@ const Wishlist = () => {
                         })
                       ) : (
                         <tr>
-                        <td className=" text-danger text-center" colSpan="5">
-                          <h3>No Data add yet</h3>
-                          {Isloader && (
+                        <td className="fs-3 text-center" colSpan="6">
+                          <img className="bg-light" src={emtyOrder} alt="emtyOrderImg" style={{height:"200px",width:"300px"}} />
+                          <p> Not Add order by user yet</p>
+                          <button onClick={()=>{
+                            history.push("/")
+                          }} className="btn btn-outline-warning rounded-pill">Shop now</button>
+                         
+                        </td>
+                          {/* {Isloader && (
                             <>
                               <tr
                                 className="spinner-grow text-primary"
@@ -194,8 +221,8 @@ const Wishlist = () => {
                                 </td>
                               </tr>
                             </>
-                          )}
-                        </td>
+                          )} */}
+                        {/* </td> */}
                       </tr>
                       )}
                     </tbody>

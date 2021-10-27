@@ -82,7 +82,7 @@ const CommanCard = ({ Allitem }) => {
         }
       );
       setIsloaderO(false);
-      toast.success(`${response.data.msg}❗`, {
+      toast.success(`${response.data.msg}✔️`, {
         theme: "colored",
       });
       console.log("response", response);
