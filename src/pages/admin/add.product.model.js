@@ -94,6 +94,7 @@ function AddProductModal({getProductsApi }) {
       });
     }
   };
+  
   const [modalIsOpen, setIsOpen] = React.useState(false);
   function openModal() {
     setIsOpen(true);

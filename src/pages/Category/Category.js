@@ -54,7 +54,7 @@ const Category = () => {
             })
           ) : (
             <div className="text-center m-4">
-            <img src={emtyDataimg} alt="EmtyData" style={{height:"300px",width:"500px"}}/>
+            <img src={emtyDataimg} alt="EmtyData"/>
             <h5 className="text-center text-danger m-2">Sorry Product Not Found</h5>
           </div>
           )}

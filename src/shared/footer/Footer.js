@@ -111,7 +111,7 @@ const footer = () => {
               <ul className="list d-flex  align-items-center justify-content-between mt-3  md">
                 <li className="ml-4 not">
                   <a 
-                  href="#/"
+                  href="https://www.facebook.com/"
                    className="faceBg">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +126,7 @@ const footer = () => {
                   </a>
                 </li>
                 <li className="mr-4">
-                  <a href="#/" className=" instaBg" >
+                  <a href="https://www.instagram.com/" className=" instaBg" >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="30"
@@ -140,7 +140,7 @@ const footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#/" className="tweetBg">
+                  <a href="https://twitter.com/tweeter?lang=en" className="tweetBg">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="30"
@@ -154,7 +154,7 @@ const footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#/" className="whatsappBg" >
+                  <a href="https://web.whatsapp.com/" className="whatsappBg" >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="30"
