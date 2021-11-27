@@ -26,7 +26,7 @@ const Wishlist = () => {
     }
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/get/wishlist",
+        "https://apple-e-commerce.herokuapp.com/api/get/wishlist",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -47,7 +47,7 @@ const Wishlist = () => {
     const token = JSON.parse(localStorage.getItem("token"));
     try {
       const response = await axios.delete(
-        `http://localhost:4000/api/delete/wishlist?_id=${_id}`,
+        `https://apple-e-commerce.herokuapp.com/api/delete/wishlist?_id=${_id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -72,7 +72,7 @@ const Wishlist = () => {
     const token = JSON.parse(localStorage.getItem("token"));
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/add/order",
+        "https://apple-e-commerce.herokuapp.com/api/add/order",
         {
           product: itempro,
           orderDate: Date.now(),

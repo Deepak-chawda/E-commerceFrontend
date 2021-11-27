@@ -13,7 +13,7 @@ const MainProfile = () => {
   const getUserDetails= async()=>{
     const localUser= JSON.parse(localStorage.getItem("userDetails"))._id ;
     try {
-      const response =await axios.get(`http://localhost:4000/api/userPofile/details?_id=${localUser}`)
+      const response =await axios.get(`https://apple-e-commerce.herokuapp.com/api/userPofile/details?_id=${localUser}`)
       console.log("response=>",response)
       setuserDetails(response.data.data)
     } catch (error) {

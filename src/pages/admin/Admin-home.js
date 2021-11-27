@@ -21,7 +21,7 @@ const AdminHome = () => {
     const token = JSON.parse(localStorage.getItem("token"));
     try {
       const response = await axios.get(
-        "http://localhost:4000/api/get/admin/product",
+        "https://apple-e-commerce.herokuapp.com/api/get/admin/product",
         {
           headers: {
             Authorization: `Bearer ${token}`,

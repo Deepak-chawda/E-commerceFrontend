@@ -17,7 +17,7 @@ const handleEmail =(e)=>{
 // console.log(forgetMail)
   const ForgfindMail = async () => {
     try {
-      const response = await axios.post(`http://localhost:4000/email/finder`,forgetMail);
+      const response = await axios.post(`https://apple-e-commerce.herokuapp.com/email/finder`,forgetMail);
       toast.success(`${response.data.msg} 👍`, {
         theme: "colored"
       })

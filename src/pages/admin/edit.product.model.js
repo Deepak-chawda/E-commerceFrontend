@@ -72,7 +72,7 @@ function EditProductModal({ editId, getProductsApi }) {
     try {
       setIsloader(true);
       const response = await axios.put(
-        `http://localhost:4000/api/update/product?_id=${fetcheditId}&cloudId=${cloudId}`,
+        `https://apple-e-commerce.herokuapp.com/api/update/product?_id=${fetcheditId}&cloudId=${cloudId}`,
         editProductAdmin,
         {
           headers: {

@@ -57,7 +57,7 @@ function EditUserProfile({getUserDetails}) {
     try {
       setIsloader(true);
       const response = await axios.put(
-        `http://localhost:4000/api/editPofile/details?_id=${id}&cloudId=${cloudId}`,
+        `https://apple-e-commerce.herokuapp.com/api/editPofile/details?_id=${id}&cloudId=${cloudId}`,
         editProfileUser
       );
       console.log("update user details data", response);

@@ -33,7 +33,7 @@ const CommanCard = ({ Allitem }) => {
     try {
       setIsloader(true);
       const response = await axios.post(
-        "http://localhost:4000/api/add/wishlist",
+        "https://apple-e-commerce.herokuapp.com/api/add/wishlist",
         {
           productId: _id,
           user: JSON.parse(localStorage.getItem("userDetails"))._id,
@@ -67,7 +67,7 @@ const CommanCard = ({ Allitem }) => {
     try {
       setIsloaderO(true);
       const response = await axios.post(
-        "http://localhost:4000/api/add/order",
+        "https://apple-e-commerce.herokuapp.com/api/add/order",
         {
           product: _id,
           orderDate: Date.now(),

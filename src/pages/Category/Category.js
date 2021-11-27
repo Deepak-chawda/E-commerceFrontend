@@ -22,7 +22,7 @@ const Category = () => {
           // console.log(category)
           setIsloader(true)
           const response = await axios.get(
-            `http://localhost:4000/api/get/category/product/${category}`,
+            `https://apple-e-commerce.herokuapp.com/api/get/category/product/${category}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,

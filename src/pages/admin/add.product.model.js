@@ -59,7 +59,7 @@ function AddProductModal({getProductsApi }) {
       console.log(addProductAdmin)
       setIsloader(true);
       const response = await axios.post(
-        "http://localhost:4000/api/add/product",
+        "https://apple-e-commerce.herokuapp.com/api/add/product",
         addProductAdmin,
         {
           headers: {

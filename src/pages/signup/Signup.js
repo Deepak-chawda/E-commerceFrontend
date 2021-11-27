@@ -49,7 +49,7 @@ const Signup = () => {
       }
       setIsloader(true);
       const response = await axios.post(
-        "http://localhost:4000/api/signup?isAdmin=false",
+        "https://apple-e-commerce.herokuapp.com/api/signup?isAdmin=false",
         userDetails
       );
       setIsloader(false);

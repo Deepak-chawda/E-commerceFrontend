@@ -26,7 +26,7 @@ function DeleteProductAdmin({itemId,getProductsApi ,itemimage}) {
     try {
       setIsloader(true);
       const response = await axios.delete(
-        `http://localhost:4000/api/delete/product?_id=${itemId}&imgId=${itemimage.cloudinary_id}`,
+        `https://apple-e-commerce.herokuapp.com/api/delete/product?_id=${itemId}&imgId=${itemimage.cloudinary_id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

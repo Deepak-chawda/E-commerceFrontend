@@ -33,7 +33,7 @@ const Home = () => {
     try {
       setIsloader(true)
       const response = await axios.get(
-        "http://localhost:4000/api/get/user/product?page=1&limit=8",
+        "https://apple-e-commerce.herokuapp.com/api/get/user/product?page=1&limit=8",
         {
           headers: {
             Authorization: `Bearer ${token}`,

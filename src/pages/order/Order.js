@@ -25,7 +25,7 @@ const Order = () => {
     }
     // console.log("hello")
     try {
-      const response = await axios.get("http://localhost:4000/api/get/order", {
+      const response = await axios.get("https://apple-e-commerce.herokuapp.com/api/get/order", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -47,7 +47,7 @@ const Order = () => {
     const token = JSON.parse(localStorage.getItem("token"));
     try {
       const response = await axios.delete(
-        `http://localhost:4000/api/delete/order?_id=${_id}`,
+        `https://apple-e-commerce.herokuapp.com/api/delete/order?_id=${_id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
