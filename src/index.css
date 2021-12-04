@@ -9,6 +9,7 @@ body {
 *{
   /* font-family: 'Allison', cursive; */
   /* font-weight: 600; */
+  box-sizing: border-box;
 }
 
 /* @import url('https://fonts.googleapis.com/css2?family=Allison&display=swap'); */
