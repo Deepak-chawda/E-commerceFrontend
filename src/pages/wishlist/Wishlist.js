@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import emtyOrder from "../images/emtyOrder.png"
 import appleWatch from "../images/apple_watch.jpeg";
 import ReactTooltip from "react-tooltip";
-import {  toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const Wishlist = () => {
   // state for loader
@@ -26,7 +26,7 @@ const Wishlist = () => {
     }
     try {
       const response = await axios.get(
-        "https://apple-e-commerce.herokuapp.com/api/get/wishlist",
+        process.env.REACT_APP_ONRENDER + "api/get/wishlist",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -72,7 +72,7 @@ const Wishlist = () => {
     const token = JSON.parse(localStorage.getItem("token"));
     try {
       const response = await axios.post(
-        "https://apple-e-commerce.herokuapp.com/api/add/order",
+        process.env.REACT_APP_ONRENDER + "api/add/order",
         {
           product: itempro,
           orderDate: Date.now(),
@@ -120,24 +120,24 @@ const Wishlist = () => {
                       </tr>
                     </thead>
                     <tbody className="text-center " >
-                    <tr>
-                      <td className=" border-bottom-0" colSpan="6">
-                      {Isloader && (
-                        <>
-                          <td
-                            className="spinner-grow text-primary" colSpan="5"
-                            style={{ width: "3rem", height: "3rem" }}
-                            role="status"
-                          >
-                            <span className="visually-hidden">Loading...</span>
-                          </td>
-                        
-                        </>
-                      )}
-                      
-                      </td>
+                      <tr>
+                        <td className=" border-bottom-0" colSpan="6">
+                          {Isloader && (
+                            <>
+                              <td
+                                className="spinner-grow text-primary" colSpan="5"
+                                style={{ width: "3rem", height: "3rem" }}
+                                role="status"
+                              >
+                                <span className="visually-hidden">Loading...</span>
+                              </td>
+
+                            </>
+                          )}
+
+                        </td>
                       </tr>
-                  
+
                       {getWishlist && getWishlist.length !== 0 ? (
                         getWishlist.map((item) => {
                           return (
@@ -146,7 +146,7 @@ const Wishlist = () => {
                                 <td>
                                   <img
                                     className="card-table-img img-fluid me-3"
-                                    src={item.product.picture ?item.product.picture : appleWatch}
+                                    src={item.product.picture ? item.product.picture : appleWatch}
                                     alt="product-img"
                                     width="100"
                                   />
@@ -201,14 +201,14 @@ const Wishlist = () => {
                         })
                       ) : (
                         <tr>
-                        <td className="fs-3 text-center" colSpan="6">
-                          <img className="bg-light" src={emtyOrder} alt="emtyOrderImg" style={{height:"200px",width:"300px"}} />
-                          <p> Not Add order by user yet</p>
-                          <button onClick={()=>{
-                            history.push("/")
-                          }} className="btn btn-outline-warning rounded-pill">Shop now</button>
-                         
-                        </td>
+                          <td className="fs-3 text-center" colSpan="6">
+                            <img className="bg-light" src={emtyOrder} alt="emtyOrderImg" style={{ height: "200px", width: "300px" }} />
+                            <p> Not Add order by user yet</p>
+                            <button onClick={() => {
+                              history.push("/")
+                            }} className="btn btn-outline-warning rounded-pill">Shop now</button>
+
+                          </td>
                           {/* {Isloader && (
                             <>
                               <tr
@@ -222,8 +222,8 @@ const Wishlist = () => {
                               </tr>
                             </>
                           )} */}
-                        {/* </td> */}
-                      </tr>
+                          {/* </td> */}
+                        </tr>
                       )}
                     </tbody>
                   </table>

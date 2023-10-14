@@ -12,7 +12,7 @@ import air_pots2 from "../images/air_pots2.jfif";
 import apple_laptop from "../images/apple_laptop.jfif";
 import ipad from "../images/ipad.jfif";
 import CommanCard from "./comman.card";
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import UserDetailContext from "../../useContext/TokenContext";
@@ -33,7 +33,7 @@ const Home = () => {
     try {
       setIsloader(true)
       const response = await axios.get(
-        "https://apple-e-commerce.herokuapp.com/api/get/user/product?page=1&limit=8",
+        process.env.REACT_APP_ONRENDER + "api/get/user/product?page=1&limit=8",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -196,15 +196,15 @@ const Home = () => {
         </div>
         <hr className="featurette-divider" />
         <h1 className="text-center grident">Here Apple Product For Order </h1>
-          {Isloader && (
-            <>
+        {Isloader && (
+          <>
             <div className="text-center mb-4">
               <div className="spinner-border text-danger" role="status">
                 <span className="visually-hidden">Loading...</span>
               </div>
-              </div>
-            </>
-          )}
+            </div>
+          </>
+        )}
         <div className="d-flex flex-wrap text-center justify-content-center">
           {/*cards*/}
           {getUserData && getUserData.length !== 0 ? (

@@ -30,7 +30,7 @@ const CategoryCommanCard = ({ Allitem }) => {
     try {
       setIsloader(true);
       const response = await axios.post(
-        "https://apple-e-commerce.herokuapp.com/api/add/wishlist",
+        process.env.REACT_APP_ONRENDER + "api/add/wishlist",
         {
           productId: _id,
           user: JSON.parse(localStorage.getItem("userDetails"))._id,
@@ -95,7 +95,7 @@ const CategoryCommanCard = ({ Allitem }) => {
   };
   return (
     <>
-      <div className="card col-xl-3 col-lg-4 col-md-6 mb-3 m-4" style={{ maxWidth: " 280px"}}>
+      <div className="card col-xl-3 col-lg-4 col-md-6 mb-3 m-4" style={{ maxWidth: " 280px" }}>
         <div className="row g-0 hover-shadow-lg hover-translate-y-n10">
           <div className="col-md-12 col-sm-12 align-content-center">
             <img
@@ -106,55 +106,55 @@ const CategoryCommanCard = ({ Allitem }) => {
               }
               className="img-fluid playhieght"
               alt="img"
-            
+
             />
           </div>
           {/* <div className="col-md-6"> */}
-            <div className="card-body p-2">
-              <h5 className="card-title">{newProductName}</h5>
-              <h5 className="card-title rup">{Allitem.price}</h5>
-              <p className="card-text">{newdiscripName}</p>
-              <div className="d-grid gap-2">
-                <button
-                  className="btn btn-primary p-2  d-flex justify-content-center align-items-center"
-                  disabled={IsloaderO}
-                  onClick={() => {
-                    placeOrder(Allitem._id);
-                  }}
-                >
-                 BUY NOW <i class="icon-shopping-cart fs-5 m-1"></i>
-                  {IsloaderO && (
-                    <>
-                      <div
-                        className="spinner-border text-dark m-1"
-                        role="status"
-                      >
-                        <span className="visually-hidden">Loading...</span>
-                      </div>
-                    </>
-                  )}
-                </button>
-                <button
-                  className="btn btn-danger p-2  d-flex justify-content-center align-items-center"
-                  disabled={Isloader}
-                  onClick={() => {
-                    addToWishlist(Allitem._id);
-                  }}
-                >
-                  WISHLIST <i class="icon-heart-empty fs-5 m-1"></i>
-                  {Isloader && (
-                    <>
-                      <div
-                        className="spinner-border text-dark m-1"
-                        role="status"
-                      >
-                        <span className="visually-hidden">Loading...</span>
-                      </div>
-                    </>
-                  )}
-                </button>
-              </div>
+          <div className="card-body p-2">
+            <h5 className="card-title">{newProductName}</h5>
+            <h5 className="card-title rup">{Allitem.price}</h5>
+            <p className="card-text">{newdiscripName}</p>
+            <div className="d-grid gap-2">
+              <button
+                className="btn btn-primary p-2  d-flex justify-content-center align-items-center"
+                disabled={IsloaderO}
+                onClick={() => {
+                  placeOrder(Allitem._id);
+                }}
+              >
+                BUY NOW <i class="icon-shopping-cart fs-5 m-1"></i>
+                {IsloaderO && (
+                  <>
+                    <div
+                      className="spinner-border text-dark m-1"
+                      role="status"
+                    >
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </>
+                )}
+              </button>
+              <button
+                className="btn btn-danger p-2  d-flex justify-content-center align-items-center"
+                disabled={Isloader}
+                onClick={() => {
+                  addToWishlist(Allitem._id);
+                }}
+              >
+                WISHLIST <i class="icon-heart-empty fs-5 m-1"></i>
+                {Isloader && (
+                  <>
+                    <div
+                      className="spinner-border text-dark m-1"
+                      role="status"
+                    >
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </>
+                )}
+              </button>
             </div>
+          </div>
           {/* </div> */}
         </div>
       </div>

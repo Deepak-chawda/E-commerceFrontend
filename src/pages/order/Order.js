@@ -25,7 +25,7 @@ const Order = () => {
     }
     // console.log("hello")
     try {
-      const response = await axios.get("https://apple-e-commerce.herokuapp.com/api/get/order", {
+      const response = await axios.get(process.env.REACT_APP_ONRENDER + "api/get/order", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -85,22 +85,22 @@ const Order = () => {
                       </tr>
                     </thead>
                     <tbody className="text-center">
-                    <tr>
-                      <td className=" border-bottom-0" colSpan="6">
-                      {Isloader && (
-                        <>
-                          <td
-                            className="spinner-grow text-primary" colSpan="5"
-                            style={{ width: "3rem", height: "3rem" }}
-                            role="status"
-                          >
-                            <span className="visually-hidden">Loading...</span>
-                          </td>
-                        
-                        </>
-                      )}
-                      
-                      </td>
+                      <tr>
+                        <td className=" border-bottom-0" colSpan="6">
+                          {Isloader && (
+                            <>
+                              <td
+                                className="spinner-grow text-primary" colSpan="5"
+                                style={{ width: "3rem", height: "3rem" }}
+                                role="status"
+                              >
+                                <span className="visually-hidden">Loading...</span>
+                              </td>
+
+                            </>
+                          )}
+
+                        </td>
                       </tr>
                       {getOrder && getOrder.length !== 0 ? (
                         getOrder.map((item) => {
@@ -156,14 +156,14 @@ const Order = () => {
                         })
                       ) : (
                         <tr className="text-center">
-                        <td className="fs-3 text-center" colSpan="6">
-                          <img className="bg-light" src={emtyOrder} alt="emtyOrderImg" style={{height:"200px",width:"300px"}} />
-                          <p> Not Add order by user yet</p>
-                          <button onClick={()=>{
-                            history.push("/")
-                          }} className="btn btn-outline-warning rounded-pill">Shop now</button>
-                         
-                        </td>
+                          <td className="fs-3 text-center" colSpan="6">
+                            <img className="bg-light" src={emtyOrder} alt="emtyOrderImg" style={{ height: "200px", width: "300px" }} />
+                            <p> Not Add order by user yet</p>
+                            <button onClick={() => {
+                              history.push("/")
+                            }} className="btn btn-outline-warning rounded-pill">Shop now</button>
+
+                          </td>
                         </tr>
                       )}
                     </tbody>

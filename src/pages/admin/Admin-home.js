@@ -21,7 +21,7 @@ const AdminHome = () => {
     const token = JSON.parse(localStorage.getItem("token"));
     try {
       const response = await axios.get(
-        "https://apple-e-commerce.herokuapp.com/api/get/admin/product",
+        process.env.REACT_APP_ONRENDER + "api/get/admin/product",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -48,7 +48,7 @@ const AdminHome = () => {
               <div className="table-responsive p-4">
                 <h2 className="">ADD PRODUCT ADMIN</h2>
                 <AddProductModal
-                  getProductsApi ={getProductsApi}
+                  getProductsApi={getProductsApi}
                 />
               </div>
               <div className="card-body m-0 p-0 text-center">
