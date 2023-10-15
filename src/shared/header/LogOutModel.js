@@ -58,7 +58,7 @@ const LogOutModel = () => {
                  
                 }}
               >
-                Conform
+                Confirm
               </button>
             </div>
           </div>
